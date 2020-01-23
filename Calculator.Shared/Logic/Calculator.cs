@@ -24,12 +24,6 @@ namespace Calculator.Shared.Logic
         public static readonly string DecimalSeparator
             = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
 
-        // Localized error messages
-        public static readonly string UnexpectedError = LocalizedStrings.UnexpectedError;
-        private static readonly string LexicalError = LocalizedStrings.LexicalError;
-        private static readonly string SyntaxError = LocalizedStrings.SyntaxError;
-        private static readonly string CalculationError = LocalizedStrings.CalculationError;
-
         #region General definitions
         private static readonly Dictionary<TerminalSymbol, char> TerminalSymbolsVariableStorageCharacter
             = new Dictionary<TerminalSymbol, char>
@@ -176,24 +170,24 @@ namespace Calculator.Shared.Logic
                 // Get operation components by properly splitting it
                 var lexemes = SplitOperation(operation);
                 if (lexemes == null)
-                    return new CalculationResult(UnexpectedError);
+                    return new CalculationResult(LocalizedStrings.UnexpectedError);
                 // Lexical analysis
                 var lexicalAnalysisResult = LexicalAnalysis(lexemes);
                 if (lexicalAnalysisResult == null)
-                    return new CalculationResult(LexicalError);
+                    return new CalculationResult(LocalizedStrings.LexicalError);
                 // Add possible missing join symbols to the operation
                 lexicalAnalysisResult = AddMissingSymbols(lexicalAnalysisResult);
                 // Syntax analysis
                 var syntaxAndSemanticAnalysisResult = SyntaxAndSemanticAnalysis(variableStorageValues, lexicalAnalysisResult);
                 if (syntaxAndSemanticAnalysisResult == null)
-                    return new CalculationResult(SyntaxError);
+                    return new CalculationResult(LocalizedStrings.SyntaxError);
                 // Do and return actual calculation
                 return ActualCalculation(syntaxAndSemanticAnalysisResult);
             }
             catch (Exception exception)
             {
                 Debug.WriteLine("Error: " + exception.Message);
-                return new CalculationResult(UnexpectedError);
+                return new CalculationResult(LocalizedStrings.UnexpectedError);
             }
         }
 
@@ -276,7 +270,7 @@ namespace Calculator.Shared.Logic
                 {
                     automataColumn = 0;
                     if (Automata[currentState, automataColumn].Equals(null))
-                        return new LexemeResult(LexicalError);
+                        return new LexemeResult(LocalizedStrings.LexicalError);
                     else
                         currentState = Automata[currentState, automataColumn].Value;
                 }
@@ -284,12 +278,12 @@ namespace Calculator.Shared.Logic
                 {
                     automataColumn = 1;
                     if (Automata[currentState, automataColumn].Equals(null))
-                        return new LexemeResult(LexicalError);
+                        return new LexemeResult(LocalizedStrings.LexicalError);
                     else
                         currentState = Automata[currentState, automataColumn].Value;
                 }
                 else
-                    return new LexemeResult(LexicalError);
+                    return new LexemeResult(LocalizedStrings.LexicalError);
             }
             return TerminalSymbolResultByState(currentState);
         }
@@ -302,7 +296,7 @@ namespace Calculator.Shared.Logic
                 case 0:
                 case 1:
                 default:
-                    return new LexemeResult(LexicalError);
+                    return new LexemeResult(LocalizedStrings.LexicalError);
                 // Only states 2 and 3 are valid outputs, it means the lexeme is a valid real number
                 case 2:
                 case 3:
@@ -507,13 +501,13 @@ namespace Calculator.Shared.Logic
             catch (Exception exception)
             {
                 Debug.WriteLine("Error: " + exception.Message);
-                return new CalculationResult(CalculationError);
+                return new CalculationResult(LocalizedStrings.CalculationError);
             }
 
             if (operandsStack.Count == 1)
                 return new CalculationResult(operandsStack.Pop().Value);
             else
-                return new CalculationResult(CalculationError);
+                return new CalculationResult(LocalizedStrings.CalculationError);
         }
 
         private static Operand EvaluateUnary(Operand operand, Operator operatorX)
@@ -523,7 +517,7 @@ namespace Calculator.Shared.Logic
                 case TerminalSymbol.SquareRootOperator:
                     return new Operand(Math.Sqrt(operand.Value));
                 default:
-                    throw new Exception(UnexpectedError);
+                    throw new Exception(LocalizedStrings.UnexpectedError);
             }
         }
 
@@ -542,7 +536,7 @@ namespace Calculator.Shared.Logic
                 case TerminalSymbol.PotentiationOperator:
                     return new Operand(Math.Pow(leftOperand.Value, rightOperand.Value));
                 default:
-                    throw new Exception(UnexpectedError);
+                    throw new Exception(LocalizedStrings.UnexpectedError);
             }
         }
     }
