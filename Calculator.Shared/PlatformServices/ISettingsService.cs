@@ -2,7 +2,7 @@
 
 namespace Calculator.Shared.PlatformServices
 {
-    interface ILocalStorageService
+    public interface ISettingsService
     {
         Task<T> Get<T>(string key, T defaultValue);
         Task Set<T>(string key, T value);

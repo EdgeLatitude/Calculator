@@ -2,7 +2,7 @@
 
 namespace Calculator.Shared.PlatformServices
 {
-    interface IAlertsService
+    public interface IAlertsService
     {
         Task DisplayAlertAsync(string title, string message);
         Task<bool> DisplayConfirmationAsync(string title, string message);

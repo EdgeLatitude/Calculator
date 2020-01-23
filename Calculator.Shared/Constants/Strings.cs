@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Shared.Constants
 {
-    static class Strings
+    public static class Strings
     {
         public const string HistoryLength = "HistoryLength";
         public const string ResultsHistory = "ResultsHistory";

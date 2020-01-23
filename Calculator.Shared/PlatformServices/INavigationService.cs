@@ -2,7 +2,7 @@
 
 namespace Calculator.Shared.PlatformServices
 {
-    interface INavigationService
+    public interface INavigationService
     {
         Task NavigateToAsync(string resource);
         Task NavigateBackAsync();
