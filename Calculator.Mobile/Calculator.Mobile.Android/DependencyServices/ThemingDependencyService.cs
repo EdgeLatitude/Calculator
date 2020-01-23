@@ -5,10 +5,10 @@ using Plugin.CurrentActivity;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(Calculator.Mobile.Droid.DependencyServices.Environment))]
+[assembly: Dependency(typeof(Calculator.Mobile.Droid.DependencyServices.ThemingDependencyService))]
 namespace Calculator.Mobile.Droid.DependencyServices
 {
-    public class Environment : IEnvironment
+    public class ThemingDependencyService : IThemingDependencyService
     {
         public bool DeviceSupportsManualDarkMode() =>
             true;

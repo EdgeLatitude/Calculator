@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(Calculator.Mobile.iOS.DependencyServices.Environment))]
+[assembly: Dependency(typeof(Calculator.Mobile.iOS.DependencyServices.ThemingDependencyService))]
 namespace Calculator.Mobile.iOS.DependencyServices
 {
-    public class Environment : IEnvironment
+    public class ThemingDependencyService : IThemingDependencyService
     {
         public bool DeviceSupportsManualDarkMode() =>
             false;

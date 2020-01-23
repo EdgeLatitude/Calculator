@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Mobile.DependencyServices
 {
-    public interface IEnvironment
+    public interface IThemingDependencyService
     {
         bool DeviceSupportsManualDarkMode();
         bool DeviceSupportsAutomaticDarkMode();

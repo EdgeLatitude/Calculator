@@ -1,13 +1,11 @@
-﻿using System.Threading.Tasks;
-
-namespace Calculator.Shared.PlatformServices
+﻿namespace Calculator.Shared.PlatformServices
 {
     public interface ISettingsService
     {
-        Task<T> Get<T>(string key, T defaultValue);
-        Task Set<T>(string key, T value);
-        Task<bool> Contains(string key);
-        Task Remove(string key);
-        Task Clear();
+        T Get<T>(string key, T defaultValue);
+        void Set<T>(string key, T value);
+        bool Contains(string key);
+        void Remove(string key);
+        void Clear();
     }
 }

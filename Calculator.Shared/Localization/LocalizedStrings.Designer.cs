@@ -22,7 +22,7 @@ namespace Calculator.Shared.Localization {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LocalizedStrings {
+    public class LocalizedStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Calculator.Shared.Localization {
         ///   Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Calculator.Shared.Localization.LocalizedStrings", typeof(LocalizedStrings).Assembly);
@@ -51,7 +51,7 @@ namespace Calculator.Shared.Localization {
         ///   búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a About.
         /// </summary>
-        internal static string About {
+        public static string About {
             get {
                 return ResourceManager.GetString("About", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Calculation error.
         /// </summary>
-        internal static string CalculationError {
+        public static string CalculationError {
             get {
                 return ResourceManager.GetString("CalculationError", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Cancel.
         /// </summary>
-        internal static string Cancel {
+        public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Clear history.
         /// </summary>
-        internal static string ClearHistory {
+        public static string ClearHistory {
             get {
                 return ResourceManager.GetString("ClearHistory", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Dark.
         /// </summary>
-        internal static string Dark {
+        public static string Dark {
             get {
                 return ResourceManager.GetString("Dark", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Device.
         /// </summary>
-        internal static string Device {
+        public static string Device {
             get {
                 return ResourceManager.GetString("Device", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a The results history is disabled.
         /// </summary>
-        internal static string DisabledResultsHistory {
+        public static string DisabledResultsHistory {
             get {
                 return ResourceManager.GetString("DisabledResultsHistory", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a The results history is empty.
         /// </summary>
-        internal static string EmptyResultsHistory {
+        public static string EmptyResultsHistory {
             get {
                 return ResourceManager.GetString("EmptyResultsHistory", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a History.
         /// </summary>
-        internal static string History {
+        public static string History {
             get {
                 return ResourceManager.GetString("History", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Results history length.
         /// </summary>
-        internal static string HistoryLength {
+        public static string HistoryLength {
             get {
                 return ResourceManager.GetString("HistoryLength", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a ANS.
         /// </summary>
-        internal static string LastResultAbbreviation {
+        public static string LastResultAbbreviation {
             get {
                 return ResourceManager.GetString("LastResultAbbreviation", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a A.
         /// </summary>
-        internal static string LastResultCharacter {
+        public static string LastResultCharacter {
             get {
                 return ResourceManager.GetString("LastResultCharacter", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Lexical error.
         /// </summary>
-        internal static string LexicalError {
+        public static string LexicalError {
             get {
                 return ResourceManager.GetString("LexicalError", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Light.
         /// </summary>
-        internal static string Light {
+        public static string Light {
             get {
                 return ResourceManager.GetString("Light", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Notice.
         /// </summary>
-        internal static string Notice {
+        public static string Notice {
             get {
                 return ResourceManager.GetString("Notice", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Ok.
         /// </summary>
-        internal static string Ok {
+        public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Save settings.
         /// </summary>
-        internal static string SaveSettings {
+        public static string SaveSettings {
             get {
                 return ResourceManager.GetString("SaveSettings", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Settings.
         /// </summary>
-        internal static string Settings {
+        public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Style.
         /// </summary>
-        internal static string Style {
+        public static string Style {
             get {
                 return ResourceManager.GetString("Style", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Syntax error.
         /// </summary>
-        internal static string SyntaxError {
+        public static string SyntaxError {
             get {
                 return ResourceManager.GetString("SyntaxError", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Theme.
         /// </summary>
-        internal static string Theme {
+        public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Calculator.Shared.Localization {
         /// <summary>
         ///   Busca una cadena traducida similar a Unexpected error.
         /// </summary>
-        internal static string UnexpectedError {
+        public static string UnexpectedError {
             get {
                 return ResourceManager.GetString("UnexpectedError", resourceCulture);
             }
