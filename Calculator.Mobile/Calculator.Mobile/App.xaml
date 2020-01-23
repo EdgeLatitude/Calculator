@@ -6,6 +6,10 @@
              mc:Ignorable="d"
              x:Class="Calculator.Mobile.App">
     <Application.Resources>
-
+        <Style x:Key="InputButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+        <Color x:Key="BarBackgroundColor">#006060</Color>
+        <Color x:Key="BarTextColor">#FFFFFF</Color>
     </Application.Resources>
 </Application>
