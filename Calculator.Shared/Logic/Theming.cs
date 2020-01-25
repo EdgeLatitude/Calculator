@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Shared.Logic
 {
-    class Theming
+    public class Theming
     {
         private static IThemingService _themingService;
 

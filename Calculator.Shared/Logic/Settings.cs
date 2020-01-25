@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Shared.Logic
 {
-    class Settings
+    public class Settings
     {
         private static ISettingsService _settingsService;
         private static IThemingService _themingService;

@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Calculator.Shared.Logic
 {
-    static class Calculator
+    public static class Calculator
     {
         // Compilation constants
         public const string WhiteSpace = " ";
