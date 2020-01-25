@@ -135,10 +135,10 @@
     <value>Notice</value>
   </data>
   <data name="DisabledResultsHistory" xml:space="preserve">
-    <value>The results history is disabled</value>
+    <value>The results history is disabled.</value>
   </data>
   <data name="EmptyResultsHistory" xml:space="preserve">
-    <value>The results history is empty</value>
+    <value>The results history is empty.</value>
   </data>
   <data name="ClearHistory" xml:space="preserve">
     <value>Clear history</value>

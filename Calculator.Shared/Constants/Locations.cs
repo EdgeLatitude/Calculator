@@ -2,6 +2,6 @@
 {
     public static class Locations
     {
-        public const string Settings = "settings";
+        public const string SettingsPage = "settings";
     }
 }

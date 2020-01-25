@@ -115,7 +115,7 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a The results history is disabled.
+        ///   Busca una cadena traducida similar a The results history is disabled..
         /// </summary>
         public static string DisabledResultsHistory {
             get {
@@ -124,7 +124,7 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a The results history is empty.
+        ///   Busca una cadena traducida similar a The results history is empty..
         /// </summary>
         public static string EmptyResultsHistory {
             get {

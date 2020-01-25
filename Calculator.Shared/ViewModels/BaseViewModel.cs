@@ -5,13 +5,6 @@ namespace Calculator.Shared.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        public BaseViewModel()
-        {
-            Initialize();
-        }
-
-        protected abstract void Initialize();
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName] string name = "") =>

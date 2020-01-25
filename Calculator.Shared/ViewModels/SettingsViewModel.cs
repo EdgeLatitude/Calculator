@@ -34,10 +34,7 @@ namespace Calculator.Shared.ViewModels
         {
             _commandFactoryService = commandFactoryService;
             _uiThreadService = uiThreadService;
-        }
 
-        protected override void Initialize()
-        {
             #region History settings
             SaveSettingsCommand = _commandFactoryService.Create(() => SaveSettings(), CanExecuteSaveSettings);
             _currentHistoryLength = Settings.Instance.GetResultsHistoryLength();

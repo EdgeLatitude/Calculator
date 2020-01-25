@@ -135,10 +135,10 @@
     <value>Aviso</value>
   </data>
   <data name="DisabledResultsHistory" xml:space="preserve">
-    <value>El historial de resultados está deshabilitado</value>
+    <value>El historial de resultados está deshabilitado.</value>
   </data>
   <data name="EmptyResultsHistory" xml:space="preserve">
-    <value>El historial de resultados está vacío</value>
+    <value>El historial de resultados está vacío.</value>
   </data>
   <data name="ClearHistory" xml:space="preserve">
     <value>Limpiar historial</value>

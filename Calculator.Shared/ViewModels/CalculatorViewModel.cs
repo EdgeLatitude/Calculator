@@ -28,10 +28,7 @@ namespace Calculator.Shared.ViewModels
             _alertsService = alertsService;
             _commandFactoryService = commandFactoryService;
             _navigationService = navigationService;
-        }
 
-        protected override void Initialize()
-        {
             AC_Command = _commandFactoryService.Create(() => AC());
             DeleteCommand = _commandFactoryService.Create(() => Delete());
             BinaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => BinaryOperator(symbol));
@@ -270,6 +267,6 @@ namespace Calculator.Shared.ViewModels
         }
 
         private async Task NavigateToSettingsAsync() =>
-            await _navigationService.NavigateToAsync(Locations.Settings);
+            await _navigationService.NavigateToAsync(Locations.SettingsPage);
     }
 }

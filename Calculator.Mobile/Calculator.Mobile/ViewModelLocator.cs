@@ -2,12 +2,30 @@
 using Calculator.Mobile.PlatformServices;
 using Calculator.Shared.PlatformServices;
 using Calculator.Shared.ViewModels;
+using System;
+using System.Collections.Generic;
 
 namespace Calculator.Mobile
 {
     static class ViewModelLocator
     {
         private static readonly IContainer _container;
+
+        private static readonly Dictionary<Type, Type> _implementationInterfaceDictionary = new Dictionary<Type, Type>
+        {
+            { typeof(AlertsService), typeof(IAlertsService) },
+            { typeof(CommandFactoryService), typeof(ICommandFactoryService) },
+            { typeof(NavigationService), typeof(INavigationService) },
+            { typeof(SettingsService), typeof(ISettingsService) },
+            { typeof(ThemingService), typeof(IThemingService) },
+            { typeof(UiThreadService), typeof(IUiThreadService) }
+        };
+
+        private static readonly Type[] _viewModelsToResolve = new Type[]
+        {
+            typeof(CalculatorViewModel),
+            typeof(SettingsViewModel)
+        };
 
         static ViewModelLocator()
         {
@@ -20,24 +38,15 @@ namespace Calculator.Mobile
 
         private static void RegisterPlatformServices(ContainerBuilder builder)
         {
-            builder.RegisterType<AlertsService>()
-                .As<IAlertsService>().SingleInstance();
-            builder.RegisterType<CommandFactoryService>()
-                .As<ICommandFactoryService>().SingleInstance();
-            builder.RegisterType<NavigationService>()
-                .As<INavigationService>().SingleInstance();
-            builder.RegisterType<SettingsService>()
-                .As<ISettingsService>().SingleInstance();
-            builder.RegisterType<ThemingService>()
-                .As<IThemingService>().SingleInstance();
-            builder.RegisterType<UiThreadService>()
-                .As<IUiThreadService>().SingleInstance();
+            foreach (var implementationInterfacePair in _implementationInterfaceDictionary)
+                builder.RegisterType(implementationInterfacePair.Key)
+                    .As(implementationInterfacePair.Value).SingleInstance();
         }
 
         private static void RegisterViewModels(ContainerBuilder builder)
         {
-            builder.RegisterType<CalculatorViewModel>().SingleInstance();
-            builder.RegisterType<SettingsViewModel>().SingleInstance();
+            foreach (var viewModelToResolve in _viewModelsToResolve)
+                builder.RegisterType(viewModelToResolve).SingleInstance();
         }
 
         private static void InitializeSingletons()
