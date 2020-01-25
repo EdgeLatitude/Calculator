@@ -9,6 +9,6 @@ namespace Calculator.Shared.PlatformServices
         bool DeviceSupportsAutomaticDarkMode();
         Theme GetDeviceDefaultTheme();
         Task<Theme> GetDeviceTheme();
-        Task SetTheme(Theme theme);
+        void SetTheme(Theme theme);
     }
 }

@@ -39,7 +39,7 @@ namespace Calculator.Shared.Logic
             if (!starting
                 && theme == _currentTheme)
                 return;
-            await _themingService.SetTheme(theme);
+            _themingService.SetTheme(theme);
             _currentTheme = theme;
         }
 

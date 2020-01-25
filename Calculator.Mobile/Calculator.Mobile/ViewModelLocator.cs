@@ -20,12 +20,18 @@ namespace Calculator.Mobile
 
         private static void RegisterPlatformServices(ContainerBuilder builder)
         {
-            builder.RegisterType<AlertsService>().As<IAlertsService>().SingleInstance();
-            builder.RegisterType<CommandFactoryService>().As<ICommandFactoryService>().SingleInstance();
-            builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
-            builder.RegisterType<SettingsService>().As<ISettingsService>().SingleInstance();
-            builder.RegisterType<ThemingService>().As<IThemingService>().SingleInstance();
-            builder.RegisterType<UiThreadService>().As<IUiThreadService>().SingleInstance();
+            builder.RegisterType<AlertsService>()
+                .As<IAlertsService>().SingleInstance();
+            builder.RegisterType<CommandFactoryService>()
+                .As<ICommandFactoryService>().SingleInstance();
+            builder.RegisterType<NavigationService>()
+                .As<INavigationService>().SingleInstance();
+            builder.RegisterType<SettingsService>()
+                .As<ISettingsService>().SingleInstance();
+            builder.RegisterType<ThemingService>()
+                .As<IThemingService>().SingleInstance();
+            builder.RegisterType<UiThreadService>()
+                .As<IUiThreadService>().SingleInstance();
         }
 
         private static void RegisterViewModels(ContainerBuilder builder)
@@ -43,7 +49,8 @@ namespace Calculator.Mobile
                 _container.Resolve<IThemingService>());
         }
 
-        public static TViewModel Resolve<TViewModel>() where TViewModel : BaseViewModel =>
+        public static TViewModel Resolve<TViewModel>()
+            where TViewModel : BaseViewModel =>
             _container.Resolve<TViewModel>();
     }
 }
