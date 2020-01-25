@@ -20,6 +20,31 @@ namespace Calculator.Shared.ViewModels
 
         private NextInput _nextStroke = NextInput.DoNothing;
 
+        public CalculatorViewModel(
+            IAlertsService alertsService,
+            ICommandFactoryService commandFactoryService,
+            INavigationService navigationService)
+        {
+            _alertsService = alertsService;
+            _commandFactoryService = commandFactoryService;
+            _navigationService = navigationService;
+        }
+
+        protected override void Initialize()
+        {
+            AC_Command = _commandFactoryService.Create(() => AC());
+            DeleteCommand = _commandFactoryService.Create(() => Delete());
+            BinaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => BinaryOperator(symbol));
+            UnaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => UnaryOperator(symbol));
+            ParenthesesCommand = _commandFactoryService.Create<string>((parentheses) => Parentheses(parentheses));
+            LastResultCommand = _commandFactoryService.Create(() => LastResult());
+            NumberCommand = _commandFactoryService.Create<string>((number) => Number(number));
+            DecimalCommand = _commandFactoryService.Create(() => Decimal());
+            CalculateCommand = _commandFactoryService.Create(() => Calculate());
+            ShowHistoryCommand = _commandFactoryService.Create(() => ShowHistory());
+            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
+        }
+
         private string _input;
 
         public string Input
@@ -60,31 +85,6 @@ namespace Calculator.Shared.ViewModels
         public ICommand ShowHistoryCommand { get; private set; }
 
         public ICommand NavigateToSettingsCommand { get; private set; }
-
-        public CalculatorViewModel(
-            IAlertsService alertsService,
-            ICommandFactoryService commandFactoryService,
-            INavigationService navigationService)
-        {
-            _alertsService = alertsService;
-            _commandFactoryService = commandFactoryService;
-            _navigationService = navigationService;
-        }
-
-        protected override void Initialize()
-        {
-            AC_Command = _commandFactoryService.Create(() => AC());
-            DeleteCommand = _commandFactoryService.Create(() => Delete());
-            BinaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => BinaryOperator(symbol));
-            UnaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => UnaryOperator(symbol));
-            ParenthesesCommand = _commandFactoryService.Create<string>((parentheses) => Parentheses(parentheses));
-            LastResultCommand = _commandFactoryService.Create(() => LastResult());
-            NumberCommand = _commandFactoryService.Create<string>((number) => Number(number));
-            DecimalCommand = _commandFactoryService.Create(() => Decimal());
-            CalculateCommand = _commandFactoryService.Create(() => Calculate());
-            ShowHistoryCommand = _commandFactoryService.Create(() => ShowHistory());
-            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
-        }
 
         private void AC()
         {
@@ -206,7 +206,7 @@ namespace Calculator.Shared.ViewModels
 
                     AddOrUpdateVariableStorage(Logic.Calculator.LastResult, result);
 
-                    Settings.Instance.ManageNewResultAsync(resultText);
+                    _ = Settings.Instance.ManageNewResultAsync(resultText);
                 }
                 // Show error message if calculation was not successful
                 else

@@ -45,7 +45,7 @@ namespace Calculator.Shared.Logic
         public void ClearResultsHistory() =>
             _settingsService.Remove(Strings.ResultsHistory);
 
-        public async void ManageNewResultAsync(string result) =>
+        public async Task ManageNewResultAsync(string result) =>
             await Task.Run(() => ManageNewResult(result));
 
         private void ManageNewResult(string result)
