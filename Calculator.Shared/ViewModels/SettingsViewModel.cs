@@ -14,6 +14,8 @@ namespace Calculator.Shared.ViewModels
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IUiThreadService _uiThreadService;
 
+        private readonly bool _deviceSupportsAutomaticDarkMode;
+
         private readonly Dictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
         {
             { LocalizedStrings.Light, Theme.Light },
@@ -21,8 +23,6 @@ namespace Calculator.Shared.ViewModels
         };
 
         private bool _loaded;
-
-        private bool _deviceSupportsAutomaticDarkMode;
 
         private int _currentHistoryLength;
 

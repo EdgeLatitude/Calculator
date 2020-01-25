@@ -5,8 +5,8 @@
        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
        xmlns:pages="clr-namespace:Calculator.Mobile.Pages"
        mc:Ignorable="d"
-       FlyoutBehavior="Disabled"
-       x:Class="Calculator.Mobile.AppShell">
+       x:Class="Calculator.Mobile.AppShell"
+       FlyoutBehavior="Disabled">
     <ShellContent
         ContentTemplate="{DataTemplate pages:CalculatorPage}" />
 </Shell>

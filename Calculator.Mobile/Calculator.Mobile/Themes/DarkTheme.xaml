@@ -4,7 +4,8 @@
                     x:Class="Calculator.Mobile.Themes.DarkTheme">
     <Color x:Key="PrimaryColor">#008080</Color>
     <Color x:Key="ButtonTextColor">#00A0A0</Color>
-    <Color x:Key="AndroidPageBackgroundColor">#303030</Color>
+    <Color x:Key="AndroidPageBackgroundColor">#121212</Color>
     <Color x:Key="iOSPageBackgroundColor">#1C1C1E</Color>
+    <Color x:Key="AndroidLabelTextColor">#E1E1E1</Color>
     <Color x:Key="iOSLabelTextColor">#FFFFFF</Color>
 </ResourceDictionary>

@@ -11,14 +11,19 @@
             <Setter Property="FontSize" Value="16" />
         </Style>
         <!-- Implicit styles !-->
-        <Style TargetType="ContentPage">
+        <Style TargetType="Button">
+            <Setter Property="TextColor"
+                    Value="{DynamicResource ButtonTextColor}" />
+        </Style>
+        <Style TargetType="Page">
             <Setter Property="BackgroundColor"
                     Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},
                                        iOS={DynamicResource iOSPageBackgroundColor}}" />
         </Style>
-        <Style TargetType="Button">
+        <Style TargetType="Label">
             <Setter Property="TextColor"
-                    Value="{DynamicResource ButtonTextColor}" />
+                    Value="{OnPlatform Android={DynamicResource AndroidLabelTextColor},
+                                       iOS={DynamicResource iOSLabelTextColor}}" />
         </Style>
     </Application.Resources>
 </Application>
