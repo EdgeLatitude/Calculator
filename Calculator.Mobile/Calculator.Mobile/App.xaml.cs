@@ -1,6 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace Calculator.Mobile
 {
@@ -8,21 +6,8 @@ namespace Calculator.Mobile
     {
         public App()
         {
-            InitializeComponent();
-
-            MainPage = new MainPage();
-        }
-
-        protected override void OnStart()
-        {
-        }
-
-        protected override void OnSleep()
-        {
-        }
-
-        protected override void OnResume()
-        {
+            InitializeComponent(); 
+            MainPage = new AppShell();
         }
     }
 }
