@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Mobile.Droid
 {
-    [Activity(Label = "Calculadora", Icon = "@mipmap/icon", Theme = "@style/MainTheme.Splash", MainLauncher = true, NoHistory = true)]
+    [Activity(Label = "@string/app_name", Icon = "@mipmap/icon", Theme = "@style/MainTheme.Splash", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : AppCompatActivity
     {
         private bool _mainActivityCreationStarted;
