@@ -24,7 +24,7 @@
                     HorizontalOptions="FillAndExpand">
                     <Label  
                         Text="{x:Static localizedstrings:LocalizedStrings.History}"
-                        TextColor="{DynamicResource PrimaryColor}"
+                        TextColor="{StaticResource AccentColor}"
                         FontSize="Subtitle"
                         FontAttributes="Bold" />
                     <StackLayout 
@@ -49,7 +49,7 @@
                     HorizontalOptions="FillAndExpand">
                     <Label  
                         Text="{x:Static localizedstrings:LocalizedStrings.Style}"
-                        TextColor="{DynamicResource PrimaryColor}"
+                        TextColor="{StaticResource AccentColor}"
                         FontSize="Subtitle"
                         FontAttributes="Bold" />
                     <StackLayout 
