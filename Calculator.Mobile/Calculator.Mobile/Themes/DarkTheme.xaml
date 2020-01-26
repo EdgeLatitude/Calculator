@@ -6,6 +6,6 @@
     <Color x:Key="ButtonTextColor">#00A0A0</Color>
     <Color x:Key="AndroidPageBackgroundColor">#121212</Color>
     <Color x:Key="iOSPageBackgroundColor">#1C1C1E</Color>
-    <Color x:Key="AndroidLabelTextColor">#E1E1E1</Color>
-    <Color x:Key="iOSLabelTextColor">#FFFFFF</Color>
+    <Color x:Key="AndroidTextColor">#E1E1E1</Color>
+    <Color x:Key="iOSTextColor">#FFFFFF</Color>
 </ResourceDictionary>
