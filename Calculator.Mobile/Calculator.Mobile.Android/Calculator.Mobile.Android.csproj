@@ -58,9 +58,13 @@
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.4.0.991537" />
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
+    <PackageReference Include="Xamarin.Forms.Visual.Material">
+      <Version>4.4.0.991537</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
+    <Compile Include="LaunchScreenActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,7 +92,12 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\drawable-hdpi\" />
+    <Folder Include="Resources\drawable-xhdpi\" />
+    <Folder Include="Resources\drawable-xxhdpi\" />
+    <Folder Include="Resources\drawable-xxxhdpi\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Calculator.Shared\Calculator.Shared.csproj">
       <Project>{87AA0025-374A-4803-A40C-1A409FB7416B}</Project>
@@ -102,6 +111,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\launch_screen.xml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

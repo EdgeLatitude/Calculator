@@ -43,6 +43,9 @@
             <Setter Property="TextColor"
                     Value="{OnPlatform Android={DynamicResource AndroidTextColor},
                                        iOS={DynamicResource iOSTextColor}}" />
+            <Setter Property="Visual"
+                    Value="{OnPlatform Android=Material,
+                                       iOS=Default}" />
         </Style>
         <Style TargetType="Label">
             <Setter Property="TextColor"
