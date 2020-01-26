@@ -7,7 +7,8 @@ namespace Calculator.Mobile
     {
         public App()
         {
-            InitializeComponent(); 
+            ViewModelLocator.Initialize();
+            InitializeComponent();
             MainPage = new AppShell();
         }
 

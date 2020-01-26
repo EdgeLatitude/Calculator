@@ -7,11 +7,20 @@ using System.Collections.Generic;
 
 namespace Calculator.Mobile
 {
-    static class ViewModelLocator
+    class ViewModelLocator
     {
-        private static readonly IContainer _container;
+        public static ViewModelLocator Instance
+        {
+            get;
+            private set;
+        }
 
-        private static readonly Dictionary<Type, Type> _implementationInterfaceDictionary = new Dictionary<Type, Type>
+        public static void Initialize() =>
+            Instance = new ViewModelLocator();
+
+        private readonly IContainer _container;
+
+        private readonly Dictionary<Type, Type> _implementationInterfaceDictionary = new Dictionary<Type, Type>
         {
             { typeof(AlertsService), typeof(IAlertsService) },
             { typeof(CommandFactoryService), typeof(ICommandFactoryService) },
@@ -21,13 +30,13 @@ namespace Calculator.Mobile
             { typeof(UiThreadService), typeof(IUiThreadService) }
         };
 
-        private static readonly Type[] _viewModelsToResolve = new Type[]
+        private readonly Type[] _viewModelsToResolve = new Type[]
         {
             typeof(CalculatorViewModel),
             typeof(SettingsViewModel)
         };
 
-        static ViewModelLocator()
+        private ViewModelLocator()
         {
             var builder = new ContainerBuilder();
             RegisterPlatformServices(builder);
@@ -36,20 +45,20 @@ namespace Calculator.Mobile
             InitializeSingletons();
         }
 
-        private static void RegisterPlatformServices(ContainerBuilder builder)
+        private void RegisterPlatformServices(ContainerBuilder builder)
         {
             foreach (var implementationInterfacePair in _implementationInterfaceDictionary)
                 builder.RegisterType(implementationInterfacePair.Key)
                     .As(implementationInterfacePair.Value).SingleInstance();
         }
 
-        private static void RegisterViewModels(ContainerBuilder builder)
+        private void RegisterViewModels(ContainerBuilder builder)
         {
             foreach (var viewModelToResolve in _viewModelsToResolve)
                 builder.RegisterType(viewModelToResolve).SingleInstance();
         }
 
-        private static void InitializeSingletons()
+        private void InitializeSingletons()
         {
             Shared.Logic.Settings.Initialize(
                 _container.Resolve<ISettingsService>(),
@@ -58,7 +67,7 @@ namespace Calculator.Mobile
                 _container.Resolve<IThemingService>());
         }
 
-        public static TViewModel Resolve<TViewModel>()
+        public TViewModel Resolve<TViewModel>()
             where TViewModel : BaseViewModel =>
             _container.Resolve<TViewModel>();
     }

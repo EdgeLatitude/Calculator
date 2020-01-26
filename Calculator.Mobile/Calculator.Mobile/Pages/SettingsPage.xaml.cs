@@ -10,7 +10,7 @@ namespace Calculator.Mobile.Pages
         public SettingsPage()
         {
             InitializeComponent();
-            BindingContext = ViewModelLocator.Resolve<SettingsViewModel>();
+            BindingContext = ViewModelLocator.Instance.Resolve<SettingsViewModel>();
         }
     }
 }

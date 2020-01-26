@@ -11,7 +11,7 @@ namespace Calculator.Mobile.Pages
         public CalculatorPage()
         {
             InitializeComponent();
-            BindingContext = ViewModelLocator.Resolve<CalculatorViewModel>();
+            BindingContext = ViewModelLocator.Instance.Resolve<CalculatorViewModel>();
         }
 
         private void InputEntry_PropertyChanged(object sender, PropertyChangedEventArgs args)
