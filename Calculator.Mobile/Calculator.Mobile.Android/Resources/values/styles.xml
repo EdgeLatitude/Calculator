@@ -2,7 +2,7 @@
 <resources>
 
   <style name="LaunchTheme" parent="MainTheme">
-    <item name="android:windowBackground">@color/colorPrimary</item>
+    <item name="android:windowBackground">@color/launcher_background</item>
   </style>
 
   <style name="MainTheme" parent="MainTheme.Base">

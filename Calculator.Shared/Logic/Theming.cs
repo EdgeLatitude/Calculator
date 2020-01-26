@@ -17,11 +17,6 @@ namespace Calculator.Shared.Logic
             private set;
         }
 
-        public static void ThemeChangeNeeded_Event(object sender, ThemeChangeNeededEventArgs theme)
-        {
-            ThemeChangeNeeded?.Invoke(sender, theme);
-        }
-
         public static void Initialize(
             IThemingService themingService) =>
             Instance = new Theming(themingService);
@@ -48,6 +43,7 @@ namespace Calculator.Shared.Logic
                 && theme == _currentTheme)
                 return;
             _themingService.SetTheme(theme);
+            ThemeChangeNeeded?.Invoke(this, new ThemeChangeNeededEventArgs { Theme = theme });
             _currentTheme = theme;
         }
 
