@@ -8,4 +8,6 @@
     <Color x:Key="iOSPageBackgroundColor">#FFFFFF</Color>
     <Color x:Key="AndroidTextColor">#212121</Color>
     <Color x:Key="iOSTextColor">#000000</Color>
+    <Color x:Key="AndroidFieldBackgroundColor">#F5F5F5</Color>
+    <Color x:Key="iOSFieldBackgroundColor">#F2F1F7</Color>
 </ResourceDictionary>
