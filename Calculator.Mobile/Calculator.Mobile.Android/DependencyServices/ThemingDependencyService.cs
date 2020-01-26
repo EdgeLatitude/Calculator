@@ -1,6 +1,6 @@
 ﻿using Android.Content.Res;
 using Calculator.Mobile.DependencyServices;
-using Calculator.Shared.Theming;
+using Calculator.Shared.Models.Theming;
 using Plugin.CurrentActivity;
 using System.Threading.Tasks;
 using Xamarin.Forms;

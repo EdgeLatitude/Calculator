@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Calculator.Shared.Theming
+namespace Calculator.Shared.Models.Theming
 {
     public class ThemeChangeNeededEventArgs : EventArgs
     {

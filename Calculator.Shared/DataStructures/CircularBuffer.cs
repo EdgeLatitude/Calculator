@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Calculator.Shared.DataEstructures
+namespace Calculator.Shared.DataStructures
 {
     class CircularBuffer<T> : IEnumerable<T>
     {

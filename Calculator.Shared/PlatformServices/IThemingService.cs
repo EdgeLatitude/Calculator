@@ -1,4 +1,4 @@
-﻿using Calculator.Shared.Theming;
+﻿using Calculator.Shared.Models.Theming;
 using System.Threading.Tasks;
 
 namespace Calculator.Shared.PlatformServices

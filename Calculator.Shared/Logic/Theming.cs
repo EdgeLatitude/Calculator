@@ -1,5 +1,6 @@
-﻿using Calculator.Shared.PlatformServices;
-using Calculator.Shared.Theming;
+﻿using Calculator.Shared.Models.Theming;
+using Calculator.Shared.PlatformServices;
+using System;
 using System.Threading.Tasks;
 
 namespace Calculator.Shared.Logic
@@ -8,10 +9,17 @@ namespace Calculator.Shared.Logic
     {
         private static IThemingService _themingService;
 
+        public static event EventHandler<ThemeChangeNeededEventArgs> ThemeChangeNeeded;
+
         public static Theming Instance
         {
             get;
             private set;
+        }
+
+        public static void ThemeChangeNeeded_Event(object sender, ThemeChangeNeededEventArgs theme)
+        {
+            ThemeChangeNeeded?.Invoke(sender, theme);
         }
 
         public static void Initialize(

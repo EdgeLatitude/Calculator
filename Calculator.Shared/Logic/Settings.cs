@@ -1,7 +1,7 @@
 ﻿using Calculator.Shared.Constants;
-using Calculator.Shared.DataEstructures;
+using Calculator.Shared.DataStructures;
+using Calculator.Shared.Models.Theming;
 using Calculator.Shared.PlatformServices;
-using Calculator.Shared.Theming;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using Calculator.Mobile.DependencyServices;
 using Calculator.Mobile.Themes;
+using Calculator.Shared.Models.Theming;
 using Calculator.Shared.PlatformServices;
-using Calculator.Shared.Theming;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;

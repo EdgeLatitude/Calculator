@@ -1,5 +1,5 @@
 ﻿using Calculator.Mobile.DependencyServices;
-using Calculator.Shared.Theming;
+using Calculator.Shared.Models.Theming;
 using System.Threading.Tasks;
 using UIKit;
 using Xamarin.Forms;

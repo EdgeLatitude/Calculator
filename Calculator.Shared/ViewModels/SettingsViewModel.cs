@@ -1,8 +1,8 @@
 ﻿using Calculator.Shared.Constants;
 using Calculator.Shared.Localization;
 using Calculator.Shared.Logic;
+using Calculator.Shared.Models.Theming;
 using Calculator.Shared.PlatformServices;
-using Calculator.Shared.Theming;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
@@ -42,9 +42,9 @@ namespace Calculator.Shared.ViewModels
             #endregion History settings
 
             #region Theme settings
-            DeviceSupportsManualDarkMode = Logic.Theming.Instance.DeviceSupportsManualDarkMode;
-            _deviceSupportsAutomaticDarkMode = Logic.Theming.Instance.DeviceSupportsAutomaticDarkMode;
-            _currentTheme = Logic.Theming.Instance.GetAppOrDefaultTheme();
+            DeviceSupportsManualDarkMode = Theming.Instance.DeviceSupportsManualDarkMode;
+            _deviceSupportsAutomaticDarkMode = Theming.Instance.DeviceSupportsAutomaticDarkMode;
+            _currentTheme = Theming.Instance.GetAppOrDefaultTheme();
 
             if (_deviceSupportsAutomaticDarkMode)
                 _themesDictionary.Add(LocalizedStrings.Device, null);
@@ -194,7 +194,7 @@ namespace Calculator.Shared.ViewModels
                 Settings.Instance.SetTheme(selectedTheme.Value);
             else
                 Settings.Instance.ClearTheme();
-            Logic.Theming.Instance.ManageAppTheme();
+            Theming.Instance.ManageAppTheme();
             _currentTheme = selectedTheme;
         }
 
