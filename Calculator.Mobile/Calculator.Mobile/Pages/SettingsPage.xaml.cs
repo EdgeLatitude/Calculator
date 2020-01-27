@@ -9,28 +9,42 @@ namespace Calculator.Mobile.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsPage : ContentPage
     {
+        private bool _themePickerIsShowing;
+
         public SettingsPage()
         {
             InitializeComponent();
             BindingContext = ViewModelLocator.Instance.Resolve<SettingsViewModel>();
         }
 
-        private async void Picker_Focused(object sender, FocusEventArgs e)
+        private void ThemePicker_Focused(object sender, FocusEventArgs e)
         {
             if (Device.RuntimePlatform != Device.Android)
                 return;
 
-            var senderPicker = (Picker)sender;
-            senderPicker.Unfocus();
+            var themePicker = (Picker)sender;
+            themePicker.Unfocus();
 
-            var selectedItem = await Shell.Current.DisplayActionSheet(
-                null,
-                LocalizedStrings.Cancel,
-                null,
-                senderPicker.Items.ToArray());
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                if (_themePickerIsShowing)
+                    return;
 
-            if (senderPicker.Items.Contains(selectedItem))
-                senderPicker.SelectedItem = selectedItem;
+                _themePickerIsShowing = true;
+
+                var senderPickerItems = themePicker.Items.ToArray();
+
+                var selectedItem = await Shell.Current.DisplayActionSheet(
+                    null,
+                    LocalizedStrings.Cancel,
+                    null,
+                    senderPickerItems);
+
+                if (senderPickerItems.Contains(selectedItem))
+                    themePicker.SelectedItem = selectedItem;
+
+                _themePickerIsShowing = false;
+            });
         }
     }
 }

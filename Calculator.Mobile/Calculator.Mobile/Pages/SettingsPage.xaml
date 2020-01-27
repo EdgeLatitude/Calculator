@@ -66,7 +66,7 @@
                             WidthRequest="150"
                             HorizontalOptions="EndAndExpand"
                             VerticalOptions="CenterAndExpand"
-                            Focused="Picker_Focused" />
+                            Focused="ThemePicker_Focused" />
                     </StackLayout>
                 </StackLayout>
                 <Button  
