@@ -29,8 +29,7 @@
             Margin="5,10" 
             FontSize="24" 
             IsReadOnly="True"
-            HorizontalTextAlignment="End"
-            PropertyChanged="InputEntry_PropertyChanged" />
+            HorizontalTextAlignment="End" />
         <Grid 
             Margin="5" 
             RowSpacing="5" 
