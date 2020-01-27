@@ -65,7 +65,8 @@
                             SelectedItem="{Binding SelectedTheme}"
                             WidthRequest="150"
                             HorizontalOptions="EndAndExpand"
-                            VerticalOptions="CenterAndExpand" />
+                            VerticalOptions="CenterAndExpand"
+                            Focused="Picker_Focused" />
                     </StackLayout>
                 </StackLayout>
                 <Button  
