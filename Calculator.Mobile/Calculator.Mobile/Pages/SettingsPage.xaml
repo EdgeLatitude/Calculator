@@ -20,52 +20,40 @@
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
                 <StackLayout
-                    Spacing="5"
-                    HorizontalOptions="FillAndExpand">
+                    Style="{StaticResource ZoneStackLayoutStyle}">
                     <Label  
                         Text="{x:Static localizedstrings:LocalizedStrings.History}"
-                        TextColor="{StaticResource AccentColor}"
-                        FontSize="Subtitle"
-                        FontAttributes="Bold" />
+                        Style="{StaticResource SectionLabelStyle}" />
                     <StackLayout 
-                        Spacing="10"
-                        Orientation="Horizontal"
-                        HorizontalOptions="FillAndExpand">
+                        Style="{StaticResource SectionStackLayoutStyle}">
                         <Label  
                             Text="{x:Static localizedstrings:LocalizedStrings.HistoryLength}" 
-                            VerticalOptions="CenterAndExpand" />
+                            Style="{StaticResource DescriptionLabelStyle}" />
                         <Entry  
                             Text="{Binding HistoryLength}"
                             Keyboard="Numeric"
                             MaxLength="2"
                             WidthRequest="100"
-                            HorizontalOptions="EndAndExpand"
-                            VerticalOptions="CenterAndExpand" />
+                            Style="{StaticResource SettingEntryStyle}" />
                     </StackLayout>
                 </StackLayout>
                 <StackLayout
                     IsVisible="{Binding StyleSectionIsVisible}"
-                    Spacing="5"
-                    HorizontalOptions="FillAndExpand">
+                    Style="{StaticResource ZoneStackLayoutStyle}">
                     <Label  
                         Text="{x:Static localizedstrings:LocalizedStrings.Style}"
-                        TextColor="{StaticResource AccentColor}"
-                        FontSize="Subtitle"
-                        FontAttributes="Bold" />
+                        Style="{StaticResource SectionLabelStyle}" />
                     <StackLayout 
                         IsVisible="{Binding DeviceSupportsManualDarkMode}"
-                        Spacing="10"
-                        Orientation="Horizontal"
-                        HorizontalOptions="FillAndExpand">
+                        Style="{StaticResource SectionStackLayoutStyle}">
                         <Label  
                             Text="{x:Static localizedstrings:LocalizedStrings.Theme}" 
-                            VerticalOptions="CenterAndExpand" />
+                            Style="{StaticResource DescriptionLabelStyle}" />
                         <Picker  
                             ItemsSource="{Binding Themes}"
                             SelectedItem="{Binding SelectedTheme}"
                             WidthRequest="150"
-                            HorizontalOptions="EndAndExpand"
-                            VerticalOptions="CenterAndExpand"
+                            Style="{StaticResource SettingPickerStyle}"
                             Focused="ThemePicker_Focused" />
                     </StackLayout>
                 </StackLayout>

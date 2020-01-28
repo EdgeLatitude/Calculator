@@ -26,10 +26,7 @@
         Spacing="0">
         <Entry 
             Text="{Binding Input}"
-            Margin="5,10" 
-            FontSize="24" 
-            IsReadOnly="True"
-            HorizontalTextAlignment="End" />
+            Style="{StaticResource InputEntryStyle}" />
         <Grid 
             Margin="5" 
             RowSpacing="5" 
