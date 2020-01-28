@@ -24,7 +24,9 @@
                                        iOS=32}" />
             <Setter Property="HorizontalTextAlignment" Value="End" />
             <Setter Property="IsReadOnly" Value="True" />
-            <Setter Property="Margin" Value="5,10" />
+            <Setter Property="Margin"
+                    Value="{OnPlatform Android='5,10',
+                                       iOS='5,20,5,10'}" />
         </Style>
         <Style x:Key="SaveSettingsButtonsStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="{StaticResource BarBackgroundColor}" />
