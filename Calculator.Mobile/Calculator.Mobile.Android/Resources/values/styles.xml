@@ -16,6 +16,7 @@
     <item name="colorAccent">#008080</item>
     <item name="windowActionModeOverlay">true</item>
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+    <item name="android:navigationBarColor">#006060</item>
     <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
   </style>
 
@@ -30,6 +31,7 @@
     <item name="colorAccent">#008080</item>
     <item name="windowActionModeOverlay">true</item>
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+    <item name="android:navigationBarColor">#006060</item>
     <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
   </style>
 
