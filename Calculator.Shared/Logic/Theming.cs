@@ -42,8 +42,8 @@ namespace Calculator.Shared.Logic
             if (!starting
                 && theme == _currentTheme)
                 return;
-            _themingService.SetTheme(theme);
             ThemeChangeNeeded?.Invoke(this, new ThemeChangeNeededEventArgs { Theme = theme });
+            _themingService.SetTheme(theme);
             _currentTheme = theme;
         }
 

@@ -16,6 +16,9 @@ namespace Calculator.Mobile.Droid.DependencyServices
         public bool DeviceSupportsAutomaticDarkMode() =>
             true;
 
+        public bool DeviceRequiresPagesRedraw() =>
+            true;
+
         public Theme GetDeviceDefaultTheme() =>
             Theme.Dark;
 

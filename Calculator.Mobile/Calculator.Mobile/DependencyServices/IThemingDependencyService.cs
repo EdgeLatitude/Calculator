@@ -7,6 +7,7 @@ namespace Calculator.Mobile.DependencyServices
     {
         bool DeviceSupportsManualDarkMode();
         bool DeviceSupportsAutomaticDarkMode();
+        bool DeviceRequiresPagesRedraw();
         Theme GetDeviceDefaultTheme();
         Task<Theme> GetDeviceTheme(); // Implementation for this based on https://codetraveler.io/2019/09/11/check-for-dark-mode-in-xamarin-forms/
     }

@@ -17,6 +17,9 @@ namespace Calculator.Mobile.iOS.DependencyServices
             // because TraitCollection.UserInterfaceStyle was introduced in iOS 12.0
             UIDevice.CurrentDevice.CheckSystemVersion(12, 0);
 
+        public bool DeviceRequiresPagesRedraw() =>
+            false;
+
         public Theme GetDeviceDefaultTheme() =>
             Theme.Light;
 
