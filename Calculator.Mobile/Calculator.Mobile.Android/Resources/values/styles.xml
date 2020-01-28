@@ -44,5 +44,10 @@
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
     <item name="colorAccent">#008080</item>
   </style>
+
+  <style name="AppToolbarStyle" parent="Theme.AppCompat.NoActionBar">
+    <item name="android:colorBackground">#006060</item>
+    <item name="android:textColor">#FFF</item>
+  </style>
   
 </resources>
