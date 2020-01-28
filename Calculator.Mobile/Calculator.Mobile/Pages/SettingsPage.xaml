@@ -5,7 +5,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:localizedstrings="clr-namespace:Calculator.Shared.Localization;assembly=Calculator.Shared"
              xmlns:viewmodels="clr-namespace:Calculator.Shared.ViewModels;assembly=Calculator.Shared"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              mc:Ignorable="d"
+             ios:Page.UseSafeArea="true"
              x:DataType="viewmodels:SettingsViewModel"
              x:Class="Calculator.Mobile.Pages.SettingsPage"
              Title="{x:Static localizedstrings:LocalizedStrings.Settings}">
