@@ -10,11 +10,7 @@ namespace Calculator.Mobile
         {
             ViewModelLocator.Initialize();
             InitializeComponent();
-            MainPage = new NavigationPage(new CalculatorPage())
-            {
-                BarBackgroundColor = (Color)Current.Resources["BarBackgroundColor"],
-                BarTextColor = (Color)Current.Resources["BarForegroundColor"]
-            };
+            MainPage = new NavigationPage(new CalculatorPage());
         }
 
         protected override void OnStart()
