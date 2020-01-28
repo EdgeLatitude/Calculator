@@ -1,4 +1,5 @@
-﻿using Calculator.Shared.Logic;
+﻿using Calculator.Mobile.Pages;
+using Calculator.Shared.Logic;
 using Xamarin.Forms;
 
 namespace Calculator.Mobile
@@ -9,7 +10,11 @@ namespace Calculator.Mobile
         {
             ViewModelLocator.Initialize();
             InitializeComponent();
-            MainPage = new AppShell();
+            MainPage = new NavigationPage(new CalculatorPage())
+            {
+                BarBackgroundColor = (Color)Current.Resources["BarBackgroundColor"],
+                BarTextColor = (Color)Current.Resources["BarForegroundColor"]
+            };
         }
 
         protected override void OnStart()

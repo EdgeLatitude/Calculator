@@ -34,7 +34,7 @@ namespace Calculator.Mobile.Pages
 
                 var senderPickerItems = themePicker.Items.ToArray();
 
-                var selectedItem = await Shell.Current.DisplayActionSheet(
+                var selectedItem = await Application.Current.MainPage.DisplayActionSheet(
                     null,
                     LocalizedStrings.Cancel,
                     null,
