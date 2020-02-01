@@ -23,12 +23,12 @@ namespace Calculator.Shared.DataStructures
 
         public bool IsEmpty
         {
-            get { return Queue.Count == 0; }
+            get => Queue.Count == 0;
         }
 
         public bool IsFull
         {
-            get { return Queue.Count == Capacity; }
+            get => Queue.Count == Capacity;
         }
 
         public void Write(T value)
