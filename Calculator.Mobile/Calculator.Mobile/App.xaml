@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              mc:Ignorable="d"
              android:Application.WindowSoftInputModeAdjust="Resize"
              x:Class="Calculator.Mobile.App">
@@ -88,6 +89,7 @@
             <Setter Property="BackgroundColor"
                     Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
                                        iOS={DynamicResource iOSFieldBackgroundColor}}" />
+            <Setter Property="ios:Entry.CursorColor" Value="{StaticResource AccentColor}" />
             <Setter Property="IsSpellCheckEnabled" Value="False" />
             <Setter Property="IsTextPredictionEnabled" Value="False" />
             <Setter Property="PlaceholderColor" Value="{StaticResource AccentColor}" />
