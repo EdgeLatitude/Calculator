@@ -17,7 +17,7 @@ namespace Calculator.Mobile.Pages
             BindingContext = ViewModelLocator.Instance.Resolve<SettingsViewModel>();
         }
 
-        private void ThemePicker_Focused(object sender, FocusEventArgs e)
+        private void ThemePicker_Focused(object sender, FocusEventArgs args)
         {
             if (Device.RuntimePlatform != Device.Android)
                 return;

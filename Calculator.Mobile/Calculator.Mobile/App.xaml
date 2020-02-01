@@ -20,7 +20,7 @@
         </Style>
         <Style x:Key="InputEntryStyle" TargetType="Entry">
             <Setter Property="FontSize"
-                    Value="{OnPlatform Android=24,
+                    Value="{OnPlatform Android=28,
                                        iOS=32}" />
             <Setter Property="HorizontalTextAlignment" Value="End" />
             <Setter Property="IsReadOnly" Value="True" />
@@ -86,6 +86,8 @@
             <Setter Property="BackgroundColor"
                     Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
                                        iOS={DynamicResource iOSFieldBackgroundColor}}" />
+            <Setter Property="IsSpellCheckEnabled" Value="False" />
+            <Setter Property="IsTextPredictionEnabled" Value="False" />
             <Setter Property="PlaceholderColor" Value="{StaticResource AccentColor}" />
             <Setter Property="TextColor"
                     Value="{OnPlatform Android={DynamicResource AndroidTextColor},

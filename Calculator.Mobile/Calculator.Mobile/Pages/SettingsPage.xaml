@@ -7,7 +7,7 @@
              xmlns:viewmodels="clr-namespace:Calculator.Shared.ViewModels;assembly=Calculator.Shared"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              mc:Ignorable="d"
-             ios:Page.UseSafeArea="true"
+             ios:Page.UseSafeArea="True"
              x:DataType="viewmodels:SettingsViewModel"
              x:Class="Calculator.Mobile.Pages.SettingsPage"
              Title="{x:Static localizedstrings:LocalizedStrings.Settings}">
