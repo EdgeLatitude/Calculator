@@ -42,7 +42,7 @@ namespace Calculator.Shared.ViewModels
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
         }
 
-        private string _input;
+        private string _input = string.Empty;
 
         public string Input
         {

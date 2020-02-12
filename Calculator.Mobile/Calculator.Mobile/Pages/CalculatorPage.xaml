@@ -26,9 +26,25 @@
     </ContentPage.ToolbarItems>
     <StackLayout
         Spacing="0">
-        <Entry 
-            Text="{Binding Input}"
-            Style="{StaticResource InputEntryStyle}" />
+        <StackLayout
+            Style="{StaticResource InputParentStackLayoutStyle}">
+            <BoxView
+                Style="{StaticResource InputSeparatorStyle}" />
+            <Frame
+                Style="{StaticResource InputFrameStyle}">
+                <ScrollView
+                    x:Name="InputScrollView"
+                    Style="{StaticResource InputScrollViewStyle}">
+                    <Label 
+                        x:Name="InputLabel"
+                        Text="{Binding Input}" 
+                        Style="{StaticResource InputLabelStyle}"
+                        PropertyChanged="InputLabel_PropertyChanged" />
+                </ScrollView>
+            </Frame>
+            <BoxView
+                Style="{StaticResource InputSeparatorStyle}" />
+        </StackLayout>
         <Grid 
             Margin="5" 
             RowSpacing="5" 
