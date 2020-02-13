@@ -185,6 +185,13 @@ namespace Calculator.Shared.ViewModels
             // Do nothing if there is no input
             if (string.IsNullOrWhiteSpace(Input))
                 return;
+            // Clear input if there was no interaction after an error
+            if (_nextStroke == NextInput.ClearAtAny)
+            {
+                Input = string.Empty;
+                _nextStroke = NextInput.DoNothing;
+                return;
+            }
             // Calculate and show corresponding result
             var calculationResult = Logic.Calculator.Calculate(Input, _variableStorageValues);
             if (calculationResult != null)
