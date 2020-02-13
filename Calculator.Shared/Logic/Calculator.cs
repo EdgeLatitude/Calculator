@@ -515,7 +515,7 @@ namespace Calculator.Shared.Logic
             switch (operatorX.TerminalSymbol)
             {
                 case TerminalSymbol.SquareRootOperator:
-                    return new Operand(Math.Sqrt(operand.Value));
+                    return new Operand(ValidateResult(Math.Sqrt(operand.Value)));
                 default:
                     throw new Exception(LocalizedStrings.UnexpectedError);
             }
@@ -526,18 +526,26 @@ namespace Calculator.Shared.Logic
             switch (operatorX.TerminalSymbol)
             {
                 case TerminalSymbol.AdditionOperator:
-                    return new Operand(leftOperand.Value + rightOperand.Value);
+                    return new Operand(ValidateResult(leftOperand.Value + rightOperand.Value));
                 case TerminalSymbol.SubstractionOperator:
-                    return new Operand(leftOperand.Value - rightOperand.Value);
+                    return new Operand(ValidateResult(leftOperand.Value - rightOperand.Value));
                 case TerminalSymbol.MultiplicationOperator:
-                    return new Operand(leftOperand.Value * rightOperand.Value);
+                    return new Operand(ValidateResult(leftOperand.Value * rightOperand.Value));
                 case TerminalSymbol.DivisionOperator:
-                    return new Operand(leftOperand.Value / rightOperand.Value);
+                    return new Operand(ValidateResult(leftOperand.Value / rightOperand.Value));
                 case TerminalSymbol.PotentiationOperator:
-                    return new Operand(Math.Pow(leftOperand.Value, rightOperand.Value));
+                    return new Operand(ValidateResult(Math.Pow(leftOperand.Value, rightOperand.Value)));
                 default:
                     throw new Exception(LocalizedStrings.UnexpectedError);
             }
+        }
+
+        private static double ValidateResult(in double result)
+        {
+            if (double.IsInfinity(result)
+                || double.IsNaN(result))
+                throw new Exception(LocalizedStrings.CalculationError);
+            return result;
         }
     }
 }
