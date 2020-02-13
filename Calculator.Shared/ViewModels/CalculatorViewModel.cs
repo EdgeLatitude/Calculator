@@ -3,6 +3,7 @@ using Calculator.Shared.Localization;
 using Calculator.Shared.Logic;
 using Calculator.Shared.Models.Enums;
 using Calculator.Shared.PlatformServices;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -191,19 +192,22 @@ namespace Calculator.Shared.ViewModels
                 if (calculationResult.Successful)
                 {
                     var result = calculationResult.Result;
+                    if (TryFormatResult(result, out var resultText))
+                    {
+                        Input = resultText;
+                        _nextStroke = NextInput.ClearAtNumber;
 
-                    var resultText = result.ToString();
-                    while (resultText.Contains(Logic.Calculator.DecimalSeparator)
-                        && (char.ToString(resultText[resultText.Length - 1]) == Logic.Calculator.ZeroString
-                            || char.ToString(resultText[resultText.Length - 1]) == Logic.Calculator.DecimalSeparator))
-                        resultText = resultText.Substring(0, resultText.Length - 1);
+                        AddOrUpdateVariableStorage(Logic.Calculator.LastResult, result);
 
-                    Input = resultText;
-                    _nextStroke = NextInput.ClearAtNumber;
+                        _ = Settings.Instance.ManageNewResultAsync(resultText);
+                    }
+                    // Show error message if result could not be formatted
+                    else
+                    {
+                        Input = LocalizedStrings.CalculationError;
+                        _nextStroke = NextInput.ClearAtAny;
+                    }
 
-                    AddOrUpdateVariableStorage(Logic.Calculator.LastResult, result);
-
-                    _ = Settings.Instance.ManageNewResultAsync(resultText);
                 }
                 // Show error message if calculation was not successful
                 else
@@ -226,6 +230,24 @@ namespace Calculator.Shared.ViewModels
                 _variableStorageValues[storage] = value;
             else
                 _variableStorageValues.Add(storage, value);
+        }
+
+        private bool TryFormatResult(double result, out string resultText)
+        {
+            resultText = string.Empty;
+            try
+            {
+                resultText = Convert.ToDecimal(result).ToString();
+            }
+            catch (OverflowException)
+            {
+                return false;
+            }
+            while (resultText.Contains(Logic.Calculator.DecimalSeparator)
+                && (char.ToString(resultText[resultText.Length - 1]) == Logic.Calculator.ZeroString
+                    || char.ToString(resultText[resultText.Length - 1]) == Logic.Calculator.DecimalSeparator))
+                resultText = resultText.Substring(0, resultText.Length - 1);
+            return true;
         }
 
         private async void ShowHistory()
