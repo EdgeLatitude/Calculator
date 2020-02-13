@@ -32,15 +32,28 @@
                 Style="{StaticResource InputSeparatorStyle}" />
             <Frame
                 Style="{StaticResource InputFrameStyle}">
-                <ScrollView
-                    x:Name="InputScrollView"
-                    Style="{StaticResource InputScrollViewStyle}">
+                <Grid>
+                    <!-- Spacer label because in iOS labels' height is collapsed when there is no text -->
                     <Label 
-                        x:Name="InputLabel"
-                        Text="{Binding Input}" 
-                        Style="{StaticResource InputLabelStyle}"
-                        PropertyChanged="InputLabel_PropertyChanged" />
-                </ScrollView>
+                        Text=" "
+                        Style="{StaticResource InputLabelStyle}">
+                        <Label.IsVisible>
+                            <OnPlatform x:TypeArguments="x:Boolean">
+                                <On Platform="Android" Value="False" />
+                                <On Platform="iOS" Value="True" />
+                            </OnPlatform>
+                        </Label.IsVisible>
+                    </Label>
+                    <ScrollView
+                        x:Name="InputScrollView"
+                        Style="{StaticResource InputScrollViewStyle}">
+                        <Label 
+                            x:Name="InputLabel"
+                            Text="{Binding Input}" 
+                            Style="{StaticResource InputLabelStyle}"
+                            PropertyChanged="InputLabel_PropertyChanged" />
+                    </ScrollView>
+                </Grid>
             </Frame>
             <BoxView
                 Style="{StaticResource InputSeparatorStyle}" />
