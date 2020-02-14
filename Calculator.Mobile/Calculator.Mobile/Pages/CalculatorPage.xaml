@@ -13,16 +13,28 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem 
             Text="{x:Static localizedstrings:LocalizedStrings.History}"
-            Command="{Binding ShowHistoryCommand}"
-            Order="Primary" />
+            Command="{Binding ShowHistoryCommand}">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Primary" />
+                    <On Platform="iOS" Value="Secondary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
         <ToolbarItem 
             Text="{x:Static localizedstrings:LocalizedStrings.Settings}"
-            Command="{Binding NavigateToSettingsCommand}"
-            Order="Secondary" />
-        <ToolbarItem 
+            Command="{Binding NavigateToSettingsCommand}">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary" />
+                    <On Platform="iOS" Value="Primary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
+        <!--ToolbarItem 
             Text="{x:Static localizedstrings:LocalizedStrings.About}"
             Command="{Binding AboutCommand}"
-            Order="Secondary" />
+            Order="Secondary" /!-->
     </ContentPage.ToolbarItems>
     <StackLayout
         Spacing="0">
@@ -32,28 +44,29 @@
                 Style="{StaticResource InputSeparatorStyle}" />
             <Frame
                 Style="{StaticResource InputFrameStyle}">
-                <Grid>
-                    <!-- Spacer label because in iOS labels' height is collapsed when there is no text -->
-                    <Label 
-                        Text=" "
-                        Style="{StaticResource InputLabelStyle}">
-                        <Label.IsVisible>
-                            <OnPlatform x:TypeArguments="x:Boolean">
-                                <On Platform="Android" Value="False" />
-                                <On Platform="iOS" Value="True" />
-                            </OnPlatform>
-                        </Label.IsVisible>
-                    </Label>
-                    <ScrollView
-                        x:Name="InputScrollView"
-                        Style="{StaticResource InputScrollViewStyle}">
+                <ScrollView
+                    x:Name="InputScrollView"
+                    Style="{StaticResource InputScrollViewStyle}">
+                    <Grid
+                        Style="{StaticResource InputGridStyle}">
+                        <!-- Spacer label because in iOS labels' height is collapsed when there is no text -->
+                        <Label 
+                            Text=" "
+                            Style="{StaticResource InputLabelStyle}">
+                            <Label.IsVisible>
+                                <OnPlatform x:TypeArguments="x:Boolean">
+                                    <On Platform="Android" Value="False" />
+                                    <On Platform="iOS" Value="True" />
+                                </OnPlatform>
+                            </Label.IsVisible>
+                        </Label>
                         <Label 
                             x:Name="InputLabel"
                             Text="{Binding Input}" 
                             Style="{StaticResource InputLabelStyle}"
                             PropertyChanged="InputLabel_PropertyChanged" />
-                    </ScrollView>
-                </Grid>
+                    </Grid>
+                </ScrollView>
             </Frame>
             <BoxView
                 Style="{StaticResource InputSeparatorStyle}" />
