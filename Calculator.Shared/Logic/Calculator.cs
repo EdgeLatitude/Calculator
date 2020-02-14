@@ -2,6 +2,7 @@
 using Calculator.Shared.Models.Enums;
 using Calculator.Shared.Models.MathObjects;
 using Calculator.Shared.Models.Results;
+using DecimalMath;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,11 +15,10 @@ namespace Calculator.Shared.Logic
     {
         // Compilation constants
         public const string WhiteSpace = " ";
-        public const double Zero = 0;
-        public const string ZeroString = "0";
-        public const string NegativeOneString = "-1";
 
         // Runtime constants
+        public static readonly string ZeroString = decimal.Zero.ToString();
+        public static readonly string MinusOneString = decimal.MinusOne.ToString();
         public static readonly char LastResult
             = LocalizedStrings.LastResultCharacter[0];
         public static readonly string DecimalSeparator
@@ -163,7 +163,7 @@ namespace Calculator.Shared.Logic
             Separators = separators.ToArray();
         }
 
-        public static CalculationResult Calculate(string operation, Dictionary<char, double> variableStorageValues)
+        public static CalculationResult Calculate(string operation, Dictionary<char, decimal> variableStorageValues)
         {
             try
             {
@@ -361,7 +361,7 @@ namespace Calculator.Shared.Logic
                     i++;
                     lexemesList[i] = Operators[TerminalSymbol.OperandNegatorOperator].Symbol;
                     terminalSymbolsList[i] = TerminalSymbol.OperandNegatorOperator;
-                    lexemesList.Insert(i, NegativeOneString);
+                    lexemesList.Insert(i, MinusOneString);
                     terminalSymbolsList.Insert(i, TerminalSymbol.RealNumber);
                     continue;
                 }
@@ -370,7 +370,7 @@ namespace Calculator.Shared.Logic
             return new LexicalAnalysisResult(lexemesList.ToArray(), terminalSymbolsList.ToArray());
         }
 
-        private static SyntaxAndSemanticAnalysisResult SyntaxAndSemanticAnalysis(Dictionary<char, double> variableStorageValues, LexicalAnalysisResult lexicalAnalysisResult)
+        private static SyntaxAndSemanticAnalysisResult SyntaxAndSemanticAnalysis(Dictionary<char, decimal> variableStorageValues, LexicalAnalysisResult lexicalAnalysisResult)
         {
             // Data structures and main variables for syntax analysis
             var syntaxQueue = new Queue<TerminalSymbol>(lexicalAnalysisResult.TerminalSymbols);
@@ -396,7 +396,7 @@ namespace Calculator.Shared.Logic
                             ProcessMathOperator(operatorsStack, postfixOperation, Operators[queueElement]);
                             break;
                         case TerminalSymbol.RealNumber:
-                            postfixOperation.Add(new Operand(double.Parse(lexicalAnalysisResult.Lexemes[lexicalAnalysisResult.Lexemes.Length - syntaxQueue.Count])));
+                            postfixOperation.Add(new Operand(decimal.Parse(lexicalAnalysisResult.Lexemes[lexicalAnalysisResult.Lexemes.Length - syntaxQueue.Count])));
                             break;
                     }
                 else if (stackElement is TerminalSymbolGroup stackElementTsg)
@@ -407,7 +407,7 @@ namespace Calculator.Shared.Logic
                                 out var memoryValue))
                                 postfixOperation.Add(new Operand(memoryValue));
                             else
-                                postfixOperation.Add(new Operand(Zero));
+                                postfixOperation.Add(new Operand(decimal.Zero));
                             break;
                         case TerminalSymbolGroup.BinaryOperators:
                         case TerminalSymbolGroup.UnaryOperators:
@@ -515,7 +515,7 @@ namespace Calculator.Shared.Logic
             switch (operatorX.TerminalSymbol)
             {
                 case TerminalSymbol.SquareRootOperator:
-                    return new Operand(ValidateResult(Math.Sqrt(operand.Value)));
+                    return new Operand(DecimalEx.Sqrt(operand.Value));
                 default:
                     throw new Exception(LocalizedStrings.UnexpectedError);
             }
@@ -526,26 +526,18 @@ namespace Calculator.Shared.Logic
             switch (operatorX.TerminalSymbol)
             {
                 case TerminalSymbol.AdditionOperator:
-                    return new Operand(ValidateResult(leftOperand.Value + rightOperand.Value));
+                    return new Operand(decimal.Add(leftOperand.Value, rightOperand.Value));
                 case TerminalSymbol.SubstractionOperator:
-                    return new Operand(ValidateResult(leftOperand.Value - rightOperand.Value));
+                    return new Operand(decimal.Subtract(leftOperand.Value, rightOperand.Value));
                 case TerminalSymbol.MultiplicationOperator:
-                    return new Operand(ValidateResult(leftOperand.Value * rightOperand.Value));
+                    return new Operand(decimal.Multiply(leftOperand.Value, rightOperand.Value));
                 case TerminalSymbol.DivisionOperator:
-                    return new Operand(ValidateResult(leftOperand.Value / rightOperand.Value));
+                    return new Operand(decimal.Divide(leftOperand.Value, rightOperand.Value));
                 case TerminalSymbol.PotentiationOperator:
-                    return new Operand(ValidateResult(Math.Pow(leftOperand.Value, rightOperand.Value)));
+                    return new Operand(DecimalEx.Pow(leftOperand.Value, rightOperand.Value));
                 default:
                     throw new Exception(LocalizedStrings.UnexpectedError);
             }
-        }
-
-        private static double ValidateResult(in double result)
-        {
-            if (double.IsInfinity(result)
-                || double.IsNaN(result))
-                throw new Exception(LocalizedStrings.CalculationError);
-            return result;
         }
     }
 }

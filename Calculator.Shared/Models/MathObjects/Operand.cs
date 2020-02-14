@@ -2,9 +2,9 @@
 {
     class Operand : MathObject
     {
-        public double Value { get; }
+        public decimal Value { get; }
 
-        public Operand(double value)
+        public Operand(decimal value)
         {
             Value = value;
         }

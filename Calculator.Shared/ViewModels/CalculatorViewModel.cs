@@ -3,7 +3,6 @@ using Calculator.Shared.Localization;
 using Calculator.Shared.Logic;
 using Calculator.Shared.Models.Enums;
 using Calculator.Shared.PlatformServices;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -16,8 +15,8 @@ namespace Calculator.Shared.ViewModels
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly INavigationService _navigationService;
 
-        private readonly Dictionary<char, double> _variableStorageValues
-            = new Dictionary<char, double>();
+        private readonly Dictionary<char, decimal> _variableStorageValues
+            = new Dictionary<char, decimal>();
 
         private NextInput _nextStroke = NextInput.DoNothing;
 
@@ -230,26 +229,18 @@ namespace Calculator.Shared.ViewModels
             }
         }
 
-        private void AddOrUpdateVariableStorage(char storage, double value)
+        private void AddOrUpdateVariableStorage(char storage, decimal value)
         {
             // If memory value already exists, overwrite it, else, add it
-            if (_variableStorageValues.TryGetValue(storage, out double _))
+            if (_variableStorageValues.TryGetValue(storage, out decimal _))
                 _variableStorageValues[storage] = value;
             else
                 _variableStorageValues.Add(storage, value);
         }
 
-        private bool TryFormatResult(double result, out string resultText)
+        private bool TryFormatResult(decimal result, out string resultText)
         {
-            resultText = string.Empty;
-            try
-            {
-                resultText = Convert.ToDecimal(result).ToString();
-            }
-            catch (OverflowException)
-            {
-                return false;
-            }
+            resultText = result.ToString();
             while (resultText.Contains(Logic.Calculator.DecimalSeparator)
                 && (char.ToString(resultText[resultText.Length - 1]) == Logic.Calculator.ZeroString
                     || char.ToString(resultText[resultText.Length - 1]) == Logic.Calculator.DecimalSeparator))

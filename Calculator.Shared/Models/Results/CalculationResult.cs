@@ -4,9 +4,9 @@
     {
         public bool Successful { get; }
         public string ErrorMessage { get; }
-        public double Result { get; }
+        public decimal Result { get; }
 
-        public CalculationResult(double result)
+        public CalculationResult(decimal result)
         {
             Successful = true;
             Result = result;
