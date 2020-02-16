@@ -8,10 +8,13 @@ namespace Calculator.Mobile.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CalculatorPage : ContentPage
     {
+        private readonly CalculatorViewModel _viewModel;
+
         public CalculatorPage()
         {
             InitializeComponent();
-            BindingContext = ViewModelLocator.Instance.Resolve<CalculatorViewModel>();
+            _viewModel = ViewModelLocator.Instance.Resolve<CalculatorViewModel>();
+            BindingContext = _viewModel;
         }
 
         private async void InputLabel_PropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -19,7 +22,7 @@ namespace Calculator.Mobile.Pages
             if (args.PropertyName != nameof(Width))
                 return;
 
-            await InputScrollView.ScrollToAsync(InputLabel, ScrollToPosition.End, false);
+            await InputScrollView.ScrollToAsync(InputLabel, _viewModel.AfterResult ? ScrollToPosition.Start : ScrollToPosition.End, false);
         }
     }
 }

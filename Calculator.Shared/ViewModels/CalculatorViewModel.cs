@@ -18,6 +18,8 @@ namespace Calculator.Shared.ViewModels
         private readonly Dictionary<char, decimal> _variableStorageValues
             = new Dictionary<char, decimal>();
 
+        private bool _calculating;
+
         private NextInput _nextStroke = NextInput.DoNothing;
 
         public CalculatorViewModel(
@@ -53,6 +55,9 @@ namespace Calculator.Shared.ViewModels
                     return;
                 _input = value;
                 OnPropertyChanged();
+
+                if (!_calculating)
+                    AfterResult = false;
             }
         }
 
@@ -60,6 +65,8 @@ namespace Calculator.Shared.ViewModels
         {
             get => Logic.Calculator.DecimalSeparator;
         }
+
+        public bool AfterResult { get; private set; }
 
         public ICommand AC_Command { get; private set; }
 
@@ -184,6 +191,7 @@ namespace Calculator.Shared.ViewModels
             // Do nothing if there is no input
             if (string.IsNullOrWhiteSpace(Input))
                 return;
+
             // Clear input if there was no interaction after an error
             if (_nextStroke == NextInput.ClearAtAny)
             {
@@ -191,7 +199,9 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
                 return;
             }
+
             // Calculate and show corresponding result
+            _calculating = true;
             var calculationResult = Logic.Calculator.Calculate(Input, _variableStorageValues);
             if (calculationResult != null)
                 // Show result if calculation was successful
@@ -200,6 +210,8 @@ namespace Calculator.Shared.ViewModels
                     var result = calculationResult.Result;
                     if (TryFormatResult(result, out var resultText))
                     {
+                        AfterResult = true;
+
                         Input = resultText;
                         _nextStroke = NextInput.ClearAtNumber;
 
@@ -227,6 +239,7 @@ namespace Calculator.Shared.ViewModels
                 Input = LocalizedStrings.UnexpectedError;
                 _nextStroke = NextInput.ClearAtAny;
             }
+            _calculating = false;
         }
 
         private void AddOrUpdateVariableStorage(char storage, decimal value)
