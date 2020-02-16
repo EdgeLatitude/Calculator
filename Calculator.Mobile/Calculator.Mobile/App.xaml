@@ -100,7 +100,6 @@
         </Style>
         <Style x:Key="InputGridStyle" TargetType="Grid">
             <Setter Property="Padding" Value="0,10" />
-            <Setter Property="VerticalOptions" Value="Center" />
         </Style>
         <Style x:Key="InputLabelStyle" TargetType="Label">
             <Setter Property="FontSize"
@@ -108,7 +107,6 @@
                                        iOS=32}" />
             <Setter Property="HorizontalOptions" Value="EndAndExpand" />
             <Setter Property="MaxLines" Value="1" />
-            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
         </Style>
         <Style x:Key="InputParentStackLayoutStyle" TargetType="StackLayout">
             <Setter Property="Margin"
