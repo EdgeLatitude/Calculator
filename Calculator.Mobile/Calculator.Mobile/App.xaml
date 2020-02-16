@@ -124,6 +124,12 @@
             <Setter Property="HeightRequest" Value="1" />
             <Setter Property="HorizontalOptions" Value="Fill" />
         </Style>
+        <Style x:Key="SettingsParentStackLayoutStyle" TargetType="StackLayout">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="Margin" Value="15,15,15,0" />
+            <Setter Property="Spacing" Value="15" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        </Style>
         <Style x:Key="SaveSettingsButtonsStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="{StaticResource BarBackgroundColor}" />
             <Setter Property="BorderColor" Value="Transparent" />

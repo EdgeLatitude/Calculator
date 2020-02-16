@@ -11,60 +11,52 @@
              x:DataType="viewmodels:SettingsViewModel"
              x:Class="Calculator.Mobile.Pages.SettingsPage"
              Title="{x:Static localizedstrings:LocalizedStrings.Settings}">
-    <StackLayout
-        Spacing="0">
-        <ScrollView
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand">
+    <ScrollView>
+        <StackLayout
+            Style="{StaticResource SettingsParentStackLayoutStyle}">
             <StackLayout
-                Margin="15,15,15,0"
-                Spacing="15"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand">
-                <StackLayout
-                    Style="{StaticResource ZoneStackLayoutStyle}">
+                Style="{StaticResource ZoneStackLayoutStyle}">
+                <Label  
+                    Text="{x:Static localizedstrings:LocalizedStrings.History}"
+                    Style="{StaticResource SectionLabelStyle}" />
+                <StackLayout 
+                    Style="{StaticResource SectionStackLayoutStyle}">
                     <Label  
-                        Text="{x:Static localizedstrings:LocalizedStrings.History}"
-                        Style="{StaticResource SectionLabelStyle}" />
-                    <StackLayout 
-                        Style="{StaticResource SectionStackLayoutStyle}">
-                        <Label  
-                            Text="{x:Static localizedstrings:LocalizedStrings.HistoryLength}" 
-                            Style="{StaticResource DescriptionLabelStyle}" />
-                        <Entry  
-                            Text="{Binding HistoryLength}"
-                            Keyboard="Numeric"
-                            MaxLength="2"
-                            WidthRequest="100"
-                            Style="{StaticResource SettingEntryStyle}" />
-                    </StackLayout>
+                        Text="{x:Static localizedstrings:LocalizedStrings.HistoryLength}" 
+                        Style="{StaticResource DescriptionLabelStyle}" />
+                    <Entry  
+                        Text="{Binding HistoryLength}"
+                        Keyboard="Numeric"
+                        MaxLength="2"
+                        WidthRequest="100"
+                        Style="{StaticResource SettingEntryStyle}" />
                 </StackLayout>
-                <StackLayout
-                    IsVisible="{Binding StyleSectionIsVisible}"
-                    Style="{StaticResource ZoneStackLayoutStyle}">
-                    <Label  
-                        Text="{x:Static localizedstrings:LocalizedStrings.Style}"
-                        Style="{StaticResource SectionLabelStyle}" />
-                    <StackLayout 
-                        IsVisible="{Binding DeviceSupportsManualDarkMode}"
-                        Style="{StaticResource SectionStackLayoutStyle}">
-                        <Label  
-                            Text="{x:Static localizedstrings:LocalizedStrings.Theme}" 
-                            Style="{StaticResource DescriptionLabelStyle}" />
-                        <Picker  
-                            ItemsSource="{Binding Themes}"
-                            SelectedItem="{Binding SelectedTheme}"
-                            WidthRequest="150"
-                            Style="{StaticResource SettingPickerStyle}"
-                            Focused="ThemePicker_Focused" />
-                    </StackLayout>
-                </StackLayout>
-                <Button  
-                    Text="{x:Static localizedstrings:LocalizedStrings.SaveSettings}"
-                    IsEnabled="{Binding SettingsChanged}"
-                    Command="{Binding SaveSettingsCommand}"
-                    Style="{StaticResource SaveSettingsButtonsStyle}" />
             </StackLayout>
-        </ScrollView>
-    </StackLayout>
+            <StackLayout
+                IsVisible="{Binding StyleSectionIsVisible}"
+                Style="{StaticResource ZoneStackLayoutStyle}">
+                <Label  
+                    Text="{x:Static localizedstrings:LocalizedStrings.Style}"
+                    Style="{StaticResource SectionLabelStyle}" />
+                <StackLayout 
+                    IsVisible="{Binding DeviceSupportsManualDarkMode}"
+                    Style="{StaticResource SectionStackLayoutStyle}">
+                    <Label  
+                        Text="{x:Static localizedstrings:LocalizedStrings.Theme}" 
+                        Style="{StaticResource DescriptionLabelStyle}" />
+                    <Picker  
+                        ItemsSource="{Binding Themes}"
+                        SelectedItem="{Binding SelectedTheme}"
+                        WidthRequest="150"
+                        Style="{StaticResource SettingPickerStyle}"
+                        Focused="ThemePicker_Focused" />
+                </StackLayout>
+            </StackLayout>
+            <Button  
+                Text="{x:Static localizedstrings:LocalizedStrings.SaveSettings}"
+                IsEnabled="{Binding SettingsChanged}"
+                Command="{Binding SaveSettingsCommand}"
+                Style="{StaticResource SaveSettingsButtonsStyle}" />
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
