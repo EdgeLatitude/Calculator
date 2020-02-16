@@ -37,7 +37,7 @@
                     Text="{x:Static localizedstrings:LocalizedStrings.Style}"
                     Style="{StaticResource SectionLabelStyle}" />
                 <StackLayout 
-                    IsVisible="{Binding DeviceSupportsManualDarkMode}"
+                    IsVisible="{Binding DeviceSupportsManualDarkMode, Mode=OneTime}"
                     Style="{StaticResource SectionStackLayoutStyle}">
                     <Label  
                         Text="{x:Static localizedstrings:LocalizedStrings.Theme}" 
@@ -53,7 +53,7 @@
             <Button  
                 Text="{x:Static localizedstrings:LocalizedStrings.SaveSettings}"
                 IsEnabled="{Binding SettingsChanged}"
-                Command="{Binding SaveSettingsCommand}"
+                Command="{Binding SaveSettingsCommand, Mode=OneTime}"
                 Style="{StaticResource SaveSettingsButtonsStyle}" />
         </StackLayout>
     </ScrollView>

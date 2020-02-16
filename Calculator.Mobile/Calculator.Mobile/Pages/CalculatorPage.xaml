@@ -11,7 +11,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem 
             Text="{x:Static localizedstrings:LocalizedStrings.History}"
-            Command="{Binding ShowHistoryCommand}">
+            Command="{Binding ShowHistoryCommand, Mode=OneTime}">
             <ToolbarItem.Order>
                 <OnPlatform x:TypeArguments="ToolbarItemOrder">
                     <On Platform="Android" Value="Primary" />
@@ -21,7 +21,7 @@
         </ToolbarItem>
         <ToolbarItem 
             Text="{x:Static localizedstrings:LocalizedStrings.Settings}"
-            Command="{Binding NavigateToSettingsCommand}">
+            Command="{Binding NavigateToSettingsCommand, Mode=OneTime}">
             <ToolbarItem.Order>
                 <OnPlatform x:TypeArguments="ToolbarItemOrder">
                     <On Platform="Android" Value="Secondary" />
@@ -29,10 +29,6 @@
                 </OnPlatform>
             </ToolbarItem.Order>
         </ToolbarItem>
-        <!--ToolbarItem 
-            Text="{x:Static localizedstrings:LocalizedStrings.About}"
-            Command="{Binding AboutCommand}"
-            Order="Secondary" /!-->
     </ContentPage.ToolbarItems>
     <StackLayout
         Spacing="0">
@@ -92,123 +88,123 @@
             <Button 
                 Text="AC" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding AC_Command}" />
+                Command="{Binding AC_Command, Mode=OneTime}" />
             <Button 
                 Text="⌫" 
                 Grid.Column="1" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding DeleteCommand}" />
+                Command="{Binding DeleteCommand, Mode=OneTime}" />
             <Button 
                 Text="^" 
                 Grid.Column="2"
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding BinaryOperatorCommand}"
+                Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                 CommandParameter="^" />
             <Button 
                 Text="√" 
                 Grid.Column="3" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding UnaryOperatorCommand}"
+                Command="{Binding UnaryOperatorCommand, Mode=OneTime}"
                 CommandParameter="√" />
             <Button 
                 Text="(" 
                 Grid.Row="1" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding ParenthesesCommand}"
+                Command="{Binding ParenthesesCommand, Mode=OneTime}"
                 CommandParameter="(" />
             <Button 
                 Text=")" 
                 Grid.Row="1" 
                 Grid.Column="1" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding ParenthesesCommand}"
+                Command="{Binding ParenthesesCommand, Mode=OneTime}"
                 CommandParameter=")" />
             <Button 
                 Text="{x:Static localizedstrings:LocalizedStrings.LastResultAbbreviation}" 
                 Grid.Row="1" 
                 Grid.Column="2" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding LastResultCommand}" />
+                Command="{Binding LastResultCommand, Mode=OneTime}" />
             <Button 
                 Text="÷" 
                 Grid.Row="1" 
                 Grid.Column="3" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding BinaryOperatorCommand}"
+                Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                 CommandParameter="÷" />
             <Button 
                 Text="7" 
                 Grid.Row="2" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding NumberCommand}"
+                Command="{Binding NumberCommand, Mode=OneTime}"
                 CommandParameter="7" />
             <Button 
                 Text="8" 
                 Grid.Row="2" 
                 Grid.Column="1" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding NumberCommand}"
+                Command="{Binding NumberCommand, Mode=OneTime}"
                 CommandParameter="8" />
             <Button 
                 Text="9" 
                 Grid.Row="2" 
                 Grid.Column="2" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding NumberCommand}"
+                Command="{Binding NumberCommand, Mode=OneTime}"
                 CommandParameter="9" />
             <Button 
                 Text="×" 
                 Grid.Row="2" 
                 Grid.Column="3" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding BinaryOperatorCommand}"
+                Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                 CommandParameter="×" />
             <Button 
                 Text="4" 
                 Grid.Row="3" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding NumberCommand}"
+                Command="{Binding NumberCommand, Mode=OneTime}"
                 CommandParameter="4" />
             <Button 
                 Text="5" 
                 Grid.Row="3" 
                 Grid.Column="1" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding NumberCommand}"
+                Command="{Binding NumberCommand, Mode=OneTime}"
                 CommandParameter="5" />
             <Button 
                 Text="6" 
                 Grid.Row="3" 
                 Grid.Column="2" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding NumberCommand}"
+                Command="{Binding NumberCommand, Mode=OneTime}"
                 CommandParameter="6" />
             <Button 
                 Text="-" 
                 Grid.Row="3" 
                 Grid.Column="3" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding BinaryOperatorCommand}"
+                Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                 CommandParameter="-" />
             <Button 
                 Text="1" 
                 Grid.Row="4" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding NumberCommand}"
+                Command="{Binding NumberCommand, Mode=OneTime}"
                 CommandParameter="1" />
             <Button 
                 Text="2" 
                 Grid.Row="4" 
                 Grid.Column="1" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding NumberCommand}"
+                Command="{Binding NumberCommand, Mode=OneTime}"
                 CommandParameter="2" />
             <Button 
                 Text="3" 
                 Grid.Row="4" 
                 Grid.Column="2" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding NumberCommand}"
+                Command="{Binding NumberCommand, Mode=OneTime}"
                 CommandParameter="3" />
             <Button 
                 Text="+" 
@@ -216,26 +212,26 @@
                 Grid.Column="3" 
                 Grid.RowSpan="2" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding BinaryOperatorCommand}"
+                Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                 CommandParameter="+" />
             <Button 
                 Text="0" 
                 Grid.Row="5" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding NumberCommand}"
+                Command="{Binding NumberCommand, Mode=OneTime}"
                 CommandParameter="0" />
             <Button
                 Text="{Binding DecimalSeparator}"
                 Grid.Row="5" 
                 Grid.Column="1" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding DecimalCommand}" />
+                Command="{Binding DecimalCommand, Mode=OneTime}" />
             <Button 
                 Text="=" 
                 Grid.Row="5" 
                 Grid.Column="2" 
                 Style="{StaticResource InputButtonStyle}"
-                Command="{Binding CalculateCommand}" />
+                Command="{Binding CalculateCommand, Mode=OneTime}" />
         </Grid>
     </StackLayout>
 </ContentPage>
