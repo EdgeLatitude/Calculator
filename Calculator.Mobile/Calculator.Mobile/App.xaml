@@ -36,6 +36,7 @@
             <Setter Property="BackgroundColor"
                     Value="{OnPlatform Android={DynamicResource AndroidPageBackgroundColor},
                                        iOS={DynamicResource iOSPageBackgroundColor}}" />
+            <Setter Property="ios:Page.UseSafeArea" Value="True" />
         </Style>
         <Style TargetType="Entry">
             <Setter Property="BackgroundColor"
