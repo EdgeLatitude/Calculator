@@ -61,6 +61,10 @@
                     Value="{OnPlatform Android=Material,
                                        iOS=Default}" />
         </Style>
+        <Style TargetType="Grid">
+            <Setter Property="ColumnSpacing" Value="0" />
+            <Setter Property="RowSpacing" Value="0" />
+        </Style>
         <Style TargetType="Label">
             <Setter Property="TextColor"
                     Value="{OnPlatform Android={DynamicResource AndroidTextColor},
