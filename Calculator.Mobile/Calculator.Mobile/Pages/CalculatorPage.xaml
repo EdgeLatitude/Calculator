@@ -30,7 +30,11 @@
             </ToolbarItem.Order>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
-    <StackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <StackLayout
             Style="{StaticResource InputParentStackLayoutStyle}">
             <BoxView
@@ -65,6 +69,7 @@
                 Style="{StaticResource InputSeparatorStyle}" />
         </StackLayout>
         <ScrollView
+            Grid.Row="1"
             Style="{StaticResource KeypadScrollViewStyle}">
             <Grid 
                 Style="{StaticResource KeypadGridStyle}">
@@ -231,5 +236,5 @@
                     Command="{Binding CalculateCommand, Mode=OneTime}" />
             </Grid>
         </ScrollView>
-    </StackLayout>
+    </Grid>
 </ContentPage>
