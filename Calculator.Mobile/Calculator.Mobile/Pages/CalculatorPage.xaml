@@ -11,7 +11,8 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem 
             Text="{x:Static localizedstrings:LocalizedStrings.History}"
-            Command="{Binding ShowHistoryCommand, Mode=OneTime}">
+            Command="{Binding ShowHistoryCommand, Mode=OneTime}"
+            Priority="0">
             <ToolbarItem.Order>
                 <OnPlatform x:TypeArguments="ToolbarItemOrder">
                     <On Platform="Android" Value="Primary" />
@@ -28,6 +29,28 @@
                     <On Platform="iOS" Value="Primary" />
                 </OnPlatform>
             </ToolbarItem.Order>
+            <ToolbarItem.Priority>
+                <OnPlatform x:TypeArguments="x:Int32">
+                    <On Platform="Android" Value="1" />
+                    <On Platform="iOS" Value="2" />
+                </OnPlatform>
+            </ToolbarItem.Priority>
+        </ToolbarItem>
+        <ToolbarItem 
+            Text="{x:Static localizedstrings:LocalizedStrings.About}"
+            Command="{Binding ShowAboutCommand, Mode=OneTime}">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Secondary" />
+                    <On Platform="iOS" Value="Primary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+            <ToolbarItem.Priority>
+                <OnPlatform x:TypeArguments="x:Int32">
+                    <On Platform="Android" Value="2" />
+                    <On Platform="iOS" Value="1" />
+                </OnPlatform>
+            </ToolbarItem.Priority>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <Grid>

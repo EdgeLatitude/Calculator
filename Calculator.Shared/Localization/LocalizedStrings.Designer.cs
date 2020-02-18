@@ -70,6 +70,24 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a App icon designed by Freepik from www.flaticon.com.
+        /// </summary>
+        public static string AppIconAttribution {
+            get {
+                return ResourceManager.GetString("AppIconAttribution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a App version:.
+        /// </summary>
+        public static string AppVersion {
+            get {
+                return ResourceManager.GetString("AppVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Calculation error.
         /// </summary>
         public static string CalculationError {

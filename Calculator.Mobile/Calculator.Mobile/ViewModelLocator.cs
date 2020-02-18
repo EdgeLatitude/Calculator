@@ -25,6 +25,7 @@ namespace Calculator.Mobile
             { typeof(AlertsService), typeof(IAlertsService) },
             { typeof(CommandFactoryService), typeof(ICommandFactoryService) },
             { typeof(NavigationService), typeof(INavigationService) },
+            { typeof(PlatformInformationService), typeof(IPlatformInformationService) },
             { typeof(SettingsService), typeof(ISettingsService) },
             { typeof(ThemingService), typeof(IThemingService) },
             { typeof(UiThreadService), typeof(IUiThreadService) }

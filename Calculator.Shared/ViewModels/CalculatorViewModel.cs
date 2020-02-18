@@ -3,6 +3,7 @@ using Calculator.Shared.Localization;
 using Calculator.Shared.Logic;
 using Calculator.Shared.Models.Enums;
 using Calculator.Shared.PlatformServices;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,6 +15,7 @@ namespace Calculator.Shared.ViewModels
         private readonly IAlertsService _alertsService;
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly INavigationService _navigationService;
+        private readonly IPlatformInformationService _platformInformationService;
 
         private readonly Dictionary<char, decimal> _variableStorageValues
             = new Dictionary<char, decimal>();
@@ -25,11 +27,13 @@ namespace Calculator.Shared.ViewModels
         public CalculatorViewModel(
             IAlertsService alertsService,
             ICommandFactoryService commandFactoryService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            IPlatformInformationService platformInformationService)
         {
             _alertsService = alertsService;
             _commandFactoryService = commandFactoryService;
             _navigationService = navigationService;
+            _platformInformationService = platformInformationService;
 
             AC_Command = _commandFactoryService.Create(() => AC());
             DeleteCommand = _commandFactoryService.Create(() => Delete());
@@ -42,6 +46,7 @@ namespace Calculator.Shared.ViewModels
             CalculateCommand = _commandFactoryService.Create(() => Calculate());
             ShowHistoryCommand = _commandFactoryService.Create(() => ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
+            ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
         }
 
         private string _input = string.Empty;
@@ -89,6 +94,8 @@ namespace Calculator.Shared.ViewModels
         public ICommand ShowHistoryCommand { get; private set; }
 
         public ICommand NavigateToSettingsCommand { get; private set; }
+
+        public ICommand ShowAboutCommand { get; private set; }
 
         private void AC()
         {
@@ -301,5 +308,17 @@ namespace Calculator.Shared.ViewModels
 
         private async Task NavigateToSettingsAsync() =>
             await _navigationService.NavigateToAsync(Locations.SettingsPage);
+
+        private async Task ShowAbout() =>
+            await _alertsService.DisplayAlertAsync(
+                LocalizedStrings.About,
+                (_platformInformationService.PlatformSupportsGettingApplicationVersion() ?
+                    LocalizedStrings.AppVersion
+                        + Environment.NewLine
+                        + _platformInformationService.GetApplicationVersion()
+                        + Environment.NewLine
+                        + Environment.NewLine :
+                    string.Empty)
+                + LocalizedStrings.AppIconAttribution);
     }
 }

@@ -164,4 +164,10 @@
   <data name="Dark" xml:space="preserve">
     <value>Oscuro</value>
   </data>
+  <data name="AppVersion" xml:space="preserve">
+    <value>Versión de la aplicación:</value>
+  </data>
+  <data name="AppIconAttribution" xml:space="preserve">
+    <value>Ícono de la aplicación diseñado por Freepik de www.flaticon.es</value>
+  </data>
 </root>

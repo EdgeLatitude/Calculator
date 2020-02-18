@@ -164,4 +164,10 @@
   <data name="Dark" xml:space="preserve">
     <value>Dark</value>
   </data>
+  <data name="AppVersion" xml:space="preserve">
+    <value>App version:</value>
+  </data>
+  <data name="AppIconAttribution" xml:space="preserve">
+    <value>App icon designed by Freepik from www.flaticon.com</value>
+  </data>
 </root>
