@@ -136,7 +136,7 @@
       <Name>Calculator.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\Calculator.Mobile\Calculator.Mobile.csproj">
-      <Project>{258A1592-CC9E-4A97-B44F-9823E90896C1}</Project>
+      <Project>{00935AEB-A7D2-4375-9D72-3E28BDC1A7F9}</Project>
       <Name>Calculator.Mobile</Name>
     </ProjectReference>
   </ItemGroup>
@@ -148,5 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Icon%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
 </Project>
