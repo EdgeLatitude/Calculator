@@ -85,7 +85,7 @@ namespace Calculator.Shared.ViewModels
         public bool DeviceSupportsManualDarkMode
         {
             get => _deviceSupportManualDarkMode;
-            set
+            private set
             {
                 if (_deviceSupportManualDarkMode == value)
                     return;
@@ -100,7 +100,7 @@ namespace Calculator.Shared.ViewModels
         public string[] Themes
         {
             get => _themes;
-            set
+            private set
             {
                 if (_themes == value)
                     return;
@@ -129,7 +129,7 @@ namespace Calculator.Shared.ViewModels
         public bool SettingsChanged
         {
             get => _settingsChanged;
-            set
+            private set
             {
                 value &= _loaded;
                 if (_settingsChanged == value)
@@ -140,10 +140,7 @@ namespace Calculator.Shared.ViewModels
             }
         }
 
-        public bool StyleSectionIsVisible
-        {
-            get => DeviceSupportsManualDarkMode;
-        }
+        public bool StyleSectionIsVisible => DeviceSupportsManualDarkMode;
 
         public ICommand SaveSettingsCommand { get; private set; }
 

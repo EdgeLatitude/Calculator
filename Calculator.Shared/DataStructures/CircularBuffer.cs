@@ -21,15 +21,9 @@ namespace Calculator.Shared.DataStructures
                 Write(item);
         }
 
-        public bool IsEmpty
-        {
-            get => Queue.Count == 0;
-        }
+        public bool IsEmpty => Queue.Count == 0;
 
-        public bool IsFull
-        {
-            get => Queue.Count == Capacity;
-        }
+        public bool IsFull => Queue.Count == Capacity;
 
         public void Write(T value)
         {

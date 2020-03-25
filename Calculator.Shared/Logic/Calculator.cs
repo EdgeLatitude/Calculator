@@ -510,34 +510,22 @@ namespace Calculator.Shared.Logic
                 return new CalculationResult(LocalizedStrings.CalculationError);
         }
 
-        private static Operand EvaluateUnary(Operand operand, Operator operatorX)
-        {
-            switch (operatorX.TerminalSymbol)
+        private static Operand EvaluateUnary(Operand operand, Operator operatorX) =>
+            operatorX.TerminalSymbol switch
             {
-                case TerminalSymbol.SquareRootOperator:
-                    return new Operand(DecimalEx.Sqrt(operand.Value));
-                default:
-                    throw new Exception(LocalizedStrings.UnexpectedError);
-            }
-        }
+                TerminalSymbol.SquareRootOperator => new Operand(DecimalEx.Sqrt(operand.Value)),
+                _ => throw new Exception(LocalizedStrings.UnexpectedError),
+            };
 
-        private static Operand EvaluateBinary(Operand rightOperand, Operand leftOperand, Operator operatorX)
-        {
-            switch (operatorX.TerminalSymbol)
+        private static Operand EvaluateBinary(Operand rightOperand, Operand leftOperand, Operator operatorX) =>
+            operatorX.TerminalSymbol switch
             {
-                case TerminalSymbol.AdditionOperator:
-                    return new Operand(decimal.Add(leftOperand.Value, rightOperand.Value));
-                case TerminalSymbol.SubstractionOperator:
-                    return new Operand(decimal.Subtract(leftOperand.Value, rightOperand.Value));
-                case TerminalSymbol.MultiplicationOperator:
-                    return new Operand(decimal.Multiply(leftOperand.Value, rightOperand.Value));
-                case TerminalSymbol.DivisionOperator:
-                    return new Operand(decimal.Divide(leftOperand.Value, rightOperand.Value));
-                case TerminalSymbol.PotentiationOperator:
-                    return new Operand(DecimalEx.Pow(leftOperand.Value, rightOperand.Value));
-                default:
-                    throw new Exception(LocalizedStrings.UnexpectedError);
-            }
-        }
+                TerminalSymbol.AdditionOperator => new Operand(decimal.Add(leftOperand.Value, rightOperand.Value)),
+                TerminalSymbol.SubstractionOperator => new Operand(decimal.Subtract(leftOperand.Value, rightOperand.Value)),
+                TerminalSymbol.MultiplicationOperator => new Operand(decimal.Multiply(leftOperand.Value, rightOperand.Value)),
+                TerminalSymbol.DivisionOperator => new Operand(decimal.Divide(leftOperand.Value, rightOperand.Value)),
+                TerminalSymbol.PotentiationOperator => new Operand(DecimalEx.Pow(leftOperand.Value, rightOperand.Value)),
+                _ => throw new Exception(LocalizedStrings.UnexpectedError),
+            };
     }
 }
