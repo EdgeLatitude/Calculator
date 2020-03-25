@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.V7.App;
+using AndroidX.AppCompat.App;
 using System.Threading.Tasks;
 
 namespace Calculator.Mobile.Droid
@@ -23,11 +23,9 @@ namespace Calculator.Mobile.Droid
                 return;
             new Task(() =>
             {
-                using (var mainActivityIntent = new Intent(Application.Context, typeof(MainActivity)))
-                {
-                    mainActivityIntent.AddFlags(ActivityFlags.NoAnimation);
-                    StartActivity(mainActivityIntent);
-                }
+                using var mainActivityIntent = new Intent(Application.Context, typeof(MainActivity));
+                mainActivityIntent.AddFlags(ActivityFlags.NoAnimation);
+                StartActivity(mainActivityIntent);
             }).Start();
             _mainActivityCreationStarted = true;
         }
