@@ -113,7 +113,7 @@
                 <Button 
                     Text="AC" 
                     Style="{StaticResource InputButtonStyle}"
-                    Command="{Binding AC_Command, Mode=OneTime}" />
+                    Command="{Binding AllClear_Command, Mode=OneTime}" />
                 <Button 
                     Text="⌫" 
                     Grid.Column="1" 

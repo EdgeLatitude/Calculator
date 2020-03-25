@@ -35,16 +35,17 @@ namespace Calculator.Shared.ViewModels
             _navigationService = navigationService;
             _platformInformationService = platformInformationService;
 
-            AC_Command = _commandFactoryService.Create(() => AC());
-            DeleteCommand = _commandFactoryService.Create(() => Delete());
+            AllClear_Command = _commandFactoryService.Create(AllClear);
+            Clear_Command = _commandFactoryService.Create(Clear);
+            DeleteCommand = _commandFactoryService.Create(Delete);
             BinaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => BinaryOperator(symbol));
             UnaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => UnaryOperator(symbol));
             ParenthesesCommand = _commandFactoryService.Create<string>((parentheses) => Parentheses(parentheses));
-            LastResultCommand = _commandFactoryService.Create(() => LastResult());
+            LastResultCommand = _commandFactoryService.Create(LastResult);
             NumberCommand = _commandFactoryService.Create<string>((number) => Number(number));
-            DecimalCommand = _commandFactoryService.Create(() => Decimal());
-            CalculateCommand = _commandFactoryService.Create(() => Calculate());
-            ShowHistoryCommand = _commandFactoryService.Create(() => ShowHistory());
+            DecimalCommand = _commandFactoryService.Create(Decimal);
+            CalculateCommand = _commandFactoryService.Create(Calculate);
+            ShowHistoryCommand = _commandFactoryService.Create(ShowHistory);
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
         }
@@ -66,14 +67,13 @@ namespace Calculator.Shared.ViewModels
             }
         }
 
-        public string DecimalSeparator
-        {
-            get => Logic.Calculator.DecimalSeparator;
-        }
+        public string DecimalSeparator => Logic.Calculator.DecimalSeparator;
 
         public bool AfterResult { get; private set; }
 
-        public ICommand AC_Command { get; private set; }
+        public ICommand AllClear_Command { get; private set; }
+
+        public ICommand Clear_Command { get; private set; }
 
         public ICommand DeleteCommand { get; private set; }
 
@@ -97,12 +97,18 @@ namespace Calculator.Shared.ViewModels
 
         public ICommand ShowAboutCommand { get; private set; }
 
-        private void AC()
+        private void AllClear()
         {
             // Clear user input and memory values
-            Input = string.Empty;
+            Clear();
             _nextStroke = NextInput.DoNothing;
             _variableStorageValues.Clear();
+        }
+
+        private void Clear()
+        {
+            // Clear user input
+            Input = string.Empty;
         }
 
         private void Delete()
