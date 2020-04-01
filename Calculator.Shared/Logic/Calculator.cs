@@ -213,11 +213,8 @@ namespace Calculator.Shared.Logic
             foreach (var lexeme in lexemes)
             {
                 var lexemeResult = AnalyzeLexeme(lexeme);
-                if (lexemeResult != null)
-                    if (lexemeResult.Successful)
-                        terminalSymbols.Add(lexemeResult.TerminalSymbol);
-                    else
-                        return null;
+                if (lexemeResult?.Successful == true)
+                    terminalSymbols.Add(lexemeResult.TerminalSymbol);
                 else
                     return null;
             }
