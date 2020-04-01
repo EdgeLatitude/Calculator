@@ -101,7 +101,6 @@ namespace Calculator.Shared.ViewModels
         {
             // Clear user input and memory values
             Clear();
-            _nextStroke = NextInput.DoNothing;
             _variableStorageValues.Clear();
         }
 
@@ -109,6 +108,7 @@ namespace Calculator.Shared.ViewModels
         {
             // Clear user input
             Input = string.Empty;
+            _nextStroke = NextInput.DoNothing;
         }
 
         private void Delete()
