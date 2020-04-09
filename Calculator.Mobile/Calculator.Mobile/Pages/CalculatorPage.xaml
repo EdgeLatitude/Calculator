@@ -84,7 +84,12 @@
                             x:Name="InputLabel"
                             Text="{Binding Input}" 
                             Style="{StaticResource InputLabelStyle}"
-                            PropertyChanged="InputLabel_PropertyChanged" />
+                            PropertyChanged="InputLabel_PropertyChanged">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding CopyToClipboardCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
                     </Grid>
                 </ScrollView>
             </Frame>
@@ -113,7 +118,7 @@
                 <Button 
                     Text="AC" 
                     Style="{StaticResource InputButtonStyle}"
-                    Command="{Binding AllClear_Command, Mode=OneTime}" />
+                    Command="{Binding AllClearCommand, Mode=OneTime}" />
                 <Button 
                     Text="⌫" 
                     Grid.Column="1" 

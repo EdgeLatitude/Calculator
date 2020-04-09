@@ -13,6 +13,7 @@ namespace Calculator.Shared.ViewModels
     public class CalculatorViewModel : BaseViewModel
     {
         private readonly IAlertsService _alertsService;
+        private readonly IClipboardService _clipboardService;
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly INavigationService _navigationService;
         private readonly IPlatformInformationService _platformInformationService;
@@ -26,17 +27,19 @@ namespace Calculator.Shared.ViewModels
 
         public CalculatorViewModel(
             IAlertsService alertsService,
+            IClipboardService clipboardService,
             ICommandFactoryService commandFactoryService,
             INavigationService navigationService,
             IPlatformInformationService platformInformationService)
         {
             _alertsService = alertsService;
+            _clipboardService = clipboardService;
             _commandFactoryService = commandFactoryService;
             _navigationService = navigationService;
             _platformInformationService = platformInformationService;
 
-            AllClear_Command = _commandFactoryService.Create(AllClear);
-            Clear_Command = _commandFactoryService.Create(Clear);
+            AllClearCommand = _commandFactoryService.Create(AllClear);
+            ClearCommand = _commandFactoryService.Create(Clear);
             DeleteCommand = _commandFactoryService.Create(Delete);
             BinaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => BinaryOperator(symbol));
             UnaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => UnaryOperator(symbol));
@@ -45,6 +48,7 @@ namespace Calculator.Shared.ViewModels
             NumberCommand = _commandFactoryService.Create<string>((number) => Number(number));
             DecimalCommand = _commandFactoryService.Create(Decimal);
             CalculateCommand = _commandFactoryService.Create(Calculate);
+            CopyToClipboardCommand = _commandFactoryService.Create(CopyToClipboard);
             ShowHistoryCommand = _commandFactoryService.Create(ShowHistory);
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
@@ -71,9 +75,9 @@ namespace Calculator.Shared.ViewModels
 
         public bool AfterResult { get; private set; }
 
-        public ICommand AllClear_Command { get; private set; }
+        public ICommand AllClearCommand { get; private set; }
 
-        public ICommand Clear_Command { get; private set; }
+        public ICommand ClearCommand { get; private set; }
 
         public ICommand DeleteCommand { get; private set; }
 
@@ -90,6 +94,8 @@ namespace Calculator.Shared.ViewModels
         public ICommand DecimalCommand { get; private set; }
 
         public ICommand CalculateCommand { get; private set; }
+
+        public ICommand CopyToClipboardCommand { get; private set; }
 
         public ICommand ShowHistoryCommand { get; private set; }
 
@@ -273,6 +279,9 @@ namespace Calculator.Shared.ViewModels
                 resultText = resultText.Substring(0, resultText.Length - 1);
             return true;
         }
+
+        private async void CopyToClipboard() =>
+            await _clipboardService.SetTextAsync(Input);
 
         private async void ShowHistory()
         {

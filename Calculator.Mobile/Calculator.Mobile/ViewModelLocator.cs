@@ -23,6 +23,7 @@ namespace Calculator.Mobile
         private readonly Dictionary<Type, Type> _implementationInterfaceDictionary = new Dictionary<Type, Type>
         {
             { typeof(AlertsService), typeof(IAlertsService) },
+            { typeof(ClipboardService), typeof(IClipboardService) },
             { typeof(CommandFactoryService), typeof(ICommandFactoryService) },
             { typeof(NavigationService), typeof(INavigationService) },
             { typeof(PlatformInformationService), typeof(IPlatformInformationService) },
