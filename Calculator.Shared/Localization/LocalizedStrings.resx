@@ -173,4 +173,7 @@
   <data name="InputCopiedToClipboard" xml:space="preserve">
     <value>Input copied to clipboard</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
 </root>

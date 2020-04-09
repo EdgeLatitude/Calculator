@@ -1,4 +1,5 @@
-﻿using Calculator.Shared.ViewModels;
+﻿using Calculator.Mobile.Controls;
+using Calculator.Shared.ViewModels;
 using System;
 using System.ComponentModel;
 using Xamarin.Forms;
@@ -7,7 +8,7 @@ using Xamarin.Forms.Xaml;
 namespace Calculator.Mobile.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CalculatorPage : ContentPage
+    public partial class CalculatorPage : KeyboardPage
     {
         private readonly CalculatorViewModel _viewModel;
 
@@ -21,6 +22,22 @@ namespace Calculator.Mobile.Pages
             BindingContext = _viewModel;
         }
 
+        public override void OnKeyUp(string character)
+        {
+            _viewModel.Input += character;
+        }
+
+        public override void OnKeyCommand(KeyCommand command)
+        {
+            switch (command)
+            {
+                case KeyCommand.Copy:
+                    _viewModel.CopyInputToClipboardCommand.Execute(null);
+                    CopyInputToClipboardAnimation();
+                    break;
+            }
+        }
+
         private async void InputLabel_PropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName != nameof(Width))
@@ -29,7 +46,10 @@ namespace Calculator.Mobile.Pages
             await InputScrollView.ScrollToAsync(InputLabel, _viewModel.AfterResult ? ScrollToPosition.Start : ScrollToPosition.End, false);
         }
 
-        private void InputLabel_Tapped(object sender, EventArgs args)
+        private void InputLabel_Tapped(object sender, EventArgs args) =>
+            CopyInputToClipboardAnimation();
+
+        private void CopyInputToClipboardAnimation()
         {
             if (!_inputCopiedToClipboardToastIsVisible)
             {

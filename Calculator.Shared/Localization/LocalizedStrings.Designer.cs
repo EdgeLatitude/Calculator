@@ -115,6 +115,15 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Copy.
+        /// </summary>
+        public static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Dark.
         /// </summary>
         public static string Dark {

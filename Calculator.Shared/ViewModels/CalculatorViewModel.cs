@@ -48,7 +48,7 @@ namespace Calculator.Shared.ViewModels
             NumberCommand = _commandFactoryService.Create<string>((number) => Number(number));
             DecimalCommand = _commandFactoryService.Create(Decimal);
             CalculateCommand = _commandFactoryService.Create(Calculate);
-            CopyToClipboardCommand = _commandFactoryService.Create(CopyToClipboard);
+            CopyInputToClipboardCommand = _commandFactoryService.Create(CopyInputToClipboard);
             ShowHistoryCommand = _commandFactoryService.Create(ShowHistory);
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
@@ -95,7 +95,7 @@ namespace Calculator.Shared.ViewModels
 
         public ICommand CalculateCommand { get; private set; }
 
-        public ICommand CopyToClipboardCommand { get; private set; }
+        public ICommand CopyInputToClipboardCommand { get; private set; }
 
         public ICommand ShowHistoryCommand { get; private set; }
 
@@ -280,7 +280,7 @@ namespace Calculator.Shared.ViewModels
             return true;
         }
 
-        private async void CopyToClipboard() =>
+        private async void CopyInputToClipboard() =>
             await _clipboardService.SetTextAsync(Input);
 
         private async void ShowHistory()

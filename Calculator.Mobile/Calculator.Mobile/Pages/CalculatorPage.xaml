@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:localizedstrings="clr-namespace:Calculator.Shared.Localization;assembly=Calculator.Shared"
-             xmlns:viewmodels="clr-namespace:Calculator.Shared.ViewModels;assembly=Calculator.Shared"
-             mc:Ignorable="d"
-             x:DataType="viewmodels:CalculatorViewModel"
-             x:Class="Calculator.Mobile.Pages.CalculatorPage">
-    <ContentPage.ToolbarItems>
+<controls:KeyboardPage xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                       xmlns:controls="clr-namespace:Calculator.Mobile.Controls"
+                       xmlns:localizedstrings="clr-namespace:Calculator.Shared.Localization;assembly=Calculator.Shared"
+                       xmlns:viewmodels="clr-namespace:Calculator.Shared.ViewModels;assembly=Calculator.Shared"
+                       mc:Ignorable="d"
+                       x:DataType="viewmodels:CalculatorViewModel"
+                       x:Class="Calculator.Mobile.Pages.CalculatorPage">
+    <controls:KeyboardPage.ToolbarItems>
         <ToolbarItem 
             Text="{x:Static localizedstrings:LocalizedStrings.History}"
             Command="{Binding ShowHistoryCommand, Mode=OneTime}"
@@ -52,7 +53,7 @@
                 </OnPlatform>
             </ToolbarItem.Priority>
         </ToolbarItem>
-    </ContentPage.ToolbarItems>
+    </controls:KeyboardPage.ToolbarItems>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -87,7 +88,7 @@
                             PropertyChanged="InputLabel_PropertyChanged">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer
-                                    Command="{Binding CopyToClipboardCommand}"
+                                    Command="{Binding CopyInputToClipboardCommand}"
                                     Tapped="InputLabel_Tapped" />
                             </Label.GestureRecognizers>
                         </Label>
@@ -274,4 +275,4 @@
                 Style="{StaticResource ToastLabelStyle}" />
         </Frame>
     </Grid>
-</ContentPage>
+</controls:KeyboardPage>

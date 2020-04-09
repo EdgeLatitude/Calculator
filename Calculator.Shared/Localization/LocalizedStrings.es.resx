@@ -173,4 +173,7 @@
   <data name="InputCopiedToClipboard" xml:space="preserve">
     <value>Entrada copiada al portapapeles</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
 </root>

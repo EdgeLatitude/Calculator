@@ -63,6 +63,7 @@
     <MtouchUseLlvm>true</MtouchUseLlvm>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
@@ -154,4 +155,5 @@
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
+  <ItemGroup />
 </Project>
