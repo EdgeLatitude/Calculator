@@ -173,6 +173,25 @@
             <Setter Property="HorizontalOptions" Value="EndAndExpand" />
             <Setter Property="VerticalOptions" Value="CenterAndExpand" />
         </Style>
+        <Style x:Key="ToastFrameStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidTextColor},
+                                       iOS={DynamicResource iOSTextColor}}" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="InputTransparent" Value="True" />
+            <Setter Property="Margin" Value="0,5,0,15" />
+            <Setter Property="Opacity" Value="0.75" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="VerticalOptions" Value="End" />
+        </Style>
+        <Style x:Key="ToastLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="MaxLines" Value="1" />
+            <Setter Property="TextColor"
+                    Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
+                                       iOS={DynamicResource iOSFieldBackgroundColor}}" />
+        </Style>
         <Style x:Key="ZoneStackLayoutStyle" TargetType="StackLayout">
             <Setter Property="HorizontalOptions" Value="FillAndExpand" />
             <Setter Property="Spacing" Value="5" />

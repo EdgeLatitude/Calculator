@@ -170,4 +170,7 @@
   <data name="AppIconAttribution" xml:space="preserve">
     <value>Ícono de la aplicación diseñado por Freepik de www.flaticon.es</value>
   </data>
+  <data name="InputCopiedToClipboard" xml:space="preserve">
+    <value>Entrada copiada al portapapeles</value>
+  </data>
 </root>

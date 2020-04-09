@@ -264,5 +264,12 @@
                     Command="{Binding CalculateCommand, Mode=OneTime}" />
             </Grid>
         </ScrollView>
+        <Frame
+            Grid.Row="1"
+            Style="{StaticResource ToastFrameStyle}">
+            <Label
+                Text="{x:Static localizedstrings:LocalizedStrings.InputCopiedToClipboard}"
+                Style="{StaticResource ToastLabelStyle}" />
+        </Frame>
     </Grid>
 </ContentPage>

@@ -169,6 +169,15 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Input copied to clipboard.
+        /// </summary>
+        public static string InputCopiedToClipboard {
+            get {
+                return ResourceManager.GetString("InputCopiedToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ANS.
         /// </summary>
         public static string LastResultAbbreviation {

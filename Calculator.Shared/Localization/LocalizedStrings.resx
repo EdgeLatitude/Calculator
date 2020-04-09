@@ -170,4 +170,7 @@
   <data name="AppIconAttribution" xml:space="preserve">
     <value>App icon designed by Freepik from www.flaticon.com</value>
   </data>
+  <data name="InputCopiedToClipboard" xml:space="preserve">
+    <value>Input copied to clipboard</value>
+  </data>
 </root>
