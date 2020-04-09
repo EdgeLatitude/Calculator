@@ -87,7 +87,8 @@
                             PropertyChanged="InputLabel_PropertyChanged">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer
-                                    Command="{Binding CopyToClipboardCommand}" />
+                                    Command="{Binding CopyToClipboardCommand}"
+                                    Tapped="InputLabel_Tapped" />
                             </Label.GestureRecognizers>
                         </Label>
                     </Grid>
@@ -265,6 +266,7 @@
             </Grid>
         </ScrollView>
         <Frame
+            x:Name="InputCopiedToClipboardToast"
             Grid.Row="1"
             Style="{StaticResource ToastFrameStyle}">
             <Label
