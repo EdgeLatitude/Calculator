@@ -1,4 +1,5 @@
-﻿using Calculator.Shared.Localization;
+﻿using Calculator.Shared.Constants;
+using Calculator.Shared.Localization;
 using Calculator.Shared.Models.Enums;
 using Calculator.Shared.Models.MathObjects;
 using Calculator.Shared.Models.Results;
@@ -37,13 +38,13 @@ namespace Calculator.Shared.Logic
         public static readonly char[] VariableStorageCharacters
             = new char[] { LastResult }; // 1 terminal symbol for each
         private static readonly char[] Parentheses
-            = new char[] { '(', ')' }; // 1 terminal symbol for each
+            = new char[] { LexicalSymbols.OpeningParenthesis, LexicalSymbols.ClosingParenthesis }; // 1 terminal symbol for each
         private static readonly char[] BinaryOperators
-            = new char[] { '+', '-', '×', '÷', '^' }; // 1 terminal symbol for each
+            = new char[] { LexicalSymbols.AdditionOperator, LexicalSymbols.SubstractionOperator, LexicalSymbols.MultiplicationOperator, LexicalSymbols.DivisionOperator, LexicalSymbols.PotentiationOperator }; // 1 terminal symbol for each
         private static readonly char[] UnaryOperators
-            = new char[] { '√' }; // 1 terminal symbol for each
+            = new char[] { LexicalSymbols.SquareRootOperator }; // 1 terminal symbol for each
         private static readonly char[] Numbers
-            = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }; // 1 terminal symbol for a complete real number
+            = new char[] { LexicalSymbols.Zero, LexicalSymbols.One, LexicalSymbols.Two, LexicalSymbols.Three, LexicalSymbols.Four, LexicalSymbols.Five, LexicalSymbols.Six, LexicalSymbols.Seven, LexicalSymbols.Eight, LexicalSymbols.Nine }; // 1 terminal symbol for a complete real number
 
         // Separators array to be filled with some lexical collections
         private static readonly char[] Separators;
@@ -65,8 +66,8 @@ namespace Calculator.Shared.Logic
         {
             { TerminalSymbol.None, TerminalSymbolGroup.None },
             { TerminalSymbol.LastResult, TerminalSymbolGroup.VariableStorageCharacters },
-            { TerminalSymbol.OpeningParentheses, TerminalSymbolGroup.Parentheses },
-            { TerminalSymbol.ClosingParentheses, TerminalSymbolGroup.Parentheses },
+            { TerminalSymbol.OpeningParenthesis, TerminalSymbolGroup.Parentheses },
+            { TerminalSymbol.ClosingParenthesis, TerminalSymbolGroup.Parentheses },
             { TerminalSymbol.AdditionOperator, TerminalSymbolGroup.BinaryOperators },
             { TerminalSymbol.SubstractionOperator, TerminalSymbolGroup.BinaryOperators },
             { TerminalSymbol.MultiplicationOperator, TerminalSymbolGroup.BinaryOperators },
@@ -86,7 +87,7 @@ namespace Calculator.Shared.Logic
                 {
                     new Enum[] { NonTerminalSymbol.Operand, NonTerminalSymbol.BinaryOperator },
                     new Enum[] { TerminalSymbolGroup.UnaryOperators, NonTerminalSymbol.Expression },
-                    new Enum[] { TerminalSymbol.OpeningParentheses, NonTerminalSymbol.Expression, TerminalSymbol.ClosingParentheses, NonTerminalSymbol.BinaryOperator }
+                    new Enum[] { TerminalSymbol.OpeningParenthesis, NonTerminalSymbol.Expression, TerminalSymbol.ClosingParenthesis, NonTerminalSymbol.BinaryOperator }
                 }},
             { NonTerminalSymbol.Operand, new Enum[][]
                 {
@@ -123,8 +124,8 @@ namespace Calculator.Shared.Logic
         private static readonly Enum[] PredictiveTableColumns = new Enum[]
         {
             TerminalSymbolGroup.VariableStorageCharacters,
-            TerminalSymbol.OpeningParentheses,
-            TerminalSymbol.ClosingParentheses,
+            TerminalSymbol.OpeningParenthesis,
+            TerminalSymbol.ClosingParenthesis,
             TerminalSymbolGroup.BinaryOperators,
             TerminalSymbolGroup.UnaryOperators,
             TerminalSymbol.RealNumber,
@@ -140,15 +141,15 @@ namespace Calculator.Shared.Logic
         private static readonly Dictionary<TerminalSymbol, Operator> Operators
             = new Dictionary<TerminalSymbol, Operator>
         {
-            { TerminalSymbol.OpeningParentheses, new Operator(TerminalSymbol.OpeningParentheses, 0, '(') },
-            { TerminalSymbol.ClosingParentheses, new Operator(TerminalSymbol.ClosingParentheses, 0, ')') },
-            { TerminalSymbol.AdditionOperator, new Operator(TerminalSymbol.AdditionOperator, 1, '+', false, false) },
-            { TerminalSymbol.SubstractionOperator, new Operator(TerminalSymbol.SubstractionOperator, 1, '-', false, false) },
-            { TerminalSymbol.MultiplicationOperator, new Operator(TerminalSymbol.MultiplicationOperator, 2, '×', false, false) },
-            { TerminalSymbol.DivisionOperator, new Operator(TerminalSymbol.DivisionOperator, 2, '÷', false, false) },
-            { TerminalSymbol.PotentiationOperator, new Operator(TerminalSymbol.PotentiationOperator, 3, '^', false, false) },
-            { TerminalSymbol.SquareRootOperator, new Operator(TerminalSymbol.SquareRootOperator, 3, '√', false, true) },
-            { TerminalSymbol.OperandNegatorOperator, new Operator(TerminalSymbol.MultiplicationOperator, int.MaxValue, '×', false, false) }
+            { TerminalSymbol.OpeningParenthesis, new Operator(TerminalSymbol.OpeningParenthesis, 0, LexicalSymbols.OpeningParenthesis) },
+            { TerminalSymbol.ClosingParenthesis, new Operator(TerminalSymbol.ClosingParenthesis, 0, LexicalSymbols.ClosingParenthesis) },
+            { TerminalSymbol.AdditionOperator, new Operator(TerminalSymbol.AdditionOperator, 1, LexicalSymbols.AdditionOperator, false, false) },
+            { TerminalSymbol.SubstractionOperator, new Operator(TerminalSymbol.SubstractionOperator, 1, LexicalSymbols.SubstractionOperator, false, false) },
+            { TerminalSymbol.MultiplicationOperator, new Operator(TerminalSymbol.MultiplicationOperator, 2, LexicalSymbols.MultiplicationOperator, false, false) },
+            { TerminalSymbol.DivisionOperator, new Operator(TerminalSymbol.DivisionOperator, 2, LexicalSymbols.DivisionOperator, false, false) },
+            { TerminalSymbol.PotentiationOperator, new Operator(TerminalSymbol.PotentiationOperator, 3, LexicalSymbols.PotentiationOperator, false, false) },
+            { TerminalSymbol.SquareRootOperator, new Operator(TerminalSymbol.SquareRootOperator, 3, LexicalSymbols.SquareRootOperator, false, true) },
+            { TerminalSymbol.OperandNegatorOperator, new Operator(TerminalSymbol.MultiplicationOperator, int.MaxValue, LexicalSymbols.MultiplicationOperator, false, false) }
         };
         #endregion
 
@@ -307,12 +308,12 @@ namespace Calculator.Shared.Logic
             var terminalSymbolsList = lexicalAnalysisResult.TerminalSymbols.ToList();
 
             // Insert zero value operand between operation start, and addition or negation operator followed by 
-            // operand, opening parentheses, variable storage character or unary operator
+            // operand, opening parenthesis, variable storage character or unary operator
             if (terminalSymbolsList.Count > 1
                 && (terminalSymbolsList[0] == TerminalSymbol.AdditionOperator
                     || terminalSymbolsList[0] == TerminalSymbol.SubstractionOperator)
                 && (terminalSymbolsList[1] == TerminalSymbol.RealNumber
-                    || terminalSymbolsList[1] == TerminalSymbol.OpeningParentheses
+                    || terminalSymbolsList[1] == TerminalSymbol.OpeningParenthesis
                     || (TerminalSymbolsGroups.TryGetValue(terminalSymbolsList[1], out var tsg)
                         && (tsg == TerminalSymbolGroup.VariableStorageCharacters
                             || tsg == TerminalSymbolGroup.UnaryOperators))))
@@ -323,13 +324,13 @@ namespace Calculator.Shared.Logic
 
             for (int i = 0; i < terminalSymbolsList.Count - 1; i++)
             {
-                // Insert multiplication operator between operand, closing parentheses or variable storage char, 
-                // and opening parentheses, variable storage character or unary operator
+                // Insert multiplication operator between operand, closing parenthesis or variable storage char, 
+                // and opening parenthesis, variable storage character or unary operator
                 if ((terminalSymbolsList[i] == TerminalSymbol.RealNumber
-                    || terminalSymbolsList[i] == TerminalSymbol.ClosingParentheses
+                    || terminalSymbolsList[i] == TerminalSymbol.ClosingParenthesis
                     || (TerminalSymbolsGroups.TryGetValue(terminalSymbolsList[i], out var leftTsg)
                         && leftTsg == TerminalSymbolGroup.VariableStorageCharacters))
-                    && (terminalSymbolsList[i + 1] == TerminalSymbol.OpeningParentheses
+                    && (terminalSymbolsList[i + 1] == TerminalSymbol.OpeningParenthesis
                     || (TerminalSymbolsGroups.TryGetValue(terminalSymbolsList[i + 1], out var rightTsg)
                         && (rightTsg == TerminalSymbolGroup.VariableStorageCharacters
                             || rightTsg == TerminalSymbolGroup.UnaryOperators))))
@@ -341,16 +342,16 @@ namespace Calculator.Shared.Logic
                 }
 
                 // Introduce prioritary negation operation between operator and negation operator followed by 
-                // operand, opening parentheses, variable storage character or unary operator, 
+                // operand, opening parenthesis, variable storage character or unary operator, 
                 // replacing the negation operator with the prioritary negation operation
                 if (i < terminalSymbolsList.Count - 2
                     && TerminalSymbolsGroups.TryGetValue(terminalSymbolsList[i], out leftTsg)
-                    && (terminalSymbolsList[i] == TerminalSymbol.OpeningParentheses
+                    && (terminalSymbolsList[i] == TerminalSymbol.OpeningParenthesis
                         || leftTsg == TerminalSymbolGroup.BinaryOperators
                         || leftTsg == TerminalSymbolGroup.UnaryOperators)
                     && terminalSymbolsList[i + 1] == TerminalSymbol.SubstractionOperator
                     && (terminalSymbolsList[i + 2] == TerminalSymbol.RealNumber
-                        || terminalSymbolsList[i + 2] == TerminalSymbol.OpeningParentheses
+                        || terminalSymbolsList[i + 2] == TerminalSymbol.OpeningParenthesis
                         || (TerminalSymbolsGroups.TryGetValue(terminalSymbolsList[i + 2], out rightTsg)
                             && (rightTsg == TerminalSymbolGroup.VariableStorageCharacters
                                 || rightTsg == TerminalSymbolGroup.UnaryOperators))))
@@ -388,8 +389,8 @@ namespace Calculator.Shared.Logic
                 if (stackElement is TerminalSymbol stackElementTs)
                     switch (stackElementTs)
                     {
-                        case TerminalSymbol.OpeningParentheses:
-                        case TerminalSymbol.ClosingParentheses:
+                        case TerminalSymbol.OpeningParenthesis:
+                        case TerminalSymbol.ClosingParenthesis:
                             ProcessMathOperator(operatorsStack, postfixOperation, Operators[queueElement]);
                             break;
                         case TerminalSymbol.RealNumber:
@@ -452,11 +453,11 @@ namespace Calculator.Shared.Logic
 
         private static void ProcessMathOperator(Stack<Operator> operatorsStack, List<MathObject> postfixOperation, Operator actualOperator)
         {
-            if (actualOperator.TerminalSymbol == TerminalSymbol.OpeningParentheses)
+            if (actualOperator.TerminalSymbol == TerminalSymbol.OpeningParenthesis)
                 operatorsStack.Push(actualOperator);
-            else if (actualOperator.TerminalSymbol == TerminalSymbol.ClosingParentheses)
+            else if (actualOperator.TerminalSymbol == TerminalSymbol.ClosingParenthesis)
             {
-                while (operatorsStack.Peek().TerminalSymbol != TerminalSymbol.OpeningParentheses)
+                while (operatorsStack.Peek().TerminalSymbol != TerminalSymbol.OpeningParenthesis)
                     postfixOperation.Add(operatorsStack.Pop());
                 operatorsStack.Pop();
             }

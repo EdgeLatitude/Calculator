@@ -4,7 +4,7 @@
     {
         None, // Used when no valid lexeme is detected
         LastResult, // Variable storage characters
-        OpeningParentheses, ClosingParentheses, // Special characters
+        OpeningParenthesis, ClosingParenthesis, // Special characters
         AdditionOperator, SubstractionOperator, MultiplicationOperator, DivisionOperator, PotentiationOperator, // Binary operators
         SquareRootOperator, // Unary operators
         RealNumber, // Numbers (any)
