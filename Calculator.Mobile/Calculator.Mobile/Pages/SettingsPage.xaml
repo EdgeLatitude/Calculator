@@ -3,24 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:localizedstrings="clr-namespace:Calculator.Shared.Localization;assembly=Calculator.Shared"
+             xmlns:localization="clr-namespace:Calculator.Shared.Localization;assembly=Calculator.Shared"
              xmlns:viewmodels="clr-namespace:Calculator.Shared.ViewModels;assembly=Calculator.Shared"
              mc:Ignorable="d"
              x:DataType="viewmodels:SettingsViewModel"
              x:Class="Calculator.Mobile.Pages.SettingsPage"
-             Title="{x:Static localizedstrings:LocalizedStrings.Settings}">
+             Title="{x:Static localization:LocalizedStrings.Settings}">
     <ScrollView>
         <StackLayout
             Style="{StaticResource SettingsParentStackLayoutStyle}">
             <StackLayout
                 Style="{StaticResource ZoneStackLayoutStyle}">
                 <Label  
-                    Text="{x:Static localizedstrings:LocalizedStrings.History}"
+                    Text="{x:Static localization:LocalizedStrings.History}"
                     Style="{StaticResource SectionLabelStyle}" />
                 <StackLayout 
                     Style="{StaticResource SectionStackLayoutStyle}">
                     <Label  
-                        Text="{x:Static localizedstrings:LocalizedStrings.HistoryLength}" 
+                        Text="{x:Static localization:LocalizedStrings.HistoryLength}" 
                         Style="{StaticResource DescriptionLabelStyle}" />
                     <Entry  
                         Text="{Binding HistoryLength}"
@@ -34,13 +34,13 @@
                 IsVisible="{Binding StyleSectionIsVisible}"
                 Style="{StaticResource ZoneStackLayoutStyle}">
                 <Label  
-                    Text="{x:Static localizedstrings:LocalizedStrings.Style}"
+                    Text="{x:Static localization:LocalizedStrings.Style}"
                     Style="{StaticResource SectionLabelStyle}" />
                 <StackLayout 
                     IsVisible="{Binding DeviceSupportsManualDarkMode, Mode=OneTime}"
                     Style="{StaticResource SectionStackLayoutStyle}">
                     <Label  
-                        Text="{x:Static localizedstrings:LocalizedStrings.Theme}" 
+                        Text="{x:Static localization:LocalizedStrings.Theme}" 
                         Style="{StaticResource DescriptionLabelStyle}" />
                     <Picker  
                         ItemsSource="{Binding Themes}"
@@ -51,7 +51,7 @@
                 </StackLayout>
             </StackLayout>
             <Button  
-                Text="{x:Static localizedstrings:LocalizedStrings.SaveSettings}"
+                Text="{x:Static localization:LocalizedStrings.SaveSettings}"
                 IsEnabled="{Binding SettingsChanged}"
                 Command="{Binding SaveSettingsCommand, Mode=OneTime}"
                 Style="{StaticResource SaveSettingsButtonsStyle}" />

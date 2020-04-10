@@ -1,9 +1,9 @@
 ﻿namespace Calculator.Shared.Constants
 {
-    public static class LexicalSymbols
+    public static class CharLexicalSymbols
     {
         public const char OpeningParenthesis = '(';
-        public const char ClosingParenthesis = '(';
+        public const char ClosingParenthesis = ')';
 
         public const char AdditionOperator = '+';
         public const char SubstractionOperator = '-';
@@ -14,6 +14,8 @@
 
         public const char SimpleMultiplicationOperator = '*';
         public const char SimpleDivisionOperator = '/';
+
+        public const char ResultOperator = '=';
 
         public const char Zero = '0';
         public const char One = '1';
