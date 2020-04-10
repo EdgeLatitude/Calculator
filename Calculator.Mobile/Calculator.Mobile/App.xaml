@@ -177,11 +177,14 @@
             <Setter Property="BackgroundColor"
                     Value="{OnPlatform Android={DynamicResource AndroidTextColor},
                                        iOS={DynamicResource iOSTextColor}}" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+        <Style x:Key="ToastContentViewStyle" TargetType="ContentView">
             <Setter Property="HorizontalOptions" Value="Center" />
             <Setter Property="InputTransparent" Value="True" />
             <Setter Property="Margin" Value="0,5,0,15" />
             <Setter Property="Opacity" Value="0" />
-            <Setter Property="Padding" Value="10" />
             <Setter Property="VerticalOptions" Value="End" />
         </Style>
         <Style x:Key="ToastLabelStyle" TargetType="Label">
