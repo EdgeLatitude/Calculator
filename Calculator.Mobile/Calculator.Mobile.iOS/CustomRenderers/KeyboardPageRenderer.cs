@@ -12,8 +12,8 @@ namespace Calculator.Mobile.iOS.CustomRenderers
     public class KeyboardPageRenderer : PageRenderer
     {
         private const string KeySelector = "KeyCommand:";
-
         private const string CopyCharacter = "c";
+        private const string SquareRootCharacter = "r";
 
         private readonly IList<UIKeyCommand> _keyCommands = new List<UIKeyCommand>();
 
@@ -29,20 +29,24 @@ namespace Calculator.Mobile.iOS.CustomRenderers
             {
                 var selector = new ObjCRuntime.Selector(KeySelector);
 
+                // Add support for numbers
                 for (var i = 0; i < 10; i++)
                 {
                     _keyCommands.Add(UIKeyCommand.Create((NSString)i.ToString(), 0, selector));
                     _keyCommands.Add(UIKeyCommand.Create((NSString)i.ToString(), UIKeyModifierFlags.NumericPad, selector));
                 }
 
+                /* // Add support for alphabet
                 for (var i = 0; i < 26; i++)
                 {
                     var key = (char)('a' + i);
                     _keyCommands.Add(UIKeyCommand.Create((NSString)key.ToString(), 0, selector));
                 }
+                */
 
                 // Viewable on iPad (>= iOS 9) when holding down ⌘
                 _keyCommands.Add(UIKeyCommand.Create(new NSString(CopyCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.Copy)));
+                _keyCommands.Add(UIKeyCommand.Create(new NSString(SquareRootCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.SquareRootOperator)));
 
                 foreach (var kc in _keyCommands)
                     AddKeyCommand(kc);
@@ -63,6 +67,9 @@ namespace Calculator.Mobile.iOS.CustomRenderers
                     {
                         case CopyCharacter:
                             Page?.OnKeyCommand(Controls.KeyCommand.Copy);
+                            break;
+                        case SquareRootCharacter:
+                            Page?.OnKeyCommand(Controls.KeyCommand.SquareRootOperator);
                             break;
                     }
                 else

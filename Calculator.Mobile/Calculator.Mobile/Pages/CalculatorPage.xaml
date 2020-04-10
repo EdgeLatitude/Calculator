@@ -133,6 +133,7 @@
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                     CommandParameter="^" />
                 <Button 
+                    x:Name="SquareRootButton"
                     Text="√" 
                     Grid.Column="3" 
                     Style="{StaticResource InputButtonStyle}"

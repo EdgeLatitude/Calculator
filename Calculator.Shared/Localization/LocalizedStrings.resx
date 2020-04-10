@@ -176,4 +176,7 @@
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="SquareRootOperator" xml:space="preserve">
+    <value>Square root operator</value>
+  </data>
 </root>

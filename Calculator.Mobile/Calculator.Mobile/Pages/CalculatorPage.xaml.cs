@@ -35,6 +35,9 @@ namespace Calculator.Mobile.Pages
                     _viewModel.CopyInputToClipboardCommand.Execute(null);
                     CopyInputToClipboardAnimation();
                     break;
+                case KeyCommand.SquareRootOperator:
+                    SquareRootButton.Command.Execute(SquareRootButton.CommandParameter);
+                    break;
             }
         }
 

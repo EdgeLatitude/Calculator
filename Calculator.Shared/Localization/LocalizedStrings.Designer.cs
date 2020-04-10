@@ -259,6 +259,15 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Square root operator.
+        /// </summary>
+        public static string SquareRootOperator {
+            get {
+                return ResourceManager.GetString("SquareRootOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Style.
         /// </summary>
         public static string Style {

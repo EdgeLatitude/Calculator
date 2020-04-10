@@ -43,17 +43,25 @@ namespace Calculator.Mobile.Droid.CustomRenderers
                         Page?.OnKeyCommand(KeyCommand.Copy);
                         handled = true;
                         break;
+                    case Keycode.R:
+                        Page?.OnKeyCommand(KeyCommand.SquareRootOperator);
+                        handled = true;
+                        break;
                 }
             else
             {
-                if (keyCode >= Keycode.A
-                    && keyCode <= Keycode.Z)
-                    handled = true;
-                else if ((keyCode >= Keycode.Num0
+                // Add support for numbers
+                if ((keyCode >= Keycode.Num0
                             && keyCode <= Keycode.Num9)
                         || (keyCode >= Keycode.Numpad0
                             && keyCode <= Keycode.Numpad9))
                     handled = true;
+
+                /* // Add support for alphabet
+                else if (keyCode >= Keycode.A
+                    && keyCode <= Keycode.Z)
+                    handled = true;
+                */
 
                 if (handled)
                     Page?.OnKeyUp(keyCode.ToString());
