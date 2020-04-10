@@ -394,7 +394,7 @@ namespace Calculator.Shared.Logic
                             ProcessMathOperator(operatorsStack, postfixOperation, Operators[queueElement]);
                             break;
                         case TerminalSymbol.RealNumber:
-                            postfixOperation.Add(new Operand(decimal.Parse(lexicalAnalysisResult.Lexemes[lexicalAnalysisResult.Lexemes.Length - syntaxQueue.Count])));
+                            postfixOperation.Add(new Operand(decimal.Parse(lexicalAnalysisResult.Lexemes[^syntaxQueue.Count])));
                             break;
                     }
                 else if (stackElement is TerminalSymbolGroup stackElementTsg)

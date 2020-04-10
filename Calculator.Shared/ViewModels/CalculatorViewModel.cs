@@ -130,7 +130,7 @@ namespace Calculator.Shared.ViewModels
                 return;
             }
             // Else only delete 1 character, the last one
-            Input = Input.Substring(0, Input.Length - 1);
+            Input = Input[0..^1];
         }
 
         private void BinaryOperator(string symbol)
@@ -274,9 +274,9 @@ namespace Calculator.Shared.ViewModels
         {
             resultText = result.ToString();
             while (resultText.Contains(Logic.Calculator.DecimalSeparator)
-                && (char.ToString(resultText[resultText.Length - 1]) == Logic.Calculator.ZeroString
-                    || char.ToString(resultText[resultText.Length - 1]) == Logic.Calculator.DecimalSeparator))
-                resultText = resultText.Substring(0, resultText.Length - 1);
+                && (char.ToString(resultText[^1]) == Logic.Calculator.ZeroString
+                    || char.ToString(resultText[^1]) == Logic.Calculator.DecimalSeparator))
+                resultText = resultText[0..^1];
             return true;
         }
 
