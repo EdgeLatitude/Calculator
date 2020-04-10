@@ -107,7 +107,7 @@
         </Style>
         <Style x:Key="InputLabelStyle" TargetType="Label">
             <Setter Property="FontSize"
-                    Value="{OnPlatform Android=26,
+                    Value="{OnPlatform Android=28,
                                        iOS=32}" />
             <Setter Property="HorizontalOptions" Value="EndAndExpand" />
             <Setter Property="MaxLines" Value="1" />
@@ -121,7 +121,7 @@
                                        iOS='5'}" />
         </Style>
         <Style x:Key="InputScrollViewStyle" TargetType="ScrollView">
-            <Setter Property="HorizontalOptions" Value="Fill" />
+            <Setter Property="HorizontalOptions" Value="EndAndExpand" />
             <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
             <Setter Property="Orientation" Value="Horizontal" />
         </Style>
