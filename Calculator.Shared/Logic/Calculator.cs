@@ -38,13 +38,13 @@ namespace Calculator.Shared.Logic
         public static readonly char[] VariableStorageCharacters
             = new char[] { LastResult }; // 1 terminal symbol for each
         private static readonly char[] Parentheses
-            = new char[] { CharLexicalSymbols.OpeningParenthesis, CharLexicalSymbols.ClosingParenthesis }; // 1 terminal symbol for each
+            = new char[] { LexicalSymbolsAsChar.OpeningParenthesis, LexicalSymbolsAsChar.ClosingParenthesis }; // 1 terminal symbol for each
         private static readonly char[] BinaryOperators
-            = new char[] { CharLexicalSymbols.AdditionOperator, CharLexicalSymbols.SubstractionOperator, CharLexicalSymbols.MultiplicationOperator, CharLexicalSymbols.DivisionOperator, CharLexicalSymbols.PotentiationOperator }; // 1 terminal symbol for each
+            = new char[] { LexicalSymbolsAsChar.AdditionOperator, LexicalSymbolsAsChar.SubstractionOperator, LexicalSymbolsAsChar.MultiplicationOperator, LexicalSymbolsAsChar.DivisionOperator, LexicalSymbolsAsChar.PotentiationOperator }; // 1 terminal symbol for each
         private static readonly char[] UnaryOperators
-            = new char[] { CharLexicalSymbols.SquareRootOperator }; // 1 terminal symbol for each
+            = new char[] { LexicalSymbolsAsChar.SquareRootOperator }; // 1 terminal symbol for each
         private static readonly char[] Numbers
-            = new char[] { CharLexicalSymbols.Zero, CharLexicalSymbols.One, CharLexicalSymbols.Two, CharLexicalSymbols.Three, CharLexicalSymbols.Four, CharLexicalSymbols.Five, CharLexicalSymbols.Six, CharLexicalSymbols.Seven, CharLexicalSymbols.Eight, CharLexicalSymbols.Nine }; // 1 terminal symbol for a complete real number
+            = new char[] { LexicalSymbolsAsChar.Zero, LexicalSymbolsAsChar.One, LexicalSymbolsAsChar.Two, LexicalSymbolsAsChar.Three, LexicalSymbolsAsChar.Four, LexicalSymbolsAsChar.Five, LexicalSymbolsAsChar.Six, LexicalSymbolsAsChar.Seven, LexicalSymbolsAsChar.Eight, LexicalSymbolsAsChar.Nine }; // 1 terminal symbol for a complete real number
 
         // Separators array to be filled with some lexical collections
         private static readonly char[] Separators;
@@ -141,15 +141,15 @@ namespace Calculator.Shared.Logic
         private static readonly Dictionary<TerminalSymbol, Operator> Operators
             = new Dictionary<TerminalSymbol, Operator>
         {
-            { TerminalSymbol.OpeningParenthesis, new Operator(TerminalSymbol.OpeningParenthesis, 0, CharLexicalSymbols.OpeningParenthesis) },
-            { TerminalSymbol.ClosingParenthesis, new Operator(TerminalSymbol.ClosingParenthesis, 0, CharLexicalSymbols.ClosingParenthesis) },
-            { TerminalSymbol.AdditionOperator, new Operator(TerminalSymbol.AdditionOperator, 1, CharLexicalSymbols.AdditionOperator, false, false) },
-            { TerminalSymbol.SubstractionOperator, new Operator(TerminalSymbol.SubstractionOperator, 1, CharLexicalSymbols.SubstractionOperator, false, false) },
-            { TerminalSymbol.MultiplicationOperator, new Operator(TerminalSymbol.MultiplicationOperator, 2, CharLexicalSymbols.MultiplicationOperator, false, false) },
-            { TerminalSymbol.DivisionOperator, new Operator(TerminalSymbol.DivisionOperator, 2, CharLexicalSymbols.DivisionOperator, false, false) },
-            { TerminalSymbol.PotentiationOperator, new Operator(TerminalSymbol.PotentiationOperator, 3, CharLexicalSymbols.PotentiationOperator, false, false) },
-            { TerminalSymbol.SquareRootOperator, new Operator(TerminalSymbol.SquareRootOperator, 3, CharLexicalSymbols.SquareRootOperator, false, true) },
-            { TerminalSymbol.OperandNegatorOperator, new Operator(TerminalSymbol.MultiplicationOperator, int.MaxValue, CharLexicalSymbols.MultiplicationOperator, false, false) }
+            { TerminalSymbol.OpeningParenthesis, new Operator(TerminalSymbol.OpeningParenthesis, 0, LexicalSymbolsAsChar.OpeningParenthesis) },
+            { TerminalSymbol.ClosingParenthesis, new Operator(TerminalSymbol.ClosingParenthesis, 0, LexicalSymbolsAsChar.ClosingParenthesis) },
+            { TerminalSymbol.AdditionOperator, new Operator(TerminalSymbol.AdditionOperator, 1, LexicalSymbolsAsChar.AdditionOperator, false, false) },
+            { TerminalSymbol.SubstractionOperator, new Operator(TerminalSymbol.SubstractionOperator, 1, LexicalSymbolsAsChar.SubstractionOperator, false, false) },
+            { TerminalSymbol.MultiplicationOperator, new Operator(TerminalSymbol.MultiplicationOperator, 2, LexicalSymbolsAsChar.MultiplicationOperator, false, false) },
+            { TerminalSymbol.DivisionOperator, new Operator(TerminalSymbol.DivisionOperator, 2, LexicalSymbolsAsChar.DivisionOperator, false, false) },
+            { TerminalSymbol.PotentiationOperator, new Operator(TerminalSymbol.PotentiationOperator, 3, LexicalSymbolsAsChar.PotentiationOperator, false, false) },
+            { TerminalSymbol.SquareRootOperator, new Operator(TerminalSymbol.SquareRootOperator, 3, LexicalSymbolsAsChar.SquareRootOperator, false, true) },
+            { TerminalSymbol.OperandNegatorOperator, new Operator(TerminalSymbol.MultiplicationOperator, int.MaxValue, LexicalSymbolsAsChar.MultiplicationOperator, false, false) }
         };
         #endregion
 

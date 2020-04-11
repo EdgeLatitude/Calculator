@@ -128,31 +128,31 @@
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding DeleteCommand, Mode=OneTime}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.PotentiationOperator}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.PotentiationOperator}" 
                     Grid.Column="2"
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.PotentiationOperator}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.PotentiationOperator}" />
                 <Button 
                     x:Name="SquareRootButton"
-                    Text="{x:Static constants:StringLexicalSymbols.SquareRootOperator}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.SquareRootOperator}" 
                     Grid.Column="3" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding UnaryOperatorCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.SquareRootOperator}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.SquareRootOperator}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.OpeningParenthesis}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.OpeningParenthesis}" 
                     Grid.Row="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding ParenthesesCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.OpeningParenthesis}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.OpeningParenthesis}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.ClosingParenthesis}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.ClosingParenthesis}" 
                     Grid.Row="1" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding ParenthesesCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.ClosingParenthesis}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.ClosingParenthesis}" />
                 <Button 
                     Text="{x:Static localization:LocalizedStrings.LastResultAbbreviation}" 
                     Grid.Row="1" 
@@ -160,100 +160,100 @@
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding LastResultCommand, Mode=OneTime}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.DivisionOperator}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.DivisionOperator}" 
                     Grid.Row="1" 
                     Grid.Column="3" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.DivisionOperator}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.DivisionOperator}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.Seven}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Seven}" 
                     Grid.Row="2" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.Seven}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Seven}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.Eight}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Eight}" 
                     Grid.Row="2" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.Eight}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Eight}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.Nine}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Nine}" 
                     Grid.Row="2" 
                     Grid.Column="2" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.Nine}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Nine}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.MultiplicationOperator}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.MultiplicationOperator}" 
                     Grid.Row="2" 
                     Grid.Column="3" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.MultiplicationOperator}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.MultiplicationOperator}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.Four}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Four}" 
                     Grid.Row="3" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.Four}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Four}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.Five}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Five}" 
                     Grid.Row="3" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.Five}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Five}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.Six}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Six}" 
                     Grid.Row="3" 
                     Grid.Column="2" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.Six}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Six}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.SubstractionOperator}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.SubstractionOperator}" 
                     Grid.Row="3" 
                     Grid.Column="3" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.SubstractionOperator}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.SubstractionOperator}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.One}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.One}" 
                     Grid.Row="4" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.One}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.One}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.Two}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Two}" 
                     Grid.Row="4" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.Two}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Two}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.Three}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Three}" 
                     Grid.Row="4" 
                     Grid.Column="2" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.Three}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Three}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.AdditionOperator}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.AdditionOperator}" 
                     Grid.Row="4" 
                     Grid.Column="3" 
                     Grid.RowSpan="2" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.AdditionOperator}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.AdditionOperator}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.Zero}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.Zero}" 
                     Grid.Row="5" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
-                    CommandParameter="{x:Static constants:StringLexicalSymbols.Zero}" />
+                    CommandParameter="{x:Static constants:LexicalSymbolsAsString.Zero}" />
                 <Button
                     Text="{Binding DecimalSeparator}"
                     Grid.Row="5" 
@@ -261,7 +261,7 @@
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding DecimalCommand, Mode=OneTime}" />
                 <Button 
-                    Text="{x:Static constants:StringLexicalSymbols.ResultOperator}" 
+                    Text="{x:Static constants:LexicalSymbolsAsString.ResultOperator}" 
                     Grid.Row="5" 
                     Grid.Column="2" 
                     Style="{StaticResource InputButtonStyle}"
