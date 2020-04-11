@@ -38,6 +38,9 @@ namespace Calculator.Mobile.Pages
                 case KeyCommand.SquareRootOperator:
                     SquareRootButton.Command.Execute(SquareRootButton.CommandParameter);
                     break;
+                case KeyCommand.Calculate:
+                    _viewModel.CalculateCommand.Execute(null);
+                    break;
             }
         }
 

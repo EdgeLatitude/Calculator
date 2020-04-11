@@ -12,6 +12,7 @@ namespace Calculator.Mobile.iOS.CustomRenderers
     public class KeyboardPageRenderer : PageRenderer
     {
         private const string KeySelector = "KeyCommand:";
+        private const string EnterKey = @"\r";
         private const string CopyCharacter = "c";
         private const string SquareRootCharacter = "r";
 
@@ -44,7 +45,11 @@ namespace Calculator.Mobile.iOS.CustomRenderers
                 }
                 */
 
-                // Viewable on iPad (>= iOS 9) when holding down ⌘
+                // Add support for enter key
+                _keyCommands.Add(UIKeyCommand.Create((NSString)EnterKey, 0, selector));
+                _keyCommands.Add(UIKeyCommand.Create((NSString)EnterKey, UIKeyModifierFlags.NumericPad, selector));
+
+                // Add support for special commands (viewable on iPad (>= iOS 9) when holding down ⌘)
                 _keyCommands.Add(UIKeyCommand.Create(new NSString(CopyCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.Copy)));
                 _keyCommands.Add(UIKeyCommand.Create(new NSString(SquareRootCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.SquareRootOperator)));
 
@@ -72,6 +77,8 @@ namespace Calculator.Mobile.iOS.CustomRenderers
                             Page?.OnKeyCommand(Controls.KeyCommand.SquareRootOperator);
                             break;
                     }
+                else if (keyCommand.Input == EnterKey)
+                    Page?.OnKeyCommand(Controls.KeyCommand.Calculate);
                 else
                     Page?.OnKeyUp(keyCommand.Input);
             }

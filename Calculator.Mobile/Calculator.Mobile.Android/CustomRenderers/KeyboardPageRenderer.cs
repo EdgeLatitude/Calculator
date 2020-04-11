@@ -36,6 +36,7 @@ namespace Calculator.Mobile.Droid.CustomRenderers
         {
             var handled = false;
 
+            // Add support for special commands
             if (keyEvent.IsCtrlPressed)
                 switch (keyCode)
                 {
@@ -48,6 +49,13 @@ namespace Calculator.Mobile.Droid.CustomRenderers
                         handled = true;
                         break;
                 }
+            // Add support for enter key
+            else if (keyCode == Keycode.Enter
+                || keyCode == Keycode.NumpadEnter)
+            {
+                Page?.OnKeyCommand(KeyCommand.Calculate);
+                handled = true;
+            }
             else
             {
                 // Add support for numbers
