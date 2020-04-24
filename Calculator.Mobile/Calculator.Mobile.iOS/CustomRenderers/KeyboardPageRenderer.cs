@@ -3,6 +3,7 @@ using Calculator.Shared.Constants;
 using Calculator.Shared.Localization;
 using Foundation;
 using System.Collections.Generic;
+using System.Linq;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -15,25 +16,6 @@ namespace Calculator.Mobile.iOS.CustomRenderers
         private const string _keySelector = "KeyCommand:";
         private const string _enterKey = "\r";
         private const string _backspaceKey = "\u0008";
-        private const string _copyCharacter = "c";
-        private const string _exponentCharacter = "e";
-        private const string _rootCharacter = "r";
-
-        private static readonly string[] _parenthesesDecimalSeparatorsAndOperators = new string[]
-        {
-            LexicalSymbolsAsString.OpeningParenthesis,
-            LexicalSymbolsAsString.ClosingParenthesis,
-            LexicalSymbolsAsString.Comma,
-            LexicalSymbolsAsString.Dot,
-            LexicalSymbolsAsString.AdditionOperator,
-            LexicalSymbolsAsString.SubstractionOperator,
-            LexicalSymbolsAsString.MultiplicationOperator,
-            LexicalSymbolsAsString.DivisionOperator,
-            LexicalSymbolsAsString.PotentiationOperator,
-            LexicalSymbolsAsString.SquareRootOperator,
-            LexicalSymbolsAsString.SimpleMultiplicationOperator,
-            LexicalSymbolsAsString.SimpleDivisionOperator
-        };
 
         private readonly IList<UIKeyCommand> _keyCommands = new List<UIKeyCommand>();
 
@@ -45,44 +27,28 @@ namespace Calculator.Mobile.iOS.CustomRenderers
         {
             base.OnElementChanged(args);
 
-            if (_keyCommands.Count == 0)
+            if (!_keyCommands.Any())
             {
                 var selector = new ObjCRuntime.Selector(_keySelector);
 
-                // Add support for numbers
-                for (var i = 0; i < 10; i++)
-                {
-                    _keyCommands.Add(UIKeyCommand.Create((NSString)i.ToString(), 0, selector));
-                    _keyCommands.Add(UIKeyCommand.Create((NSString)i.ToString(), UIKeyModifierFlags.NumericPad, selector));
-                }
-
-                /* // Add support for alphabet
-                for (var i = 0; i < 26; i++)
-                {
-                    var key = (char)('a' + i);
-                    _keyCommands.Add(UIKeyCommand.Create((NSString)key.ToString(), 0, selector));
-                }
-                */
-
-                // Add support for parentheses, decimal separators and operators
-                foreach (var symbol in _parenthesesDecimalSeparatorsAndOperators)
-                {
-                    _keyCommands.Add(UIKeyCommand.Create((NSString)symbol, 0, selector));
-                    _keyCommands.Add(UIKeyCommand.Create((NSString)symbol, UIKeyModifierFlags.NumericPad, selector));
-                }
+                // Add support for special commands (viewable on iPad (>= iOS 9) when holding down ⌘)
+                _keyCommands.Add(UIKeyCommand.Create(new NSString(HardwareInput.CopyCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.Copy)));
+                _keyCommands.Add(UIKeyCommand.Create(new NSString(HardwareInput.RootCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.RootOperator)));
 
                 // Add support for enter and equals key
                 _keyCommands.Add(UIKeyCommand.Create((NSString)_enterKey, 0, selector));
-                _keyCommands.Add(UIKeyCommand.Create((NSString)LexicalSymbolsAsString.ResultOperator, 0, selector));
-                _keyCommands.Add(UIKeyCommand.Create((NSString)LexicalSymbolsAsString.ResultOperator, UIKeyModifierFlags.NumericPad, selector));
+                _keyCommands.Add(UIKeyCommand.Create((NSString)HardwareInput.ResultOperator, 0, selector));
 
                 // Add support for backspace key
                 _keyCommands.Add(UIKeyCommand.Create((NSString)_backspaceKey, 0, selector));
 
-                // Add support for special commands (viewable on iPad (>= iOS 9) when holding down ⌘)
-                _keyCommands.Add(UIKeyCommand.Create(new NSString(_copyCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.Copy)));
-                _keyCommands.Add(UIKeyCommand.Create(new NSString(_exponentCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.PotentiationOperator)));
-                _keyCommands.Add(UIKeyCommand.Create(new NSString(_rootCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.SquareRootOperator)));
+                // Add support for numbers
+                for (var i = 0; i < 10; i++)
+                    _keyCommands.Add(UIKeyCommand.Create((NSString)i.ToString(), 0, selector));
+
+                // Add support for parentheses, decimal separators and operators
+                foreach (var symbol in HardwareInput.ParenthesesDecimalSeparatorsAndOperators)
+                    _keyCommands.Add(UIKeyCommand.Create((NSString)symbol, 0, selector));
 
                 foreach (var kc in _keyCommands)
                     AddKeyCommand(kc);
@@ -101,23 +67,31 @@ namespace Calculator.Mobile.iOS.CustomRenderers
                 if (keyCommand.ModifierFlags == UIKeyModifierFlags.Command)
                     switch (keyCommand.Input.ToString())
                     {
-                        case _copyCharacter:
+                        case HardwareInput.CopyCharacter:
                             Page?.OnKeyCommand(Controls.KeyCommand.Copy);
                             break;
-                        case _exponentCharacter:
-                            Page?.OnKeyCommand(Controls.KeyCommand.ExponentOperator);
-                            break;
-                        case _rootCharacter:
+                        case HardwareInput.RootCharacter:
                             Page?.OnKeyCommand(Controls.KeyCommand.RootOperator);
                             break;
                     }
                 else if (keyCommand.Input == _enterKey
-                    || keyCommand.Input == LexicalSymbolsAsString.ResultOperator)
+                    || keyCommand.Input == HardwareInput.ResultOperator)
                     Page?.OnKeyCommand(Controls.KeyCommand.Calculate);
                 else if (keyCommand.Input == _backspaceKey)
                     Page?.OnKeyCommand(Controls.KeyCommand.Delete);
-                else
-                    Page?.OnKeyUp(keyCommand.Input);
+                else if (char.TryParse(keyCommand.Input, out var keyCharacter))
+                {
+                    var handled = false;
+                    var keyCharacterAsString = keyCharacter.ToString();
+
+                    if (char.IsDigit(keyCharacter))
+                        handled = true;
+                    else if (HardwareInput.ParenthesesDecimalSeparatorsAndOperators.Contains(keyCharacterAsString))
+                        handled = true;
+
+                    if (handled)
+                        Page?.OnKeyUp(keyCharacter);
+                }
             }
         }
     }

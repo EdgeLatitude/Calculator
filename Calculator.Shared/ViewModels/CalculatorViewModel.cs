@@ -5,6 +5,7 @@ using Calculator.Shared.Models.Enums;
 using Calculator.Shared.PlatformServices;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -12,6 +13,20 @@ namespace Calculator.Shared.ViewModels
 {
     public class CalculatorViewModel : BaseViewModel
     {
+        private static readonly List<char> _possibleDecimalSeparators
+            = new List<char>()
+            {
+                LexicalSymbolsAsChar.Comma,
+                LexicalSymbolsAsChar.Dot
+            };
+
+        private static readonly Dictionary<char, char> _equivalentSymbols
+            = new Dictionary<char, char>()
+            {
+                { LexicalSymbolsAsChar.SimpleDivisionOperator, LexicalSymbolsAsChar.DivisionOperator },
+                { LexicalSymbolsAsChar.SimpleMultiplicationOperator, LexicalSymbolsAsChar.MultiplicationOperator }
+            };
+
         private readonly IAlertsService _alertsService;
         private readonly IClipboardService _clipboardService;
         private readonly ICommandFactoryService _commandFactoryService;
@@ -43,12 +58,13 @@ namespace Calculator.Shared.ViewModels
             DeleteCommand = _commandFactoryService.Create(Delete);
             BinaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => BinaryOperator(symbol));
             UnaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => UnaryOperator(symbol));
-            ParenthesesCommand = _commandFactoryService.Create<string>((parentheses) => Parentheses(parentheses));
-            LastResultCommand = _commandFactoryService.Create(LastResult);
+            ParenthesisCommand = _commandFactoryService.Create<string>((parenthesis) => Parenthesis(parenthesis));
+            VariableStorageCommand = _commandFactoryService.Create<string>((symbol) => VariableStorage(symbol));
             NumberCommand = _commandFactoryService.Create<string>((number) => Number(number));
             DecimalCommand = _commandFactoryService.Create(Decimal);
             CalculateCommand = _commandFactoryService.Create(Calculate);
             CopyInputToClipboardCommand = _commandFactoryService.Create(CopyInputToClipboard);
+            ManageInputFromHardwareCommand = _commandFactoryService.Create<char>((character) => ManageInputFromHardware(character));
             ShowHistoryCommand = _commandFactoryService.Create(ShowHistory);
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
@@ -85,9 +101,9 @@ namespace Calculator.Shared.ViewModels
 
         public ICommand UnaryOperatorCommand { get; private set; }
 
-        public ICommand ParenthesesCommand { get; private set; }
+        public ICommand ParenthesisCommand { get; private set; }
 
-        public ICommand LastResultCommand { get; private set; }
+        public ICommand VariableStorageCommand { get; private set; }
 
         public ICommand NumberCommand { get; private set; }
 
@@ -96,6 +112,8 @@ namespace Calculator.Shared.ViewModels
         public ICommand CalculateCommand { get; private set; }
 
         public ICommand CopyInputToClipboardCommand { get; private set; }
+
+        public ICommand ManageInputFromHardwareCommand { get; private set; }
 
         public ICommand ShowHistoryCommand { get; private set; }
 
@@ -160,26 +178,26 @@ namespace Calculator.Shared.ViewModels
                 Input += symbol;
         }
 
-        private void Parentheses(string parentheses)
+        private void Parenthesis(string parenthesis)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
-                Input = parentheses;
+                Input = parenthesis;
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                Input += parentheses;
+                Input += parenthesis;
         }
 
-        private void LastResult()
+        private void VariableStorage(string symbol)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
-                Input = char.ToString(Logic.Calculator.LastResult);
+                Input = symbol;
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                Input += Logic.Calculator.LastResult;
+                Input += symbol;
         }
 
         private void Number(string number)
@@ -282,6 +300,25 @@ namespace Calculator.Shared.ViewModels
 
         private async void CopyInputToClipboard() =>
             await _clipboardService.SetTextAsync(Input);
+
+        private void ManageInputFromHardware(char character)
+        {
+            var characterAsString = character.ToString();
+            if (Logic.Calculator.VariableStorageCharacters.Contains(character))
+                VariableStorage(characterAsString);
+            else if (Logic.Calculator.Parentheses.Contains(character))
+                Parenthesis(characterAsString);
+            else if (Logic.Calculator.BinaryOperators.Contains(character))
+                BinaryOperator(characterAsString);
+            else if (Logic.Calculator.UnaryOperators.Contains(character))
+                UnaryOperator(characterAsString);
+            else if (Logic.Calculator.Numbers.Contains(character))
+                Number(characterAsString);
+            else if (_possibleDecimalSeparators.Contains(character))
+                Decimal();
+            else if (_equivalentSymbols.ContainsKey(character))
+                ManageInputFromHardware(_equivalentSymbols[character]);
+        }
 
         private async void ShowHistory()
         {

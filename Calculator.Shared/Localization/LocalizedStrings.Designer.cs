@@ -241,11 +241,11 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Potentiation operator.
+        ///   Busca una cadena traducida similar a Root operator.
         /// </summary>
-        public static string PotentiationOperator {
+        public static string RootOperator {
             get {
-                return ResourceManager.GetString("PotentiationOperator", resourceCulture);
+                return ResourceManager.GetString("RootOperator", resourceCulture);
             }
         }
         
@@ -264,15 +264,6 @@ namespace Calculator.Shared.Localization {
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Square root operator.
-        /// </summary>
-        public static string SquareRootOperator {
-            get {
-                return ResourceManager.GetString("SquareRootOperator", resourceCulture);
             }
         }
         

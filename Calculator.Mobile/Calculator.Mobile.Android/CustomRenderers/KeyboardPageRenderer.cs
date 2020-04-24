@@ -2,7 +2,9 @@
 using Android.Runtime;
 using Android.Views;
 using Calculator.Mobile.Controls;
+using Calculator.Shared.Constants;
 using System;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -36,29 +38,25 @@ namespace Calculator.Mobile.Droid.CustomRenderers
         public override bool OnKeyUp([GeneratedEnum] Keycode keyCode, KeyEvent keyEvent)
         {
             var handled = false;
+            var keyCharacter = Convert.ToChar(keyEvent.UnicodeChar);
+            var keyCharacterAsString = keyCharacter.ToString();
 
             // Add support for special commands
             if (keyEvent.IsCtrlPressed)
-                switch (keyCode)
+                switch (keyCharacterAsString.ToLower())
                 {
-                    case Keycode.C:
+                    case HardwareInput.CopyCharacter:
                         Page?.OnKeyCommand(KeyCommand.Copy);
                         handled = true;
                         break;
-                    case Keycode.E:
-                        Page?.OnKeyCommand(KeyCommand.ExponentOperator);
-                        handled = true;
-                        break;
-                    case Keycode.R:
+                    case HardwareInput.RootCharacter:
                         Page?.OnKeyCommand(KeyCommand.RootOperator);
                         handled = true;
                         break;
                 }
             // Add support for enter and equals key
             else if (keyCode == Keycode.Enter
-                || keyCode == Keycode.NumpadEnter
-                || keyCode == Keycode.Equals
-                || keyCode == Keycode.NumpadEquals)
+                || keyCharacterAsString == HardwareInput.ResultOperator)
             {
                 Page?.OnKeyCommand(KeyCommand.Calculate);
                 handled = true;
@@ -72,42 +70,14 @@ namespace Calculator.Mobile.Droid.CustomRenderers
             else
             {
                 // Add support for numbers
-                if ((keyCode >= Keycode.Num0
-                            && keyCode <= Keycode.Num9)
-                        || (keyCode >= Keycode.Numpad0
-                            && keyCode <= Keycode.Numpad9))
+                if (char.IsDigit(keyCharacter))
                     handled = true;
-
-                /* // Add support for alphabet
-                else if (keyCode >= Keycode.A
-                    && keyCode <= Keycode.Z)
+                // Add support for parentheses, decimal separators and operators
+                else if (HardwareInput.ParenthesesDecimalSeparatorsAndOperators.Contains(keyCharacterAsString))
                     handled = true;
-                */
-
-                if (!handled)
-                    // Add support for parentheses, decimal separators and operators
-                    switch (keyCode)
-                    {
-                        case Keycode.NumpadLeftParen:
-                        case Keycode.NumpadRightParen:
-                        case Keycode.Comma:
-                        case Keycode.NumpadComma:
-                        case Keycode.Period:
-                        case Keycode.NumpadDot:
-                        case Keycode.Plus:
-                        case Keycode.NumpadAdd:
-                        case Keycode.Minus:
-                        case Keycode.NumpadSubtract:
-                        case Keycode.Star:
-                        case Keycode.NumpadMultiply:
-                        case Keycode.Slash:
-                        case Keycode.NumpadDivide:
-                            handled = true;
-                            break;
-                    }
 
                 if (handled)
-                    Page?.OnKeyUp(Convert.ToChar(keyEvent.UnicodeChar).ToString());
+                    Page?.OnKeyUp(keyCharacter);
             }
 
             return handled || base.OnKeyUp(keyCode, keyEvent);

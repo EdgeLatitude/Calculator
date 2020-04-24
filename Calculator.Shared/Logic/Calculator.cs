@@ -37,13 +37,13 @@ namespace Calculator.Shared.Logic
         // Lexical collections
         public static readonly char[] VariableStorageCharacters
             = new char[] { LastResult }; // 1 terminal symbol for each
-        private static readonly char[] Parentheses
+        public static readonly char[] Parentheses
             = new char[] { LexicalSymbolsAsChar.OpeningParenthesis, LexicalSymbolsAsChar.ClosingParenthesis }; // 1 terminal symbol for each
-        private static readonly char[] BinaryOperators
+        public static readonly char[] BinaryOperators
             = new char[] { LexicalSymbolsAsChar.AdditionOperator, LexicalSymbolsAsChar.SubstractionOperator, LexicalSymbolsAsChar.MultiplicationOperator, LexicalSymbolsAsChar.DivisionOperator, LexicalSymbolsAsChar.PotentiationOperator }; // 1 terminal symbol for each
-        private static readonly char[] UnaryOperators
+        public static readonly char[] UnaryOperators
             = new char[] { LexicalSymbolsAsChar.SquareRootOperator }; // 1 terminal symbol for each
-        private static readonly char[] Numbers
+        public static readonly char[] Numbers
             = new char[] { LexicalSymbolsAsChar.Zero, LexicalSymbolsAsChar.One, LexicalSymbolsAsChar.Two, LexicalSymbolsAsChar.Three, LexicalSymbolsAsChar.Four, LexicalSymbolsAsChar.Five, LexicalSymbolsAsChar.Six, LexicalSymbolsAsChar.Seven, LexicalSymbolsAsChar.Eight, LexicalSymbolsAsChar.Nine }; // 1 terminal symbol for a complete real number
 
         // Separators array to be filled with some lexical collections

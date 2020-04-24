@@ -129,7 +129,6 @@
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding DeleteCommand, Mode=OneTime}" />
                 <Button 
-                    x:Name="PotentiationButton"
                     Text="{x:Static constants:LexicalSymbolsAsString.PotentiationOperator}" 
                     Grid.Column="2"
                     Style="{StaticResource InputButtonStyle}"
@@ -146,21 +145,22 @@
                     Text="{x:Static constants:LexicalSymbolsAsString.OpeningParenthesis}" 
                     Grid.Row="1" 
                     Style="{StaticResource InputButtonStyle}"
-                    Command="{Binding ParenthesesCommand, Mode=OneTime}"
+                    Command="{Binding ParenthesisCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.OpeningParenthesis}" />
                 <Button 
                     Text="{x:Static constants:LexicalSymbolsAsString.ClosingParenthesis}" 
                     Grid.Row="1" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
-                    Command="{Binding ParenthesesCommand, Mode=OneTime}"
+                    Command="{Binding ParenthesisCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.ClosingParenthesis}" />
                 <Button 
                     Text="{x:Static localization:LocalizedStrings.LastResultAbbreviation}" 
                     Grid.Row="1" 
                     Grid.Column="2" 
                     Style="{StaticResource InputButtonStyle}"
-                    Command="{Binding LastResultCommand, Mode=OneTime}" />
+                    Command="{Binding VariableStorageCommand, Mode=OneTime}"
+                    CommandParameter="{x:Static localization:LocalizedStrings.LastResultCharacter}" />
                 <Button 
                     Text="{x:Static constants:LexicalSymbolsAsString.DivisionOperator}" 
                     Grid.Row="1" 

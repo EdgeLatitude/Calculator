@@ -22,10 +22,8 @@ namespace Calculator.Mobile.Pages
             BindingContext = _viewModel;
         }
 
-        public override void OnKeyUp(string character)
-        {
-            _viewModel.Input += character;
-        }
+        public override void OnKeyUp(char character) =>
+            _viewModel.ManageInputFromHardwareCommand.Execute(character);
 
         public override void OnKeyCommand(KeyCommand command)
         {
@@ -34,9 +32,6 @@ namespace Calculator.Mobile.Pages
                 case KeyCommand.Copy:
                     _viewModel.CopyInputToClipboardCommand.Execute(null);
                     CopyInputToClipboardAnimation();
-                    break;
-                case KeyCommand.ExponentOperator:
-                    PotentiationButton.Command.Execute(PotentiationButton.CommandParameter);
                     break;
                 case KeyCommand.RootOperator:
                     SquareRootButton.Command.Execute(SquareRootButton.CommandParameter);
