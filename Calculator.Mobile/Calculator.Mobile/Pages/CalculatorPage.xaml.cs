@@ -35,11 +35,17 @@ namespace Calculator.Mobile.Pages
                     _viewModel.CopyInputToClipboardCommand.Execute(null);
                     CopyInputToClipboardAnimation();
                     break;
-                case KeyCommand.SquareRootOperator:
+                case KeyCommand.ExponentOperator:
+                    PotentiationButton.Command.Execute(PotentiationButton.CommandParameter);
+                    break;
+                case KeyCommand.RootOperator:
                     SquareRootButton.Command.Execute(SquareRootButton.CommandParameter);
                     break;
                 case KeyCommand.Calculate:
-                    _viewModel.CalculateCommand.Execute(null);
+                    CalculateButton.Command.Execute(null);
+                    break;
+                case KeyCommand.Delete:
+                    DeleteButton.Command.Execute(null);
                     break;
             }
         }

@@ -241,6 +241,15 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Potentiation operator.
+        /// </summary>
+        public static string PotentiationOperator {
+            get {
+                return ResourceManager.GetString("PotentiationOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Save settings.
         /// </summary>
         public static string SaveSettings {

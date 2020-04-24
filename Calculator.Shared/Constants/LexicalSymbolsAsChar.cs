@@ -27,5 +27,8 @@
         public const char Seven = '7';
         public const char Eight = '8';
         public const char Nine = '9';
+
+        public const char Comma = ',';
+        public const char Dot = '.';
     }
 }

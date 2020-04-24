@@ -2,6 +2,7 @@
 using Android.Runtime;
 using Android.Views;
 using Calculator.Mobile.Controls;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -44,16 +45,28 @@ namespace Calculator.Mobile.Droid.CustomRenderers
                         Page?.OnKeyCommand(KeyCommand.Copy);
                         handled = true;
                         break;
+                    case Keycode.E:
+                        Page?.OnKeyCommand(KeyCommand.ExponentOperator);
+                        handled = true;
+                        break;
                     case Keycode.R:
-                        Page?.OnKeyCommand(KeyCommand.SquareRootOperator);
+                        Page?.OnKeyCommand(KeyCommand.RootOperator);
                         handled = true;
                         break;
                 }
-            // Add support for enter key
+            // Add support for enter and equals key
             else if (keyCode == Keycode.Enter
-                || keyCode == Keycode.NumpadEnter)
+                || keyCode == Keycode.NumpadEnter
+                || keyCode == Keycode.Equals
+                || keyCode == Keycode.NumpadEquals)
             {
                 Page?.OnKeyCommand(KeyCommand.Calculate);
+                handled = true;
+            }
+            // Add support for backspace key
+            else if (keyCode == Keycode.Del)
+            {
+                Page?.OnKeyCommand(KeyCommand.Delete);
                 handled = true;
             }
             else
@@ -71,8 +84,30 @@ namespace Calculator.Mobile.Droid.CustomRenderers
                     handled = true;
                 */
 
+                if (!handled)
+                    // Add support for parentheses, decimal separators and operators
+                    switch (keyCode)
+                    {
+                        case Keycode.NumpadLeftParen:
+                        case Keycode.NumpadRightParen:
+                        case Keycode.Comma:
+                        case Keycode.NumpadComma:
+                        case Keycode.Period:
+                        case Keycode.NumpadDot:
+                        case Keycode.Plus:
+                        case Keycode.NumpadAdd:
+                        case Keycode.Minus:
+                        case Keycode.NumpadSubtract:
+                        case Keycode.Star:
+                        case Keycode.NumpadMultiply:
+                        case Keycode.Slash:
+                        case Keycode.NumpadDivide:
+                            handled = true;
+                            break;
+                    }
+
                 if (handled)
-                    Page?.OnKeyUp(keyCode.ToString());
+                    Page?.OnKeyUp(Convert.ToChar(keyEvent.UnicodeChar).ToString());
             }
 
             return handled || base.OnKeyUp(keyCode, keyEvent);

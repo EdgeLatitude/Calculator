@@ -11,7 +11,9 @@ namespace Calculator.Mobile.Controls
     public enum KeyCommand
     {
         Copy,
-        SquareRootOperator,
-        Calculate
+        ExponentOperator,
+        RootOperator,
+        Calculate,
+        Delete
     }
 }
