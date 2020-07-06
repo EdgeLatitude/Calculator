@@ -29,7 +29,7 @@ namespace Calculator.Mobile.Controls
 
                 var customPickerItems = customPicker.Items.ToArray();
 
-                var selectedItem = await Shell.Current.DisplayActionSheet(
+                var selectedItem = await Application.Current.MainPage.DisplayActionSheet(
                     customPicker.Title,
                     LocalizedStrings.Cancel,
                     null,

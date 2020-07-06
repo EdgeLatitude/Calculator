@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:controls="clr-namespace:Calculator.Mobile.Controls"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              mc:Ignorable="d"
@@ -74,7 +75,7 @@
             <Setter Property="BarBackgroundColor" Value="{StaticResource BarBackgroundColor}" />
             <Setter Property="BarTextColor" Value="{StaticResource BarForegroundColor}" />
         </Style>
-        <Style TargetType="Picker">
+        <Style TargetType="controls:CustomPicker">
             <Setter Property="BackgroundColor"
                     Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
                                        iOS={DynamicResource iOSFieldBackgroundColor}}" />
