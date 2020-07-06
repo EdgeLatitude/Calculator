@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:controls="clr-namespace:Calculator.Mobile.Controls"
              xmlns:localization="clr-namespace:Calculator.Shared.Localization;assembly=Calculator.Shared"
              xmlns:viewmodels="clr-namespace:Calculator.Shared.ViewModels;assembly=Calculator.Shared"
              mc:Ignorable="d"
@@ -42,12 +43,11 @@
                     <Label  
                         Text="{x:Static localization:LocalizedStrings.Theme}" 
                         Style="{StaticResource DescriptionLabelStyle}" />
-                    <Picker  
+                    <controls:CustomPicker  
                         ItemsSource="{Binding Themes}"
                         SelectedItem="{Binding SelectedTheme}"
                         WidthRequest="150"
-                        Style="{StaticResource SettingPickerStyle}"
-                        Focused="ThemePicker_Focused" />
+                        Style="{StaticResource SettingPickerStyle}" />
                 </StackLayout>
             </StackLayout>
             <Button  
