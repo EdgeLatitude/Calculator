@@ -11,12 +11,12 @@
   <style name="MainTheme.Base" parent="Theme.AppCompat">
     <item name="windowNoTitle">true</item>
     <item name="windowActionBar">false</item>
-    <item name="colorPrimary">#006060</item>
-    <item name="colorPrimaryDark">#004040</item>
-    <item name="colorAccent">#008080</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
     <item name="windowActionModeOverlay">true</item>
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
-    <item name="android:navigationBarColor">#006060</item>
+    <item name="android:navigationBarColor">@color/colorPrimary</item>
     <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
   </style>
 
@@ -26,12 +26,12 @@
   <style name="MainTheme.Base.Light" parent="Theme.AppCompat.Light">
     <item name="windowNoTitle">true</item>
     <item name="windowActionBar">false</item>
-    <item name="colorPrimary">#006060</item>
-    <item name="colorPrimaryDark">#004040</item>
-    <item name="colorAccent">#008080</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
     <item name="windowActionModeOverlay">true</item>
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
-    <item name="android:navigationBarColor">#006060</item>
+    <item name="android:navigationBarColor">@color/colorPrimary</item>
     <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
   </style>
 
@@ -39,16 +39,16 @@
     <item name="android:windowBackground">@drawable/launch_screen</item>
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowActionBar">false</item>
-    <item name="android:navigationBarColor">#000</item>
+    <item name="android:navigationBarColor">@color/launcher_background</item>
     <item name="android:windowContentOverlay">@null</item>
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-    <item name="colorAccent">#008080</item>
+    <item name="colorAccent">@color/colorAccent</item>
   </style>
 
   <style name="AppToolbarStyle" parent="Theme.AppCompat.NoActionBar">
-    <item name="android:colorBackground">#006060</item>
+    <item name="android:colorBackground">@color/colorPrimary</item>
     <item name="android:textColor">#FFF</item>
   </style>
   
