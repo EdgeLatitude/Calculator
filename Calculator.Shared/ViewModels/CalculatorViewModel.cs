@@ -38,6 +38,8 @@ namespace Calculator.Shared.ViewModels
 
         private bool _calculating;
 
+        private string _lastInput;
+
         private NextInput _nextStroke = NextInput.DoNothing;
 
         public CalculatorViewModel(
@@ -237,9 +239,13 @@ namespace Calculator.Shared.ViewModels
                 return;
             }
 
+            // Use previous input if it was a valid one and there was no interaction after calculating
+            var input = _nextStroke == NextInput.ClearAtNumber ? _lastInput : Input;
+
             // Calculate and show corresponding result
             _calculating = true;
-            var calculationResult = Logic.Calculator.Calculate(Input, _variableStorageValues);
+            _lastInput = input;
+            var calculationResult = Logic.Calculator.Calculate(input, _variableStorageValues);
             if (calculationResult != null)
                 // Show result if calculation was successful
                 if (calculationResult.Successful)
