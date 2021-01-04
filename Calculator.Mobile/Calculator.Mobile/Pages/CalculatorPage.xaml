@@ -118,131 +118,131 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="AC" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding AllClearCommand, Mode=OneTime}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     x:Name="DeleteButton"
                     Text="⌫" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding DeleteCommand, Mode=OneTime}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.PotentiationOperator}" 
                     Grid.Column="2"
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.PotentiationOperator}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     x:Name="SquareRootButton"
                     Text="{x:Static constants:LexicalSymbolsAsString.SquareRootOperator}" 
                     Grid.Column="3" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding UnaryOperatorCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.SquareRootOperator}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.OpeningParenthesis}" 
                     Grid.Row="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding ParenthesisCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.OpeningParenthesis}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.ClosingParenthesis}" 
                     Grid.Row="1" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding ParenthesisCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.ClosingParenthesis}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static localization:LocalizedStrings.LastResultAbbreviation}" 
                     Grid.Row="1" 
                     Grid.Column="2" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding VariableStorageCommand, Mode=OneTime}"
                     CommandParameter="{x:Static localization:LocalizedStrings.LastResultCharacter}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.DivisionOperator}" 
                     Grid.Row="1" 
                     Grid.Column="3" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.DivisionOperator}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.Seven}" 
                     Grid.Row="2" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.Seven}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.Eight}" 
                     Grid.Row="2" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.Eight}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.Nine}" 
                     Grid.Row="2" 
                     Grid.Column="2" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.Nine}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.MultiplicationOperator}" 
                     Grid.Row="2" 
                     Grid.Column="3" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.MultiplicationOperator}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.Four}" 
                     Grid.Row="3" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.Four}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.Five}" 
                     Grid.Row="3" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.Five}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.Six}" 
                     Grid.Row="3" 
                     Grid.Column="2" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.Six}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.SubstractionOperator}" 
                     Grid.Row="3" 
                     Grid.Column="3" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.SubstractionOperator}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.One}" 
                     Grid.Row="4" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.One}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.Two}" 
                     Grid.Row="4" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.Two}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.Three}" 
                     Grid.Row="4" 
                     Grid.Column="2" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.Three}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.AdditionOperator}" 
                     Grid.Row="4" 
                     Grid.Column="3" 
@@ -250,19 +250,19 @@
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.AdditionOperator}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     Text="{x:Static constants:LexicalSymbolsAsString.Zero}" 
                     Grid.Row="5" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.Zero}" />
-                <Button
+                <controls:HapticFeedbackButton
                     Text="{Binding DecimalSeparator}"
                     Grid.Row="5" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
                     Command="{Binding DecimalCommand, Mode=OneTime}" />
-                <Button 
+                <controls:HapticFeedbackButton 
                     x:Name="CalculateButton"
                     Text="{x:Static constants:LexicalSymbolsAsString.ResultOperator}" 
                     Grid.Row="5" 
