@@ -65,9 +65,9 @@ namespace Calculator.Shared.ViewModels
             NumberCommand = _commandFactoryService.Create<string>((number) => Number(number));
             DecimalCommand = _commandFactoryService.Create(Decimal);
             CalculateCommand = _commandFactoryService.Create(Calculate);
-            CopyInputToClipboardCommand = _commandFactoryService.Create(CopyInputToClipboard);
+            CopyInputToClipboardCommand = _commandFactoryService.Create(async () => await CopyInputToClipboard());
             ManageInputFromHardwareCommand = _commandFactoryService.Create<char>((character) => ManageInputFromHardware(character));
-            ShowHistoryCommand = _commandFactoryService.Create(ShowHistory);
+            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
         }
@@ -304,7 +304,7 @@ namespace Calculator.Shared.ViewModels
             return true;
         }
 
-        private async void CopyInputToClipboard() =>
+        private async Task CopyInputToClipboard() =>
             await _clipboardService.SetTextAsync(Input);
 
         private void ManageInputFromHardware(char character)
@@ -326,7 +326,7 @@ namespace Calculator.Shared.ViewModels
                 ManageInputFromHardware(_equivalentSymbols[character]);
         }
 
-        private async void ShowHistory()
+        private async Task ShowHistory()
         {
             if (Settings.Instance.GetResultsHistoryLength() == 0)
             {

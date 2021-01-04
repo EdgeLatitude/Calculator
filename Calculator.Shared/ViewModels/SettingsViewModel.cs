@@ -5,6 +5,7 @@ using Calculator.Shared.Models.Theming;
 using Calculator.Shared.PlatformServices;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Calculator.Shared.ViewModels
@@ -146,12 +147,12 @@ namespace Calculator.Shared.ViewModels
 
         private void SaveSettings()
         {
-            ManageHistoryLengthSettings();
+            _ = ManageHistoryLengthSettings();
             ManageThemeSettings();
             SettingsChanged = false;
         }
 
-        private async void ManageHistoryLengthSettings()
+        private async Task ManageHistoryLengthSettings()
         {
             // Try to use the value that the user inputted, else, use the configuration default
             if (!int.TryParse(HistoryLength, out int historyLengthAsInt))
