@@ -66,7 +66,7 @@ namespace Calculator.Shared.ViewModels
             VariableStorageCommand = _commandFactoryService.Create<string>((symbol) => VariableStorage(symbol));
             NumberCommand = _commandFactoryService.Create<string>((number) => Number(number));
             DecimalCommand = _commandFactoryService.Create(Decimal);
-            CalculateCommand = _commandFactoryService.Create(Calculate);
+            CalculateCommand = _commandFactoryService.Create(async () => await Calculate());
             CopyInputToClipboardCommand = _commandFactoryService.Create(async () => await CopyInputToClipboard());
             ManageInputFromHardwareCommand = _commandFactoryService.Create<char>((character) => ManageInputFromHardware(character));
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
@@ -241,7 +241,7 @@ namespace Calculator.Shared.ViewModels
                 AddInputSection(DecimalSeparator);
         }
 
-        private void Calculate()
+        private async Task Calculate()
         {
             // Do nothing if there is no input
             if (!Input.Any())
@@ -263,7 +263,7 @@ namespace Calculator.Shared.ViewModels
             // Calculate and show corresponding result
             _calculating = true;
             _lastInput = input;
-            var calculationResult = Logic.Calculator.Calculate(JoinInputSectionsIntoSingleString(input), _variableStorageValues);
+            var calculationResult = await Logic.Calculator.CalculateAsync(JoinInputSectionsIntoSingleString(input), _variableStorageValues);
             if (calculationResult != null)
                 // Show result if calculation was successful
                 if (calculationResult.Successful)

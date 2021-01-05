@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Calculator.Shared.Logic
 {
@@ -164,7 +165,10 @@ namespace Calculator.Shared.Logic
             Separators = separators.ToArray();
         }
 
-        public static CalculationResult Calculate(string operation, Dictionary<char, decimal> variableStorageValues)
+        public static async Task<CalculationResult> CalculateAsync(string operation, Dictionary<char, decimal> variableStorageValues) =>
+            await Task.Run(() => Calculate(operation, variableStorageValues));
+
+        private static CalculationResult Calculate(string operation, Dictionary<char, decimal> variableStorageValues)
         {
             try
             {
