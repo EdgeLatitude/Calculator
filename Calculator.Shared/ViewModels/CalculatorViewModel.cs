@@ -61,7 +61,7 @@ namespace Calculator.Shared.ViewModels
 
             AllClearCommand = _commandFactoryService.Create(AllClear);
             ClearCommand = _commandFactoryService.Create(Clear);
-            DeleteCommand = _commandFactoryService.Create(Delete);
+            DeleteCommand = _commandFactoryService.Create(async () => await Delete());
             BinaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => BinaryOperator(symbol));
             UnaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => UnaryOperator(symbol));
             ParenthesisCommand = _commandFactoryService.Create<string>((parenthesis) => Parenthesis(parenthesis));
@@ -130,7 +130,7 @@ namespace Calculator.Shared.ViewModels
             _nextStroke = NextInput.DoNothing;
         }
 
-        private void Delete()
+        private async Task Delete()
         {
             // Do nothing if there is currently no input
             if (!Input.Any())
@@ -145,13 +145,13 @@ namespace Calculator.Shared.ViewModels
             // Else only delete 1 section, the selected one
             var indexOfSelectedInputSection = Input.IndexOf(_selectedInputSection);
             Input.RemoveAt(indexOfSelectedInputSection);
-            _selectedInputSection = indexOfSelectedInputSection == 0 ?
-                Input.Any() ?
-                    Input.First() :
-                    null :
-                Input.Count > indexOfSelectedInputSection ?
-                    Input[indexOfSelectedInputSection] :
-                    Input[indexOfSelectedInputSection - 1];
+            await Task.Run(() => _selectedInputSection = indexOfSelectedInputSection == 0 ?
+               Input.Any() ?
+                   Input.First() :
+                   null :
+               Input.Count > indexOfSelectedInputSection ?
+                   Input[indexOfSelectedInputSection] :
+                   Input[indexOfSelectedInputSection - 1]);
             if (_selectedInputSection != null)
                 _selectedInputSection.IsSelected = true;
         }
