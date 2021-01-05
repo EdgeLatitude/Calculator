@@ -44,6 +44,8 @@ namespace Calculator.Shared.ViewModels
 
         private NextInput _nextStroke = NextInput.DoNothing;
 
+        private InputSectionViewModel _selectedInputSection;
+
         public CalculatorViewModel(
             IAlertsService alertsService,
             IClipboardService clipboardService,
@@ -81,20 +83,6 @@ namespace Calculator.Shared.ViewModels
         private readonly ObservableCollection<InputSectionViewModel> _input = new ObservableCollection<InputSectionViewModel>();
 
         public ObservableCollection<InputSectionViewModel> Input => _input;
-
-        private InputSectionViewModel _selectedInputSection;
-
-        public InputSectionViewModel SelectedInputSection
-        {
-            get => _selectedInputSection;
-            set
-            {
-                if (_selectedInputSection == value)
-                    return;
-                _selectedInputSection = value;
-                OnPropertyChanged();
-            }
-        }
 
         public bool AfterResult { get; private set; }
 
@@ -155,17 +143,17 @@ namespace Calculator.Shared.ViewModels
                 return;
             }
             // Else only delete 1 section, the selected one
-            var indexOfSelectedInputSection = Input.IndexOf(SelectedInputSection);
+            var indexOfSelectedInputSection = Input.IndexOf(_selectedInputSection);
             Input.RemoveAt(indexOfSelectedInputSection);
-            SelectedInputSection = indexOfSelectedInputSection == 0 ?
+            _selectedInputSection = indexOfSelectedInputSection == 0 ?
                 Input.Any() ?
                     Input.First() :
                     null :
                 Input.Count > indexOfSelectedInputSection ?
                     Input[indexOfSelectedInputSection] :
                     Input[indexOfSelectedInputSection - 1];
-            if (SelectedInputSection != null)
-                SelectedInputSection.IsSelected = true;
+            if (_selectedInputSection != null)
+                _selectedInputSection.IsSelected = true;
         }
 
         private void BinaryOperator(string symbol)
@@ -402,25 +390,25 @@ namespace Calculator.Shared.ViewModels
             Input.Clear();
             var onlySection = new InputSectionViewModel(input);
             Input.Add(onlySection);
-            SelectedInputSection = onlySection;
+            _selectedInputSection = onlySection;
         }
 
         private void AddInputSection(string input)
         {
-            if (SelectedInputSection == null)
+            if (_selectedInputSection == null)
             {
                 var onlySection = new InputSectionViewModel(input);
                 Input.Add(onlySection);
-                SelectedInputSection = onlySection;
+                _selectedInputSection = onlySection;
                 return;
             }
 
-            var indexOfSelectedInputSection = Input.IndexOf(SelectedInputSection);
-            SelectedInputSection.IsSelected = false;
+            var indexOfSelectedInputSection = Input.IndexOf(_selectedInputSection);
+            _selectedInputSection.IsSelected = false;
 
             var newSection = new InputSectionViewModel(input);
             Input.Insert(indexOfSelectedInputSection + 1, newSection);
-            SelectedInputSection = newSection;
+            _selectedInputSection = newSection;
         }
 
         private string JoinInputSectionsIntoSingleString(InputSectionViewModel[] input) =>
