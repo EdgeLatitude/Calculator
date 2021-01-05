@@ -21,34 +21,32 @@ namespace Calculator.Shared.Logic
         // Runtime constants
         public static readonly string ZeroString = decimal.Zero.ToString();
         public static readonly string MinusOneString = decimal.MinusOne.ToString();
-        public static readonly char LastResult
-            = LocalizedStrings.LastResultCharacter[0];
         public static readonly string DecimalSeparator
             = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
 
         #region General definitions
-        private static readonly Dictionary<TerminalSymbol, char> TerminalSymbolsVariableStorageCharacter
-            = new Dictionary<TerminalSymbol, char>
+        private static readonly Dictionary<TerminalSymbol, string> TerminalSymbolsVariableStorageCharacter
+            = new Dictionary<TerminalSymbol, string>
         {
-            { TerminalSymbol.LastResult, LastResult }
+            { TerminalSymbol.LastResult, LocalizedStrings.LastResultAbbreviation }
         };
         #endregion
 
         #region Lexical definitions
         // Lexical collections
-        public static readonly char[] VariableStorageCharacters
-            = new char[] { LastResult }; // 1 terminal symbol for each
-        public static readonly char[] Parentheses
-            = new char[] { LexicalSymbolsAsChar.OpeningParenthesis, LexicalSymbolsAsChar.ClosingParenthesis }; // 1 terminal symbol for each
-        public static readonly char[] BinaryOperators
-            = new char[] { LexicalSymbolsAsChar.AdditionOperator, LexicalSymbolsAsChar.SubstractionOperator, LexicalSymbolsAsChar.MultiplicationOperator, LexicalSymbolsAsChar.DivisionOperator, LexicalSymbolsAsChar.PotentiationOperator }; // 1 terminal symbol for each
-        public static readonly char[] UnaryOperators
-            = new char[] { LexicalSymbolsAsChar.SquareRootOperator }; // 1 terminal symbol for each
-        public static readonly char[] Numbers
-            = new char[] { LexicalSymbolsAsChar.Zero, LexicalSymbolsAsChar.One, LexicalSymbolsAsChar.Two, LexicalSymbolsAsChar.Three, LexicalSymbolsAsChar.Four, LexicalSymbolsAsChar.Five, LexicalSymbolsAsChar.Six, LexicalSymbolsAsChar.Seven, LexicalSymbolsAsChar.Eight, LexicalSymbolsAsChar.Nine }; // 1 terminal symbol for a complete real number
+        public static readonly string[] VariableStorageWords
+            = new string[] { LocalizedStrings.LastResultAbbreviation }; // 1 terminal symbol for each
+        public static readonly string[] Parentheses
+            = new string[] { LexicalSymbols.OpeningParenthesis, LexicalSymbols.ClosingParenthesis }; // 1 terminal symbol for each
+        public static readonly string[] BinaryOperators
+            = new string[] { LexicalSymbols.AdditionOperator, LexicalSymbols.SubstractionOperator, LexicalSymbols.MultiplicationOperator, LexicalSymbols.DivisionOperator, LexicalSymbols.PotentiationOperator }; // 1 terminal symbol for each
+        public static readonly string[] UnaryOperators
+            = new string[] { LexicalSymbols.SquareRootOperator }; // 1 terminal symbol for each
+        public static readonly string[] Numbers
+            = new string[] { LexicalSymbols.Zero, LexicalSymbols.One, LexicalSymbols.Two, LexicalSymbols.Three, LexicalSymbols.Four, LexicalSymbols.Five, LexicalSymbols.Six, LexicalSymbols.Seven, LexicalSymbols.Eight, LexicalSymbols.Nine }; // 1 terminal symbol for a complete real number
 
         // Separators array to be filled with some lexical collections
-        private static readonly char[] Separators;
+        private static readonly string[] Separators;
 
         // Automata for lexical analysis
         private static readonly int?[,] Automata = new int?[,]
@@ -142,33 +140,33 @@ namespace Calculator.Shared.Logic
         private static readonly Dictionary<TerminalSymbol, Operator> Operators
             = new Dictionary<TerminalSymbol, Operator>
         {
-            { TerminalSymbol.OpeningParenthesis, new Operator(TerminalSymbol.OpeningParenthesis, 0, LexicalSymbolsAsChar.OpeningParenthesis) },
-            { TerminalSymbol.ClosingParenthesis, new Operator(TerminalSymbol.ClosingParenthesis, 0, LexicalSymbolsAsChar.ClosingParenthesis) },
-            { TerminalSymbol.AdditionOperator, new Operator(TerminalSymbol.AdditionOperator, 1, LexicalSymbolsAsChar.AdditionOperator, false, false) },
-            { TerminalSymbol.SubstractionOperator, new Operator(TerminalSymbol.SubstractionOperator, 1, LexicalSymbolsAsChar.SubstractionOperator, false, false) },
-            { TerminalSymbol.MultiplicationOperator, new Operator(TerminalSymbol.MultiplicationOperator, 2, LexicalSymbolsAsChar.MultiplicationOperator, false, false) },
-            { TerminalSymbol.DivisionOperator, new Operator(TerminalSymbol.DivisionOperator, 2, LexicalSymbolsAsChar.DivisionOperator, false, false) },
-            { TerminalSymbol.PotentiationOperator, new Operator(TerminalSymbol.PotentiationOperator, 3, LexicalSymbolsAsChar.PotentiationOperator, false, false) },
-            { TerminalSymbol.SquareRootOperator, new Operator(TerminalSymbol.SquareRootOperator, 3, LexicalSymbolsAsChar.SquareRootOperator, false, true) },
-            { TerminalSymbol.OperandNegatorOperator, new Operator(TerminalSymbol.MultiplicationOperator, int.MaxValue, LexicalSymbolsAsChar.MultiplicationOperator, false, false) }
+            { TerminalSymbol.OpeningParenthesis, new Operator(TerminalSymbol.OpeningParenthesis, 0, LexicalSymbols.OpeningParenthesis) },
+            { TerminalSymbol.ClosingParenthesis, new Operator(TerminalSymbol.ClosingParenthesis, 0, LexicalSymbols.ClosingParenthesis) },
+            { TerminalSymbol.AdditionOperator, new Operator(TerminalSymbol.AdditionOperator, 1, LexicalSymbols.AdditionOperator, false, false) },
+            { TerminalSymbol.SubstractionOperator, new Operator(TerminalSymbol.SubstractionOperator, 1, LexicalSymbols.SubstractionOperator, false, false) },
+            { TerminalSymbol.MultiplicationOperator, new Operator(TerminalSymbol.MultiplicationOperator, 2, LexicalSymbols.MultiplicationOperator, false, false) },
+            { TerminalSymbol.DivisionOperator, new Operator(TerminalSymbol.DivisionOperator, 2, LexicalSymbols.DivisionOperator, false, false) },
+            { TerminalSymbol.PotentiationOperator, new Operator(TerminalSymbol.PotentiationOperator, 3, LexicalSymbols.PotentiationOperator, false, false) },
+            { TerminalSymbol.SquareRootOperator, new Operator(TerminalSymbol.SquareRootOperator, 3, LexicalSymbols.SquareRootOperator, false, true) },
+            { TerminalSymbol.OperandNegatorOperator, new Operator(TerminalSymbol.MultiplicationOperator, int.MaxValue, LexicalSymbols.MultiplicationOperator, false, false) }
         };
         #endregion
 
         static Calculator()
         {
             // Initialize separators array from list filled with specified lexical collections
-            var separators = new List<char>();
-            separators.AddRange(VariableStorageCharacters);
+            var separators = new List<string>();
+            separators.AddRange(VariableStorageWords);
             separators.AddRange(Parentheses);
             separators.AddRange(BinaryOperators);
             separators.AddRange(UnaryOperators);
             Separators = separators.ToArray();
         }
 
-        public static async Task<CalculationResult> CalculateAsync(string operation, Dictionary<char, decimal> variableStorageValues) =>
+        public static async Task<CalculationResult> CalculateAsync(string operation, Dictionary<string, decimal> variableStorageValues) =>
             await Task.Run(() => Calculate(operation, variableStorageValues));
 
-        private static CalculationResult Calculate(string operation, Dictionary<char, decimal> variableStorageValues)
+        private static CalculationResult Calculate(string operation, Dictionary<string, decimal> variableStorageValues)
         {
             try
             {
@@ -201,7 +199,7 @@ namespace Calculator.Shared.Logic
             // Add surrounding blank spaces to every separator in the operation
             foreach (var separator in Separators)
                 if (operation.Contains(separator))
-                    operation = operation.Replace(separator.ToString(), WhiteSpace + separator + WhiteSpace);
+                    operation = operation.Replace(separator, WhiteSpace + separator + WhiteSpace);
             // Remove unnecessary blank spaces
             var doubleWhiteSpace = WhiteSpace + WhiteSpace;
             while (operation.Contains(doubleWhiteSpace))
@@ -231,35 +229,29 @@ namespace Calculator.Shared.Logic
             var terminalSymbol = 0;
             // Check for lexeme in each lexical collection, at the end parse accumulated terminal symbol index into an actual symbol
             // Check in variable storage characters collection
-            if (lexeme.Length == 1)
-            {
-                var charLexeme = char.Parse(lexeme);
-                if (VariableStorageCharacters.Contains(charLexeme))
-                    return new LexemeResult((TerminalSymbol)Array.IndexOf(VariableStorageCharacters, charLexeme) + terminalSymbol + 1);
-            }
-            terminalSymbol += VariableStorageCharacters.Length;
+            if (VariableStorageWords.Contains(lexeme))
+                return new LexemeResult((TerminalSymbol)Array.IndexOf(VariableStorageWords, lexeme) + terminalSymbol + 1);
+            terminalSymbol += VariableStorageWords.Length;
             // Check in special characters and operators collections
             if (lexeme.Length == 1)
             {
-                var lexemeAsCharacter = lexeme.ToCharArray()[0];
                 // Check in special characters collection
-                if (Parentheses.Contains(lexemeAsCharacter))
-                    return new LexemeResult((TerminalSymbol)Array.IndexOf(Parentheses, lexemeAsCharacter) + terminalSymbol + 1);
+                if (Parentheses.Contains(lexeme))
+                    return new LexemeResult((TerminalSymbol)Array.IndexOf(Parentheses, lexeme) + terminalSymbol + 1);
                 terminalSymbol += Parentheses.Length;
                 // Check in binary operators collection
-                if (BinaryOperators.Contains(lexemeAsCharacter))
-                    return new LexemeResult((TerminalSymbol)Array.IndexOf(BinaryOperators, lexemeAsCharacter) + terminalSymbol + 1);
+                if (BinaryOperators.Contains(lexeme))
+                    return new LexemeResult((TerminalSymbol)Array.IndexOf(BinaryOperators, lexeme) + terminalSymbol + 1);
                 terminalSymbol += BinaryOperators.Length;
                 // Check in unary operators collection
-                if (UnaryOperators.Contains(lexemeAsCharacter))
-                    return new LexemeResult((TerminalSymbol)Array.IndexOf(UnaryOperators, lexemeAsCharacter) + terminalSymbol + 1);
+                if (UnaryOperators.Contains(lexeme))
+                    return new LexemeResult((TerminalSymbol)Array.IndexOf(UnaryOperators, lexeme) + terminalSymbol + 1);
             }
             return AnalyzeLexemeByAutomata(lexeme);
         }
 
         private static LexemeResult AnalyzeLexemeByAutomata(string lexeme)
         {
-            char lexemeCharacter;
             int automataColumn, currentState = 0;
             /* Analyze lexeme parsing each character, using the current state as main reference
              * If the current state turns is about to turn into a null value, it means it has found an unexpected character for the current state,
@@ -267,7 +259,7 @@ namespace Calculator.Shared.Logic
              * If parsing successfully continues until the end, return an error message or terminal symbol according to the last state */
             for (var i = 0; i < lexeme.Length; i++)
             {
-                lexemeCharacter = lexeme[i];
+                var lexemeCharacter = lexeme[i].ToString();
                 if (Numbers.Contains(lexemeCharacter))
                 {
                     automataColumn = 0;
@@ -276,7 +268,7 @@ namespace Calculator.Shared.Logic
                     else
                         currentState = Automata[currentState, automataColumn].Value;
                 }
-                else if (DecimalSeparator == lexemeCharacter.ToString())
+                else if (DecimalSeparator == lexemeCharacter)
                 {
                     automataColumn = 1;
                     if (Automata[currentState, automataColumn].Equals(null))
@@ -372,7 +364,7 @@ namespace Calculator.Shared.Logic
             return new LexicalAnalysisResult(lexemesList.ToArray(), terminalSymbolsList.ToArray());
         }
 
-        private static SyntaxAndSemanticAnalysisResult SyntaxAndSemanticAnalysis(Dictionary<char, decimal> variableStorageValues, LexicalAnalysisResult lexicalAnalysisResult)
+        private static SyntaxAndSemanticAnalysisResult SyntaxAndSemanticAnalysis(Dictionary<string, decimal> variableStorageValues, LexicalAnalysisResult lexicalAnalysisResult)
         {
             // Data structures and main variables for syntax analysis
             var syntaxQueue = new Queue<TerminalSymbol>(lexicalAnalysisResult.TerminalSymbols);

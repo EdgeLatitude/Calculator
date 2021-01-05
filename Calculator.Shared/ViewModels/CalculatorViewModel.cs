@@ -15,18 +15,18 @@ namespace Calculator.Shared.ViewModels
 {
     public class CalculatorViewModel : BaseViewModel
     {
-        private static readonly List<char> _possibleDecimalSeparators
-            = new List<char>()
+        private static readonly List<string> _possibleDecimalSeparators
+            = new List<string>()
             {
-                LexicalSymbolsAsChar.Comma,
-                LexicalSymbolsAsChar.Dot
+                LexicalSymbols.Comma,
+                LexicalSymbols.Dot
             };
 
-        private static readonly Dictionary<char, char> _equivalentSymbols
-            = new Dictionary<char, char>()
+        private static readonly Dictionary<string, string> _equivalentSymbols
+            = new Dictionary<string, string>()
             {
-                { LexicalSymbolsAsChar.SimpleDivisionOperator, LexicalSymbolsAsChar.DivisionOperator },
-                { LexicalSymbolsAsChar.SimpleMultiplicationOperator, LexicalSymbolsAsChar.MultiplicationOperator }
+                { LexicalSymbols.SimpleDivisionOperator, LexicalSymbols.DivisionOperator },
+                { LexicalSymbols.SimpleMultiplicationOperator, LexicalSymbols.MultiplicationOperator }
             };
 
         private readonly IAlertsService _alertsService;
@@ -35,8 +35,8 @@ namespace Calculator.Shared.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPlatformInformationService _platformInformationService;
 
-        private readonly Dictionary<char, decimal> _variableStorageValues
-            = new Dictionary<char, decimal>();
+        private readonly Dictionary<string, decimal> _variableStorageValues
+            = new Dictionary<string, decimal>();
 
         private bool _calculating;
 
@@ -70,7 +70,7 @@ namespace Calculator.Shared.ViewModels
             DecimalCommand = _commandFactoryService.Create(Decimal);
             CalculateCommand = _commandFactoryService.Create(async () => await Calculate());
             CopyInputToClipboardCommand = _commandFactoryService.Create(async () => await CopyInputToClipboard());
-            ManageInputFromHardwareCommand = _commandFactoryService.Create<char>((character) => ManageInputFromHardware(character));
+            ManageInputFromHardwareCommand = _commandFactoryService.Create<string>((character) => ManageInputFromHardware(character));
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
@@ -165,7 +165,7 @@ namespace Calculator.Shared.ViewModels
             }
             else if (_nextStroke == NextInput.ClearAtNumber)
             {
-                ClearAndAddInputSection(Logic.Calculator.LastResult.ToString());
+                ClearAndAddInputSection(LocalizedStrings.LastResultAbbreviation);
                 AddInputSection(symbol);
                 _nextStroke = NextInput.DoNothing;
             }
@@ -264,7 +264,7 @@ namespace Calculator.Shared.ViewModels
                         ClearAndAddInputSection(resultText);
                         _nextStroke = NextInput.ClearAtNumber;
 
-                        AddOrUpdateVariableStorage(Logic.Calculator.LastResult, result);
+                        AddOrUpdateVariableStorage(LocalizedStrings.LastResultAbbreviation, result);
 
                         _ = Settings.Instance.ManageNewResultAsync(resultText);
                     }
@@ -291,7 +291,7 @@ namespace Calculator.Shared.ViewModels
             _calculating = false;
         }
 
-        private void AddOrUpdateVariableStorage(char storage, decimal value)
+        private void AddOrUpdateVariableStorage(string storage, decimal value)
         {
             // If memory value already exists, overwrite it, else, add it
             if (_variableStorageValues.TryGetValue(storage, out decimal _))
@@ -313,19 +313,18 @@ namespace Calculator.Shared.ViewModels
         private async Task CopyInputToClipboard() =>
             await _clipboardService.SetTextAsync(JoinInputSectionsIntoSingleString(Input.ToArray()));
 
-        private void ManageInputFromHardware(char character)
+        private void ManageInputFromHardware(string character)
         {
-            var characterAsString = character.ToString();
-            if (Logic.Calculator.VariableStorageCharacters.Contains(character))
-                VariableStorage(characterAsString);
+            if (Logic.Calculator.VariableStorageWords.Contains(character))
+                VariableStorage(character);
             else if (Logic.Calculator.Parentheses.Contains(character))
-                Parenthesis(characterAsString);
+                Parenthesis(character);
             else if (Logic.Calculator.BinaryOperators.Contains(character))
-                BinaryOperator(characterAsString);
+                BinaryOperator(character);
             else if (Logic.Calculator.UnaryOperators.Contains(character))
-                UnaryOperator(characterAsString);
+                UnaryOperator(character);
             else if (Logic.Calculator.Numbers.Contains(character))
-                Number(characterAsString);
+                Number(character);
             else if (_possibleDecimalSeparators.Contains(character))
                 Decimal();
             else if (_equivalentSymbols.ContainsKey(character))

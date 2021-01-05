@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Shared.Constants
 {
-    public static class LexicalSymbolsAsString
+    public static class LexicalSymbols
     {
         public const string OpeningParenthesis = "(";
         public const string ClosingParenthesis = ")";

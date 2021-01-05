@@ -122,9 +122,6 @@
   <data name="LastResultAbbreviation" xml:space="preserve">
     <value>RES</value>
   </data>
-  <data name="LastResultCharacter" xml:space="preserve">
-    <value>R</value>
-  </data>
   <data name="HistoryLength" xml:space="preserve">
     <value>Largo del historial de resultados</value>
   </data>

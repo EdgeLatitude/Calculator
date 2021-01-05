@@ -23,7 +23,7 @@ namespace Calculator.Mobile.Pages
         }
 
         public override void OnKeyUp(char character) =>
-            _viewModel.ManageInputFromHardwareCommand.Execute(character);
+            _viewModel.ManageInputFromHardwareCommand.Execute(char.ToString(character));
 
         public override void OnKeyCommand(KeyCommand command)
         {

@@ -10,18 +10,18 @@ namespace Calculator.Shared.Models.MathObjects
         public bool? RightAssociative { get; }
         public bool? Unary { get; }
 
-        public Operator(TerminalSymbol terminalSymbol, int precedence, char symbol)
+        public Operator(TerminalSymbol terminalSymbol, int precedence, string symbol)
         {
             TerminalSymbol = terminalSymbol;
             Precedence = precedence;
-            Symbol = char.ToString(symbol);
+            Symbol = symbol;
         }
 
-        public Operator(TerminalSymbol terminalSymbol, int precedence, char symbol, bool rightAssociative, bool unary)
+        public Operator(TerminalSymbol terminalSymbol, int precedence, string symbol, bool rightAssociative, bool unary)
         {
             TerminalSymbol = terminalSymbol;
             Precedence = precedence;
-            Symbol = char.ToString(symbol);
+            Symbol = symbol;
             RightAssociative = rightAssociative;
             Unary = unary;
         }

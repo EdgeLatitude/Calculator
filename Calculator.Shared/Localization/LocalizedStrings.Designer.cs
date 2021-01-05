@@ -196,15 +196,6 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a A.
-        /// </summary>
-        public static string LastResultCharacter {
-            get {
-                return ResourceManager.GetString("LastResultCharacter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Lexical error.
         /// </summary>
         public static string LexicalError {

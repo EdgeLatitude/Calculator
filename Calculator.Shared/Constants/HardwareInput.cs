@@ -4,22 +4,22 @@
     {
         public const string CopyCharacter = "c";
         public const string RootCharacter = "r";
-        public const string ResultOperator = LexicalSymbolsAsString.ResultOperator;
+        public const string ResultOperator = LexicalSymbols.ResultOperator;
 
         public static readonly string[] ParenthesesDecimalSeparatorsAndOperators = new string[]
         {
-            LexicalSymbolsAsString.OpeningParenthesis,
-            LexicalSymbolsAsString.ClosingParenthesis,
-            LexicalSymbolsAsString.Comma,
-            LexicalSymbolsAsString.Dot,
-            LexicalSymbolsAsString.AdditionOperator,
-            LexicalSymbolsAsString.SubstractionOperator,
-            LexicalSymbolsAsString.MultiplicationOperator,
-            LexicalSymbolsAsString.DivisionOperator,
-            LexicalSymbolsAsString.PotentiationOperator,
-            LexicalSymbolsAsString.SquareRootOperator,
-            LexicalSymbolsAsString.SimpleMultiplicationOperator,
-            LexicalSymbolsAsString.SimpleDivisionOperator
+            LexicalSymbols.OpeningParenthesis,
+            LexicalSymbols.ClosingParenthesis,
+            LexicalSymbols.Comma,
+            LexicalSymbols.Dot,
+            LexicalSymbols.AdditionOperator,
+            LexicalSymbols.SubstractionOperator,
+            LexicalSymbols.MultiplicationOperator,
+            LexicalSymbols.DivisionOperator,
+            LexicalSymbols.PotentiationOperator,
+            LexicalSymbols.SquareRootOperator,
+            LexicalSymbols.SimpleMultiplicationOperator,
+            LexicalSymbols.SimpleDivisionOperator
         };
     }
 }

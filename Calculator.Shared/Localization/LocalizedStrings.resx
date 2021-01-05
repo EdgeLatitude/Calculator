@@ -122,9 +122,6 @@
   <data name="LastResultAbbreviation" xml:space="preserve">
     <value>ANS</value>
   </data>
-  <data name="LastResultCharacter" xml:space="preserve">
-    <value>A</value>
-  </data>
   <data name="HistoryLength" xml:space="preserve">
     <value>Results history length</value>
   </data>
