@@ -256,12 +256,14 @@ namespace Calculator.Shared.ViewModels
             }
 
             // Use previous input if it was a valid one and there was no interaction after calculating
-            var input = _nextStroke == NextInput.ClearAtNumber ? _lastInput : Input;
+            var input = _nextStroke == NextInput.ClearAtNumber ?
+                _lastInput :
+                Input.ToArray();
 
             // Calculate and show corresponding result
             _calculating = true;
             _lastInput = input;
-            var calculationResult = Logic.Calculator.Calculate(input, _variableStorageValues);
+            var calculationResult = Logic.Calculator.Calculate(JoinInputSectionsIntoSingleString(input), _variableStorageValues);
             if (calculationResult != null)
                 // Show result if calculation was successful
                 if (calculationResult.Successful)
@@ -271,7 +273,7 @@ namespace Calculator.Shared.ViewModels
                     {
                         AfterResult = true;
 
-                        Input = resultText;
+                        ClearAndAddInputSection(resultText);
                         _nextStroke = NextInput.ClearAtNumber;
 
                         AddOrUpdateVariableStorage(Logic.Calculator.LastResult, result);
@@ -281,7 +283,7 @@ namespace Calculator.Shared.ViewModels
                     // Show error message if result could not be formatted
                     else
                     {
-                        Input = LocalizedStrings.CalculationError;
+                        ClearAndAddInputSection(LocalizedStrings.CalculationError);
                         _nextStroke = NextInput.ClearAtAny;
                     }
 
@@ -289,13 +291,13 @@ namespace Calculator.Shared.ViewModels
                 // Show error message if calculation was not successful
                 else
                 {
-                    Input = calculationResult.ErrorMessage;
+                    ClearAndAddInputSection(calculationResult.ErrorMessage);
                     _nextStroke = NextInput.ClearAtAny;
                 }
             // It has no reason to be a null object
             else
             {
-                Input = LocalizedStrings.UnexpectedError;
+                ClearAndAddInputSection(LocalizedStrings.UnexpectedError);
                 _nextStroke = NextInput.ClearAtAny;
             }
             _calculating = false;
@@ -321,7 +323,7 @@ namespace Calculator.Shared.ViewModels
         }
 
         private async Task CopyInputToClipboard() =>
-            await _clipboardService.SetTextAsync(Input);
+            await _clipboardService.SetTextAsync(JoinInputSectionsIntoSingleString(Input.ToArray()));
 
         private void ManageInputFromHardware(char character)
         {
@@ -420,6 +422,9 @@ namespace Calculator.Shared.ViewModels
             Input.Insert(indexOfSelectedInputSection + 1, newSection);
             SelectedInputSection = newSection;
         }
+
+        private string JoinInputSectionsIntoSingleString(InputSectionViewModel[] input) =>
+            string.Join(string.Empty, input.Select(inputSection => inputSection.Input));
 
         private void Input_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
