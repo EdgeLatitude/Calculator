@@ -85,12 +85,12 @@
                                 <DataTemplate
                                     x:DataType="viewmodels:InputSectionViewModel">
                                     <Label 
-                                        Text="{Binding Input}" 
+                                        Text="{Binding Input, Mode=OneTime}" 
                                         TextDecorations="{Binding IsSelected, Converter={StaticResource isSelectedConverter}}"
                                         Style="{StaticResource InputLabelStyle}">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer
-                                                Command="{Binding Source={x:Reference Page}, Path=BindingContext.CopyInputToClipboardCommand}"
+                                                Command="{Binding Source={x:Reference Page}, Path=BindingContext.CopyInputToClipboardCommand, Mode=OneTime}"
                                                 Tapped="InputLabel_Tapped" />
                                         </Label.GestureRecognizers>
                                     </Label>
@@ -261,7 +261,7 @@
                     Command="{Binding NumberCommand, Mode=OneTime}"
                     CommandParameter="{x:Static constants:LexicalSymbolsAsString.Zero}" />
                 <controls:HapticFeedbackButton
-                    Text="{Binding DecimalSeparator}"
+                    Text="{Binding DecimalSeparator, Mode=OneTime}"
                     Grid.Row="5" 
                     Grid.Column="1" 
                     Style="{StaticResource InputButtonStyle}"
