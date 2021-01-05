@@ -45,12 +45,15 @@ namespace Calculator.Mobile.Pages
             }
         }
 
-        private async void InputLabel_PropertyChanged(object sender, PropertyChangedEventArgs args)
+        private async void InputStackLayout_PropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName != nameof(Width))
                 return;
 
-            await InputScrollView.ScrollToAsync(InputLabel, _viewModel.AfterResult ? ScrollToPosition.Start : ScrollToPosition.End, false);
+            await InputScrollView.ScrollToAsync(InputStackLayout, _viewModel.AfterResult ?
+                ScrollToPosition.Start :
+                ScrollToPosition.End,
+                false);
         }
 
         private void InputLabel_Tapped(object sender, EventArgs args) =>

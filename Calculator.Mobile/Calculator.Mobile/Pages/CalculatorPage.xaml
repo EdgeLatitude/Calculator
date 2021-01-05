@@ -9,7 +9,8 @@
                        xmlns:viewmodels="clr-namespace:Calculator.Shared.ViewModels;assembly=Calculator.Shared"
                        mc:Ignorable="d"
                        x:DataType="viewmodels:CalculatorViewModel"
-                       x:Class="Calculator.Mobile.Pages.CalculatorPage">
+                       x:Class="Calculator.Mobile.Pages.CalculatorPage"
+                       x:Name="Page">
     <controls:KeyboardPage.ToolbarItems>
         <ToolbarItem 
             Text="{x:Static localization:LocalizedStrings.History}"
@@ -71,28 +72,30 @@
                     Style="{StaticResource InputScrollViewStyle}">
                     <Grid
                         Style="{StaticResource InputGridStyle}">
-                        <!-- Spacer label because in iOS labels' height is collapsed when there is no text -->
                         <Label 
                             Text=" "
-                            Style="{StaticResource InputLabelStyle}">
-                            <Label.IsVisible>
-                                <OnPlatform x:TypeArguments="x:Boolean">
-                                    <On Platform="Android" Value="False" />
-                                    <On Platform="iOS" Value="True" />
-                                </OnPlatform>
-                            </Label.IsVisible>
-                        </Label>
-                        <Label 
-                            x:Name="InputLabel"
-                            Text="{Binding Input}" 
-                            Style="{StaticResource InputLabelStyle}"
-                            PropertyChanged="InputLabel_PropertyChanged">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding CopyInputToClipboardCommand}"
-                                    Tapped="InputLabel_Tapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
+                            Style="{StaticResource InputLabelStyle}" />
+                        <StackLayout
+                            x:Name="InputStackLayout"
+                            BindableLayout.ItemsSource="{Binding Input, Mode=OneTime}"
+                            Orientation="Horizontal"
+                            PropertyChanged="InputStackLayout_PropertyChanged"
+                            Spacing="0">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate
+                                    x:DataType="viewmodels:InputSectionViewModel">
+                                    <Label 
+                                        Text="{Binding Input}" 
+                                        Style="{StaticResource InputLabelStyle}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={x:Reference Page}, Path=BindingContext.CopyInputToClipboardCommand}"
+                                                Tapped="InputLabel_Tapped" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
                     </Grid>
                 </ScrollView>
             </Frame>
