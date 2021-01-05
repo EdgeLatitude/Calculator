@@ -5,6 +5,8 @@ using Calculator.Shared.Models.Enums;
 using Calculator.Shared.PlatformServices;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -38,7 +40,7 @@ namespace Calculator.Shared.ViewModels
 
         private bool _calculating;
 
-        private string _lastInput;
+        private InputSectionViewModel[] _lastInput;
 
         private NextInput _nextStroke = NextInput.DoNothing;
 
@@ -70,26 +72,29 @@ namespace Calculator.Shared.ViewModels
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
-        }
 
-        private string _input = string.Empty;
-
-        public string Input
-        {
-            get => _input;
-            set
-            {
-                if (_input == value)
-                    return;
-                _input = value;
-                OnPropertyChanged();
-
-                if (!_calculating)
-                    AfterResult = false;
-            }
+            Input.CollectionChanged += Input_CollectionChanged;
         }
 
         public string DecimalSeparator => Logic.Calculator.DecimalSeparator;
+
+        private readonly ObservableCollection<InputSectionViewModel> _input = new ObservableCollection<InputSectionViewModel>();
+
+        public ObservableCollection<InputSectionViewModel> Input => _input;
+
+        private InputSectionViewModel _selectedInputSection;
+
+        public InputSectionViewModel SelectedInputSection
+        {
+            get => _selectedInputSection;
+            set
+            {
+                if (_selectedInputSection == value)
+                    return;
+                _selectedInputSection = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool AfterResult { get; private set; }
 
@@ -133,73 +138,84 @@ namespace Calculator.Shared.ViewModels
         private void Clear()
         {
             // Clear user input
-            Input = string.Empty;
+            Input.Clear();
             _nextStroke = NextInput.DoNothing;
         }
 
         private void Delete()
         {
             // Do nothing if there is currently no input
-            if (string.IsNullOrWhiteSpace(Input))
+            if (!Input.Any())
                 return;
             // Clear everything if required
             if (_nextStroke != NextInput.DoNothing)
             {
-                Input = string.Empty;
+                Input.Clear();
                 _nextStroke = NextInput.DoNothing;
                 return;
             }
-            // Else only delete 1 character, the last one
-            Input = Input[0..^1];
+            // Else only delete 1 section, the selected one
+            var indexOfSelectedInputSection = Input.IndexOf(SelectedInputSection);
+            Input.RemoveAt(indexOfSelectedInputSection);
+            SelectedInputSection = indexOfSelectedInputSection == 0 ?
+                Input.Any() ?
+                    Input.First() :
+                    null :
+                Input.Count > indexOfSelectedInputSection ?
+                    Input[indexOfSelectedInputSection] :
+                    Input[indexOfSelectedInputSection - 1];
+            if (SelectedInputSection != null)
+                SelectedInputSection.IsSelected = true;
         }
 
         private void BinaryOperator(string symbol)
         {
             if (_nextStroke == NextInput.ClearAtAny)
             {
-                Input = symbol;
+                ClearAndAddInputSection(symbol);
                 _nextStroke = NextInput.DoNothing;
             }
             else if (_nextStroke == NextInput.ClearAtNumber)
             {
-                Input = Logic.Calculator.LastResult + symbol;
+                ClearAndAddInputSection(Logic.Calculator.LastResult.ToString());
+                AddInputSection(symbol);
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                Input += symbol;
+                AddInputSection(symbol);
         }
 
         private void UnaryOperator(string symbol)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
-                Input = symbol;
+                ClearAndAddInputSection(symbol);
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                Input += symbol;
+                AddInputSection(symbol);
         }
 
         private void Parenthesis(string parenthesis)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
-                Input = parenthesis;
+                ClearAndAddInputSection(parenthesis);
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                Input += parenthesis;
+                AddInputSection(parenthesis);
         }
 
         private void VariableStorage(string symbol)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
-                Input = symbol;
+                ClearAndAddInputSection(symbol);
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                Input += symbol;
+                AddInputSection(symbol);
         }
 
         private void Number(string number)
@@ -207,34 +223,34 @@ namespace Calculator.Shared.ViewModels
             if (_nextStroke == NextInput.ClearAtAny
                 || _nextStroke == NextInput.ClearAtNumber)
             {
-                Input = number;
+                ClearAndAddInputSection(number);
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                Input += number;
+                AddInputSection(number);
         }
 
         private void Decimal()
         {
             if (_nextStroke != NextInput.DoNothing)
             {
-                Input = Logic.Calculator.DecimalSeparator;
+                ClearAndAddInputSection(DecimalSeparator);
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                Input += Logic.Calculator.DecimalSeparator;
+                AddInputSection(DecimalSeparator);
         }
 
         private void Calculate()
         {
             // Do nothing if there is no input
-            if (string.IsNullOrWhiteSpace(Input))
+            if (!Input.Any())
                 return;
 
             // Clear input if there was no interaction after an error
             if (_nextStroke == NextInput.ClearAtAny)
             {
-                Input = string.Empty;
+                Input.Clear();
                 _nextStroke = NextInput.DoNothing;
                 return;
             }
@@ -297,9 +313,9 @@ namespace Calculator.Shared.ViewModels
         private bool TryFormatResult(decimal result, out string resultText)
         {
             resultText = result.ToString();
-            while (resultText.Contains(Logic.Calculator.DecimalSeparator)
+            while (resultText.Contains(DecimalSeparator)
                 && (char.ToString(resultText[^1]) == Logic.Calculator.ZeroString
-                    || char.ToString(resultText[^1]) == Logic.Calculator.DecimalSeparator))
+                    || char.ToString(resultText[^1]) == DecimalSeparator))
                 resultText = resultText[0..^1];
             return true;
         }
@@ -355,11 +371,11 @@ namespace Calculator.Shared.ViewModels
                 && resultFromHistory != LocalizedStrings.ClearHistory)
                 if (_nextStroke != NextInput.DoNothing)
                 {
-                    Input = resultFromHistory;
+                    ClearAndAddInputSection(resultFromHistory);
                     _nextStroke = NextInput.DoNothing;
                 }
                 else
-                    Input += resultFromHistory;
+                    AddInputSection(resultFromHistory);
             else if (resultFromHistory == LocalizedStrings.ClearHistory)
                 Settings.Instance.ClearResultsHistory();
         }
@@ -378,5 +394,37 @@ namespace Calculator.Shared.ViewModels
                         + Environment.NewLine :
                     string.Empty)
                 + LocalizedStrings.AppIconAttribution);
+
+        private void ClearAndAddInputSection(string input)
+        {
+            Input.Clear();
+            var onlySection = new InputSectionViewModel(input);
+            Input.Add(onlySection);
+            SelectedInputSection = onlySection;
+        }
+
+        private void AddInputSection(string input)
+        {
+            if (SelectedInputSection == null)
+            {
+                var onlySection = new InputSectionViewModel(input);
+                Input.Add(onlySection);
+                SelectedInputSection = onlySection;
+                return;
+            }
+
+            var indexOfSelectedInputSection = Input.IndexOf(SelectedInputSection);
+            SelectedInputSection.IsSelected = false;
+
+            var newSection = new InputSectionViewModel(input);
+            Input.Insert(indexOfSelectedInputSection + 1, newSection);
+            SelectedInputSection = newSection;
+        }
+
+        private void Input_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            if (!_calculating)
+                AfterResult = false;
+        }
     }
 }
