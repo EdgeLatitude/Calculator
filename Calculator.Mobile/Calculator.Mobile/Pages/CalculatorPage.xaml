@@ -86,6 +86,7 @@
                                     x:DataType="viewmodels:InputSectionViewModel">
                                     <Label 
                                         Text="{Binding Input}" 
+                                        TextDecorations="{Binding IsSelected, Converter={StaticResource isSelectedConverter}}"
                                         Style="{StaticResource InputLabelStyle}">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer

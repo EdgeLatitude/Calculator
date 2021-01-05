@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:controls="clr-namespace:Calculator.Mobile.Controls"
+             xmlns:converters="clr-namespace:Calculator.Mobile.Converters"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              mc:Ignorable="d"
@@ -14,6 +15,8 @@
         <Color x:Key="AccentColor">#006060</Color>
         <Color x:Key="BarBackgroundColor">#004040</Color>
         <Color x:Key="BarForegroundColor">#FFFFFF</Color>
+        <!-- Converters !-->
+        <converters:IsSelectedConverter x:Key="isSelectedConverter" />
         <!-- Implicit styles !-->
         <Style TargetType="Button">
             <Setter Property="VisualStateManager.VisualStateGroups">
