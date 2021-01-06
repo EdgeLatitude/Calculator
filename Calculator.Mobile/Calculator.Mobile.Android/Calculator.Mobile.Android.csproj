@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />
+    <Compile Include="DependencyServices\ClickSoundDependencyService.cs" />
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
     <Compile Include="LaunchScreenActivity.cs" />
     <Compile Include="MainActivity.cs" />

@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Calculator.Shared.Models.Theming;
+using Plugin.CurrentActivity;
 
 namespace Calculator.Mobile.Droid
 {
@@ -14,6 +15,7 @@ namespace Calculator.Mobile.Droid
 
             base.OnCreate(savedInstanceState);
 
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             LoadApplication(new App());

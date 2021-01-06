@@ -64,6 +64,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />
+    <Compile Include="DependencyServices\ClickSoundDependencyService.cs" />
     <Compile Include="DependencyServices\ThemingDependencyService.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
