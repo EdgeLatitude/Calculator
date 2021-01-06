@@ -62,15 +62,15 @@ namespace Calculator.Shared.ViewModels
             AllClearCommand = _commandFactoryService.Create(AllClear);
             ClearCommand = _commandFactoryService.Create(Clear);
             DeleteCommand = _commandFactoryService.Create(async () => await Delete());
-            BinaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => BinaryOperator(symbol));
-            UnaryOperatorCommand = _commandFactoryService.Create<string>((symbol) => UnaryOperator(symbol));
-            ParenthesisCommand = _commandFactoryService.Create<string>((parenthesis) => Parenthesis(parenthesis));
-            VariableStorageCommand = _commandFactoryService.Create<string>((symbol) => VariableStorage(symbol));
-            NumberCommand = _commandFactoryService.Create<string>((number) => Number(number));
-            DecimalCommand = _commandFactoryService.Create(Decimal);
+            BinaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await BinaryOperator(symbol));
+            UnaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await UnaryOperator(symbol));
+            ParenthesisCommand = _commandFactoryService.Create<string>(async (parenthesis) => await Parenthesis(parenthesis));
+            VariableStorageCommand = _commandFactoryService.Create<string>(async (symbol) => await VariableStorage(symbol));
+            NumberCommand = _commandFactoryService.Create<string>(async (number) => await Number(number));
+            DecimalCommand = _commandFactoryService.Create(async () => await Decimal());
             CalculateCommand = _commandFactoryService.Create(async () => await Calculate());
             CopyInputToClipboardCommand = _commandFactoryService.Create(async () => await CopyInputToClipboard());
-            ManageInputFromHardwareCommand = _commandFactoryService.Create<string>((character) => ManageInputFromHardware(character));
+            ManageInputFromHardwareCommand = _commandFactoryService.Create<string>(async (character) => await ManageInputFromHardware(character));
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
@@ -156,7 +156,7 @@ namespace Calculator.Shared.ViewModels
                 _selectedInputSection.IsSelected = true;
         }
 
-        private void BinaryOperator(string symbol)
+        private async Task BinaryOperator(string symbol)
         {
             if (_nextStroke == NextInput.ClearAtAny)
             {
@@ -166,14 +166,14 @@ namespace Calculator.Shared.ViewModels
             else if (_nextStroke == NextInput.ClearAtNumber)
             {
                 ClearAndAddInputSection(LocalizedStrings.LastResultAbbreviation);
-                AddInputSection(symbol);
+                await AddInputSection(symbol);
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                AddInputSection(symbol);
+                await AddInputSection(symbol);
         }
 
-        private void UnaryOperator(string symbol)
+        private async Task UnaryOperator(string symbol)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
@@ -181,10 +181,10 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                AddInputSection(symbol);
+                await AddInputSection(symbol);
         }
 
-        private void Parenthesis(string parenthesis)
+        private async Task Parenthesis(string parenthesis)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
@@ -192,10 +192,10 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                AddInputSection(parenthesis);
+                await AddInputSection(parenthesis);
         }
 
-        private void VariableStorage(string symbol)
+        private async Task VariableStorage(string symbol)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
@@ -203,10 +203,10 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                AddInputSection(symbol);
+                await AddInputSection(symbol);
         }
 
-        private void Number(string number)
+        private async Task Number(string number)
         {
             if (_nextStroke == NextInput.ClearAtAny
                 || _nextStroke == NextInput.ClearAtNumber)
@@ -215,10 +215,10 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                AddInputSection(number);
+                await AddInputSection(number);
         }
 
-        private void Decimal()
+        private async Task Decimal()
         {
             if (_nextStroke != NextInput.DoNothing)
             {
@@ -226,7 +226,7 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                AddInputSection(DecimalSeparator);
+                await AddInputSection(DecimalSeparator);
         }
 
         private async Task Calculate()
@@ -313,22 +313,22 @@ namespace Calculator.Shared.ViewModels
         private async Task CopyInputToClipboard() =>
             await _clipboardService.SetTextAsync(JoinInputSectionsIntoSingleString(Input.ToArray()));
 
-        private void ManageInputFromHardware(string character)
+        private async Task ManageInputFromHardware(string character)
         {
             if (Logic.Calculator.VariableStorageWords.Contains(character))
-                VariableStorage(character);
+                await VariableStorage(character);
             else if (Logic.Calculator.Parentheses.Contains(character))
-                Parenthesis(character);
+                await Parenthesis(character);
             else if (Logic.Calculator.BinaryOperators.Contains(character))
-                BinaryOperator(character);
+                await BinaryOperator(character);
             else if (Logic.Calculator.UnaryOperators.Contains(character))
-                UnaryOperator(character);
+                await UnaryOperator(character);
             else if (Logic.Calculator.Numbers.Contains(character))
-                Number(character);
+                await Number(character);
             else if (_possibleDecimalSeparators.Contains(character))
-                Decimal();
+                await Decimal();
             else if (_equivalentSymbols.ContainsKey(character))
-                ManageInputFromHardware(_equivalentSymbols[character]);
+                await ManageInputFromHardware(_equivalentSymbols[character]);
         }
 
         private async Task ShowHistory()
@@ -364,7 +364,7 @@ namespace Calculator.Shared.ViewModels
                     _nextStroke = NextInput.DoNothing;
                 }
                 else
-                    AddInputSection(resultFromHistory);
+                    await AddInputSection(resultFromHistory);
             else if (resultFromHistory == LocalizedStrings.ClearHistory)
                 Settings.Instance.ClearResultsHistory();
         }
@@ -392,7 +392,7 @@ namespace Calculator.Shared.ViewModels
             _selectedInputSection = onlySection;
         }
 
-        private void AddInputSection(string input)
+        private async Task AddInputSection(string input)
         {
             if (_selectedInputSection == null)
             {
@@ -402,7 +402,7 @@ namespace Calculator.Shared.ViewModels
                 return;
             }
 
-            var indexOfSelectedInputSection = Input.IndexOf(_selectedInputSection);
+            var indexOfSelectedInputSection = await Task.Run(() => Input.IndexOf(_selectedInputSection));
             _selectedInputSection.IsSelected = false;
 
             var newSection = new InputSectionViewModel(input);
