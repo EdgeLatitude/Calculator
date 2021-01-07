@@ -145,15 +145,17 @@ namespace Calculator.Shared.ViewModels
             // Else only delete 1 section, the selected one
             var indexOfSelectedInputSection = Input.IndexOf(_selectedInputSection);
             Input.RemoveAt(indexOfSelectedInputSection);
-            await Task.Run(() => _selectedInputSection = indexOfSelectedInputSection == 0 ?
-               Input.Any() ?
-                   Input.First() :
-                   null :
-               Input.Count > indexOfSelectedInputSection ?
-                   Input[indexOfSelectedInputSection] :
-                   Input[indexOfSelectedInputSection - 1]);
+            _selectedInputSection = indexOfSelectedInputSection == 0 ?
+                Input.Any() ?
+                    Input.First() :
+                    null :
+                Input.Count > indexOfSelectedInputSection ?
+                    Input[indexOfSelectedInputSection] :
+                    Input[indexOfSelectedInputSection - 1];
             if (_selectedInputSection != null)
                 _selectedInputSection.IsSelected = true;
+
+            await Task.Delay(100);
         }
 
         private async Task BinaryOperator(string symbol)
@@ -402,12 +404,14 @@ namespace Calculator.Shared.ViewModels
                 return;
             }
 
-            var indexOfSelectedInputSection = await Task.Run(() => Input.IndexOf(_selectedInputSection));
+            var indexOfSelectedInputSection = Input.IndexOf(_selectedInputSection);
             _selectedInputSection.IsSelected = false;
 
             var newSection = new InputSectionViewModel(input);
             Input.Insert(indexOfSelectedInputSection + 1, newSection);
             _selectedInputSection = newSection;
+
+            await Task.Delay(100);
         }
 
         private string JoinInputSectionsIntoSingleString(InputSectionViewModel[] input) =>
