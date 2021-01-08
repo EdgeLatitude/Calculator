@@ -70,6 +70,7 @@ namespace Calculator.Shared.ViewModels
             DecimalCommand = _commandFactoryService.Create(async () => await Decimal());
             CalculateCommand = _commandFactoryService.Create(async () => await Calculate());
             CopyInputToClipboardCommand = _commandFactoryService.Create(async () => await CopyInputToClipboard());
+            SelectInputSectionCommand = _commandFactoryService.Create<InputSectionViewModel>(async (inputSectionViewModel) => await SelectInputSection(inputSectionViewModel));
             ManageInputFromHardwareCommand = _commandFactoryService.Create<string>(async (character) => await ManageInputFromHardware(character));
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
@@ -107,6 +108,8 @@ namespace Calculator.Shared.ViewModels
         public ICommand CalculateCommand { get; private set; }
 
         public ICommand CopyInputToClipboardCommand { get; private set; }
+
+        public ICommand SelectInputSectionCommand { get; private set; }
 
         public ICommand ManageInputFromHardwareCommand { get; private set; }
 
@@ -149,9 +152,7 @@ namespace Calculator.Shared.ViewModels
                 Input.Any() ?
                     Input.First() :
                     null :
-                Input.Count > indexOfSelectedInputSection ?
-                    Input[indexOfSelectedInputSection] :
-                    Input[indexOfSelectedInputSection - 1];
+                Input[indexOfSelectedInputSection - 1];
             if (_selectedInputSection != null)
                 _selectedInputSection.IsSelected = true;
 
@@ -314,6 +315,15 @@ namespace Calculator.Shared.ViewModels
 
         private async Task CopyInputToClipboard() =>
             await _clipboardService.SetTextAsync(JoinInputSectionsIntoSingleString(Input.ToArray()));
+
+        private async Task SelectInputSection(InputSectionViewModel inputSectionViewModel)
+        {
+            if (_selectedInputSection != null)
+                _selectedInputSection.IsSelected = false;
+            _selectedInputSection = inputSectionViewModel;
+            inputSectionViewModel.IsSelected = true;
+            await Task.Delay(100);
+        }
 
         private async Task ManageInputFromHardware(string character)
         {

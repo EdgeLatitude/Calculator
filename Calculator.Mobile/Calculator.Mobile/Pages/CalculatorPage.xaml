@@ -90,8 +90,8 @@
                                         Style="{StaticResource InputLabelStyle}">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer
-                                                Command="{Binding Source={x:Reference Page}, Path=BindingContext.CopyInputToClipboardCommand, Mode=OneTime}"
-                                                Tapped="InputLabel_Tapped" />
+                                                Command="{Binding Source={x:Reference Page}, Path=BindingContext.SelectInputSectionCommand, Mode=OneTime}"
+                                                CommandParameter="{Binding .}" />
                                         </Label.GestureRecognizers>
                                     </Label>
                                 </DataTemplate>
