@@ -96,6 +96,10 @@
                                     </Label>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
+                            <StackLayout.GestureRecognizers>
+                                <PinchGestureRecognizer
+                                    PinchUpdated="InputStackLayout_PinchUpdated" />
+                            </StackLayout.GestureRecognizers>
                         </StackLayout>
                     </Grid>
                 </ScrollView>

@@ -2,6 +2,7 @@
 using Calculator.Shared.ViewModels;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -56,8 +57,13 @@ namespace Calculator.Mobile.Pages
                 false);
         }
 
-        private void InputLabel_Tapped(object sender, EventArgs args) =>
+        private void InputStackLayout_PinchUpdated(object sender, PinchGestureUpdatedEventArgs args)
+        {
+            if (!_viewModel.Input.Any())
+                return;
+            _viewModel.CopyInputToClipboardCommand.Execute(null);
             CopyInputToClipboardAnimation();
+        }
 
         private void CopyInputToClipboardAnimation()
         {
