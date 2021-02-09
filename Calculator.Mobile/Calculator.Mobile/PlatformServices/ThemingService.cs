@@ -3,7 +3,7 @@ using Calculator.Mobile.Themes;
 using Calculator.Shared.Models.Theming;
 using Calculator.Shared.PlatformServices;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -28,10 +28,14 @@ namespace Calculator.Mobile.PlatformServices
 
         public void SetTheme(Theme theme)
         {
-            ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+            var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+            var appJustLaunched = true;
             if (mergedDictionaries != null)
             {
-                mergedDictionaries.Clear();
+                if (mergedDictionaries.Any())
+                    appJustLaunched = false;
+                if (!appJustLaunched)
+                    mergedDictionaries.Clear();
                 switch (theme)
                 {
                     case Theme.Dark:
@@ -43,7 +47,8 @@ namespace Calculator.Mobile.PlatformServices
                 }
             }
 
-            if (_themingDependencyService.DeviceRequiresPagesRedraw())
+            if (!appJustLaunched
+                && _themingDependencyService.DeviceRequiresPagesRedraw())
                 RedrawPages();
         }
 
