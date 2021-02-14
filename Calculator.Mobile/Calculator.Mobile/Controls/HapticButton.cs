@@ -5,11 +5,11 @@ using Xamarin.Forms;
 
 namespace Calculator.Mobile.Controls
 {
-    class HapticFeedbackButton : Button
+    class HapticButton : Button
     {
         private static IClickSoundDependencyService _clickSoundService;
 
-        public HapticFeedbackButton() =>
+        public HapticButton() =>
             Clicked += HapticFeedbackButton_Clicked;
 
         private void HapticFeedbackButton_Clicked(object sender, EventArgs e)
