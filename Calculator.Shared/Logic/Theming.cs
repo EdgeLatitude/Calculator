@@ -7,10 +7,6 @@ namespace Calculator.Shared.Logic
 {
     public class Theming
     {
-        private static IThemingService _themingService;
-
-        public static event EventHandler<ThemeChangeNeededEventArgs> ThemeChangeNeeded;
-
         public static Theming Instance
         {
             get;
@@ -20,6 +16,10 @@ namespace Calculator.Shared.Logic
         public static void Initialize(
             IThemingService themingService) =>
             Instance = new Theming(themingService);
+
+        private static IThemingService _themingService;
+
+        public static event EventHandler<ThemeChangeNeededEventArgs> ThemeChangeNeeded;
 
         private Theming(
             IThemingService themingService)

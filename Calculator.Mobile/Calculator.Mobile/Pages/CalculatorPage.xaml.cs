@@ -57,12 +57,6 @@ namespace Calculator.Mobile.Pages
                 false);
         }
 
-        private void InputStackLayout_PinchUpdated(object sender, PinchGestureUpdatedEventArgs args) =>
-            CopyInputToClipboard();
-
-        private void InputStackLayout_Swiped(object sender, SwipedEventArgs args) =>
-            CopyInputToClipboard();
-
         private void CopyInputToClipboard()
         {
             if (!_viewModel.Input.Any())

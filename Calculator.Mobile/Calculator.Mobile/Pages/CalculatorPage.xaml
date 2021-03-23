@@ -96,19 +96,6 @@
                                     </Label>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
-                            <StackLayout.GestureRecognizers>
-                                <OnPlatform x:TypeArguments="GestureRecognizer">
-                                    <OnPlatform.Android>
-                                        <PinchGestureRecognizer
-                                            PinchUpdated="InputStackLayout_PinchUpdated" />
-                                    </OnPlatform.Android>
-                                    <OnPlatform.iOS>
-                                        <SwipeGestureRecognizer
-                                            Direction="Down,Up"
-                                            Swiped="InputStackLayout_Swiped" />
-                                    </OnPlatform.iOS>
-                                </OnPlatform>
-                            </StackLayout.GestureRecognizers>
                         </StackLayout>
                     </Grid>
                 </ScrollView>
