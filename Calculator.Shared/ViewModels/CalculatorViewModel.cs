@@ -69,7 +69,8 @@ namespace Calculator.Shared.ViewModels
             NumberCommand = _commandFactoryService.Create<string>(async (number) => await Number(number));
             DecimalCommand = _commandFactoryService.Create(async () => await Decimal());
             CalculateCommand = _commandFactoryService.Create(async () => await Calculate());
-            CopyInputToClipboardCommand = _commandFactoryService.Create(async () => await CopyInputToClipboard());
+            CopyCommand = _commandFactoryService.Create(async () => await Copy());
+            PasteCommand = _commandFactoryService.Create(async () => await Paste());
             SelectInputSectionCommand = _commandFactoryService.Create<InputSectionViewModel>(async (inputSectionViewModel) => await SelectInputSection(inputSectionViewModel));
             ManageInputFromHardwareCommand = _commandFactoryService.Create<string>(async (character) => await ManageInputFromHardware(character));
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
@@ -107,7 +108,9 @@ namespace Calculator.Shared.ViewModels
 
         public ICommand CalculateCommand { get; private set; }
 
-        public ICommand CopyInputToClipboardCommand { get; private set; }
+        public ICommand CopyCommand { get; private set; }
+
+        public ICommand PasteCommand { get; private set; }
 
         public ICommand SelectInputSectionCommand { get; private set; }
 
@@ -313,8 +316,27 @@ namespace Calculator.Shared.ViewModels
             return true;
         }
 
-        private async Task CopyInputToClipboard() =>
+        private async Task Copy() =>
             await _clipboardService.SetTextAsync(JoinInputSectionsIntoSingleString(Input.ToArray()));
+
+        private async Task Paste()
+        {
+            var clipboardText = await _clipboardService.GetTextAsync();
+            if (!decimal.TryParse(clipboardText, out var clipboardNumber))
+            {
+                await _alertsService.DisplayAlertAsync(
+                    LocalizedStrings.Notice,
+                    LocalizedStrings.YouCanOnlyPasteValidNumbers);
+                return;
+            }
+
+            var clipboardNumberAsString = clipboardNumber.ToString();
+            foreach (var symbol in clipboardNumberAsString)
+                if (char.IsNumber(symbol))
+                    await Number(char.ToString(symbol));
+                else if (char.ToString(symbol) == DecimalSeparator)
+                    await Decimal();
+        }
 
         private async Task SelectInputSection(InputSectionViewModel inputSectionViewModel)
         {
@@ -357,7 +379,8 @@ namespace Calculator.Shared.ViewModels
 
             if (!Settings.Instance.ContainsResultsHistory())
             {
-                await _alertsService.DisplayAlertAsync(LocalizedStrings.Notice,
+                await _alertsService.DisplayAlertAsync(
+                    LocalizedStrings.Notice,
                     LocalizedStrings.EmptyResultsHistory);
                 return;
             }

@@ -31,7 +31,7 @@ namespace Calculator.Mobile.Pages
             switch (command)
             {
                 case KeyCommand.Copy:
-                    _viewModel.CopyInputToClipboardCommand.Execute(null);
+                    _viewModel.CopyCommand.Execute(null);
                     CopyInputToClipboardAnimation();
                     break;
                 case KeyCommand.RootOperator:
@@ -57,11 +57,11 @@ namespace Calculator.Mobile.Pages
                 false);
         }
 
-        private void CopyInputToClipboard()
+        private void Copy_Clicked(object sender, EventArgs args)
         {
             if (!_viewModel.Input.Any())
                 return;
-            _viewModel.CopyInputToClipboardCommand.Execute(null);
+            _viewModel.CopyCommand.Execute(null);
             CopyInputToClipboardAnimation();
         }
 

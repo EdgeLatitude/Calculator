@@ -232,6 +232,15 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Paste.
+        /// </summary>
+        public static string Paste {
+            get {
+                return ResourceManager.GetString("Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Root operator.
         /// </summary>
         public static string RootOperator {
@@ -291,6 +300,15 @@ namespace Calculator.Shared.Localization {
         public static string UnexpectedError {
             get {
                 return ResourceManager.GetString("UnexpectedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You can only paste valid numbers..
+        /// </summary>
+        public static string YouCanOnlyPasteValidNumbers {
+            get {
+                return ResourceManager.GetString("YouCanOnlyPasteValidNumbers", resourceCulture);
             }
         }
     }

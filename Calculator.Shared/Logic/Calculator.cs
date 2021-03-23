@@ -25,7 +25,7 @@ namespace Calculator.Shared.Logic
             = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
 
         #region General definitions
-        private static readonly Dictionary<TerminalSymbol, string> TerminalSymbolsVariableStorageCharacter
+        private static readonly Dictionary<TerminalSymbol, string> _terminalSymbolsVariableStorageCharacter
             = new Dictionary<TerminalSymbol, string>
         {
             { TerminalSymbol.LastResult, LocalizedStrings.LastResultAbbreviation }
@@ -46,10 +46,10 @@ namespace Calculator.Shared.Logic
             = new string[] { LexicalSymbols.Zero, LexicalSymbols.One, LexicalSymbols.Two, LexicalSymbols.Three, LexicalSymbols.Four, LexicalSymbols.Five, LexicalSymbols.Six, LexicalSymbols.Seven, LexicalSymbols.Eight, LexicalSymbols.Nine }; // 1 terminal symbol for a complete real number
 
         // Separators array to be filled with some lexical collections
-        private static readonly string[] Separators;
+        private static readonly string[] _separators;
 
         // Automata for lexical analysis
-        private static readonly int?[,] Automata = new int?[,]
+        private static readonly int?[,] _automata = new int?[,]
         {           //  Numbers     Decimal
         /* S0 */    {   2,          1,      }, // Initial state
         /* S1 */    {   3,          null,   },
@@ -60,7 +60,7 @@ namespace Calculator.Shared.Logic
 
         #region Syntax definitions
         // Terminal symbols groups
-        private static readonly Dictionary<TerminalSymbol, TerminalSymbolGroup> TerminalSymbolsGroups
+        private static readonly Dictionary<TerminalSymbol, TerminalSymbolGroup> _terminalSymbolsGroups
             = new Dictionary<TerminalSymbol, TerminalSymbolGroup>
         {
             { TerminalSymbol.None, TerminalSymbolGroup.None },
@@ -79,7 +79,7 @@ namespace Calculator.Shared.Logic
         };
 
         // Grammar productions for each non terminal symbol
-        private static readonly Dictionary<NonTerminalSymbol, Enum[][]> GrammarNonTerminalSymbols
+        private static readonly Dictionary<NonTerminalSymbol, Enum[][]> _grammarNonTerminalSymbols
             = new Dictionary<NonTerminalSymbol, Enum[][]>
         {
             { NonTerminalSymbol.Expression, new Enum[][]
@@ -106,7 +106,7 @@ namespace Calculator.Shared.Logic
         };
 
         // Predictive table for each non terminal symbol
-        private static readonly Dictionary<NonTerminalSymbol, int?[]> PredictiveTable
+        private static readonly Dictionary<NonTerminalSymbol, int?[]> _predictiveTable
             = new Dictionary<NonTerminalSymbol, int?[]>
         {
             { NonTerminalSymbol.Expression,
@@ -120,7 +120,7 @@ namespace Calculator.Shared.Logic
         };
 
         // Predictive table column definitions
-        private static readonly Enum[] PredictiveTableColumns = new Enum[]
+        private static readonly Enum[] _predictiveTableColumns = new Enum[]
         {
             TerminalSymbolGroup.VariableStorageCharacters,
             TerminalSymbol.OpeningParenthesis,
@@ -132,12 +132,12 @@ namespace Calculator.Shared.Logic
         };
 
         // Starting non terminal symbol
-        private const NonTerminalSymbol StartingNonTerminalSymbol = NonTerminalSymbol.Expression;
+        private const NonTerminalSymbol _startingNonTerminalSymbol = NonTerminalSymbol.Expression;
         #endregion
 
         #region Semantic definitions
         // Operators dictionary by token
-        private static readonly Dictionary<TerminalSymbol, Operator> Operators
+        private static readonly Dictionary<TerminalSymbol, Operator> _operators
             = new Dictionary<TerminalSymbol, Operator>
         {
             { TerminalSymbol.OpeningParenthesis, new Operator(TerminalSymbol.OpeningParenthesis, 0, LexicalSymbols.OpeningParenthesis) },
@@ -160,7 +160,7 @@ namespace Calculator.Shared.Logic
             separators.AddRange(Parentheses);
             separators.AddRange(BinaryOperators);
             separators.AddRange(UnaryOperators);
-            Separators = separators.ToArray();
+            _separators = separators.ToArray();
         }
 
         public static async Task<CalculationResult> CalculateAsync(string operation, Dictionary<string, decimal> variableStorageValues) =>
@@ -197,7 +197,7 @@ namespace Calculator.Shared.Logic
         private static string[] SplitOperation(string operation)
         {
             // Add surrounding blank spaces to every separator in the operation
-            foreach (var separator in Separators)
+            foreach (var separator in _separators)
                 if (operation.Contains(separator))
                     operation = operation.Replace(separator, WhiteSpace + separator + WhiteSpace);
             // Remove unnecessary blank spaces
@@ -263,18 +263,18 @@ namespace Calculator.Shared.Logic
                 if (Numbers.Contains(lexemeCharacter))
                 {
                     automataColumn = 0;
-                    if (Automata[currentState, automataColumn].Equals(null))
+                    if (_automata[currentState, automataColumn].Equals(null))
                         return new LexemeResult(LocalizedStrings.LexicalError);
                     else
-                        currentState = Automata[currentState, automataColumn].Value;
+                        currentState = _automata[currentState, automataColumn].Value;
                 }
                 else if (DecimalSeparator == lexemeCharacter)
                 {
                     automataColumn = 1;
-                    if (Automata[currentState, automataColumn].Equals(null))
+                    if (_automata[currentState, automataColumn].Equals(null))
                         return new LexemeResult(LocalizedStrings.LexicalError);
                     else
-                        currentState = Automata[currentState, automataColumn].Value;
+                        currentState = _automata[currentState, automataColumn].Value;
                 }
                 else
                     return new LexemeResult(LocalizedStrings.LexicalError);
@@ -310,7 +310,7 @@ namespace Calculator.Shared.Logic
                     || terminalSymbolsList[0] == TerminalSymbol.SubstractionOperator)
                 && (terminalSymbolsList[1] == TerminalSymbol.RealNumber
                     || terminalSymbolsList[1] == TerminalSymbol.OpeningParenthesis
-                    || (TerminalSymbolsGroups.TryGetValue(terminalSymbolsList[1], out var tsg)
+                    || (_terminalSymbolsGroups.TryGetValue(terminalSymbolsList[1], out var tsg)
                         && (tsg == TerminalSymbolGroup.VariableStorageCharacters
                             || tsg == TerminalSymbolGroup.UnaryOperators))))
             {
@@ -324,15 +324,15 @@ namespace Calculator.Shared.Logic
                 // and opening parenthesis, variable storage character or unary operator
                 if ((terminalSymbolsList[i] == TerminalSymbol.RealNumber
                     || terminalSymbolsList[i] == TerminalSymbol.ClosingParenthesis
-                    || (TerminalSymbolsGroups.TryGetValue(terminalSymbolsList[i], out var leftTsg)
+                    || (_terminalSymbolsGroups.TryGetValue(terminalSymbolsList[i], out var leftTsg)
                         && leftTsg == TerminalSymbolGroup.VariableStorageCharacters))
                     && (terminalSymbolsList[i + 1] == TerminalSymbol.OpeningParenthesis
-                    || (TerminalSymbolsGroups.TryGetValue(terminalSymbolsList[i + 1], out var rightTsg)
+                    || (_terminalSymbolsGroups.TryGetValue(terminalSymbolsList[i + 1], out var rightTsg)
                         && (rightTsg == TerminalSymbolGroup.VariableStorageCharacters
                             || rightTsg == TerminalSymbolGroup.UnaryOperators))))
                 {
                     i++;
-                    lexemesList.Insert(i, Operators[TerminalSymbol.MultiplicationOperator].Symbol);
+                    lexemesList.Insert(i, _operators[TerminalSymbol.MultiplicationOperator].Symbol);
                     terminalSymbolsList.Insert(i, TerminalSymbol.MultiplicationOperator);
                     continue;
                 }
@@ -341,19 +341,19 @@ namespace Calculator.Shared.Logic
                 // operand, opening parenthesis, variable storage character or unary operator, 
                 // replacing the negation operator with the prioritary negation operation
                 if (i < terminalSymbolsList.Count - 2
-                    && TerminalSymbolsGroups.TryGetValue(terminalSymbolsList[i], out leftTsg)
+                    && _terminalSymbolsGroups.TryGetValue(terminalSymbolsList[i], out leftTsg)
                     && (terminalSymbolsList[i] == TerminalSymbol.OpeningParenthesis
                         || leftTsg == TerminalSymbolGroup.BinaryOperators
                         || leftTsg == TerminalSymbolGroup.UnaryOperators)
                     && terminalSymbolsList[i + 1] == TerminalSymbol.SubstractionOperator
                     && (terminalSymbolsList[i + 2] == TerminalSymbol.RealNumber
                         || terminalSymbolsList[i + 2] == TerminalSymbol.OpeningParenthesis
-                        || (TerminalSymbolsGroups.TryGetValue(terminalSymbolsList[i + 2], out rightTsg)
+                        || (_terminalSymbolsGroups.TryGetValue(terminalSymbolsList[i + 2], out rightTsg)
                             && (rightTsg == TerminalSymbolGroup.VariableStorageCharacters
                                 || rightTsg == TerminalSymbolGroup.UnaryOperators))))
                 {
                     i++;
-                    lexemesList[i] = Operators[TerminalSymbol.OperandNegatorOperator].Symbol;
+                    lexemesList[i] = _operators[TerminalSymbol.OperandNegatorOperator].Symbol;
                     terminalSymbolsList[i] = TerminalSymbol.OperandNegatorOperator;
                     lexemesList.Insert(i, MinusOneString);
                     terminalSymbolsList.Insert(i, TerminalSymbol.RealNumber);
@@ -373,7 +373,7 @@ namespace Calculator.Shared.Logic
 
             var syntaxStack = new Stack<Enum>();
             syntaxStack.Push(TerminalSymbol.Nothing);
-            syntaxStack.Push(StartingNonTerminalSymbol);
+            syntaxStack.Push(_startingNonTerminalSymbol);
 
             // Data structures for semantic analysis
             var operatorsStack = new Stack<Operator>();
@@ -387,7 +387,7 @@ namespace Calculator.Shared.Logic
                     {
                         case TerminalSymbol.OpeningParenthesis:
                         case TerminalSymbol.ClosingParenthesis:
-                            ProcessMathOperator(operatorsStack, postfixOperation, Operators[queueElement]);
+                            ProcessMathOperator(operatorsStack, postfixOperation, _operators[queueElement]);
                             break;
                         case TerminalSymbol.RealNumber:
                             postfixOperation.Add(new Operand(decimal.Parse(lexicalAnalysisResult.Lexemes[^syntaxQueue.Count])));
@@ -397,7 +397,7 @@ namespace Calculator.Shared.Logic
                     switch (stackElementTsg)
                     {
                         case TerminalSymbolGroup.VariableStorageCharacters:
-                            if (variableStorageValues.TryGetValue(TerminalSymbolsVariableStorageCharacter[queueElement],
+                            if (variableStorageValues.TryGetValue(_terminalSymbolsVariableStorageCharacter[queueElement],
                                 out var memoryValue))
                                 postfixOperation.Add(new Operand(memoryValue));
                             else
@@ -405,31 +405,31 @@ namespace Calculator.Shared.Logic
                             break;
                         case TerminalSymbolGroup.BinaryOperators:
                         case TerminalSymbolGroup.UnaryOperators:
-                            ProcessMathOperator(operatorsStack, postfixOperation, Operators[queueElement]);
+                            ProcessMathOperator(operatorsStack, postfixOperation, _operators[queueElement]);
                             break;
                     }
 
-                if ((PredictiveTableColumns.Contains(queueElement)
+                if ((_predictiveTableColumns.Contains(queueElement)
                         && queueElement.Equals(stackElement)
                         && !queueElement.Equals(TerminalSymbol.Nothing))
-                    || (!PredictiveTableColumns.Contains(queueElement)
-                        && TerminalSymbolsGroups[queueElement].Equals(stackElement)
+                    || (!_predictiveTableColumns.Contains(queueElement)
+                        && _terminalSymbolsGroups[queueElement].Equals(stackElement)
                         && !queueElement.Equals(TerminalSymbol.Nothing)))
                     queueElement = syntaxQueue.Dequeue();
                 else if (stackElement is NonTerminalSymbol nonTerminalSymbol)
                 {
                     int? nextProductionIndex;
-                    if (PredictiveTableColumns.Contains(queueElement))
-                        nextProductionIndex = PredictiveTable[nonTerminalSymbol][Array.IndexOf(PredictiveTableColumns, queueElement)];
+                    if (_predictiveTableColumns.Contains(queueElement))
+                        nextProductionIndex = _predictiveTable[nonTerminalSymbol][Array.IndexOf(_predictiveTableColumns, queueElement)];
                     else
-                        nextProductionIndex = PredictiveTable[nonTerminalSymbol][Array.IndexOf(PredictiveTableColumns, TerminalSymbolsGroups[queueElement])];
+                        nextProductionIndex = _predictiveTable[nonTerminalSymbol][Array.IndexOf(_predictiveTableColumns, _terminalSymbolsGroups[queueElement])];
 
                     if (nextProductionIndex == null)
                         return null;
                     else
                     {
                         // Gets the next production and pushes its elements backwards to the syntax stack
-                        var nextProduction = GrammarNonTerminalSymbols[nonTerminalSymbol][nextProductionIndex.Value];
+                        var nextProduction = _grammarNonTerminalSymbols[nonTerminalSymbol][nextProductionIndex.Value];
                         foreach (var productionElement in nextProduction.Reverse())
                             syntaxStack.Push(productionElement);
                     }

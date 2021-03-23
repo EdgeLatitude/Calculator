@@ -13,9 +13,31 @@
                        x:Name="Page">
     <controls:KeyboardPage.ToolbarItems>
         <ToolbarItem 
+            Text="{x:Static localization:LocalizedStrings.Copy}"
+            Clicked="Copy_Clicked"
+            Priority="0">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Primary" />
+                    <On Platform="iOS" Value="Secondary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
+        <ToolbarItem 
+            Text="{x:Static localization:LocalizedStrings.Paste}"
+            Command="{Binding PasteCommand, Mode=OneTime}"
+            Priority="1">
+            <ToolbarItem.Order>
+                <OnPlatform x:TypeArguments="ToolbarItemOrder">
+                    <On Platform="Android" Value="Primary" />
+                    <On Platform="iOS" Value="Secondary" />
+                </OnPlatform>
+            </ToolbarItem.Order>
+        </ToolbarItem>
+        <ToolbarItem 
             Text="{x:Static localization:LocalizedStrings.History}"
             Command="{Binding ShowHistoryCommand, Mode=OneTime}"
-            Priority="0">
+            Priority="2">
             <ToolbarItem.Order>
                 <OnPlatform x:TypeArguments="ToolbarItemOrder">
                     <On Platform="Android" Value="Primary" />

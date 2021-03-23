@@ -173,7 +173,13 @@
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
   <data name="RootOperator" xml:space="preserve">
     <value>Root operator</value>
+  </data>
+  <data name="YouCanOnlyPasteValidNumbers" xml:space="preserve">
+    <value>You can only paste valid numbers.</value>
   </data>
 </root>
