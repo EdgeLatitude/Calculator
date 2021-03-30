@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:controls="clr-namespace:Calculator.Mobile.Controls"
-             xmlns:converters="clr-namespace:Calculator.Mobile.Converters"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              mc:Ignorable="d"
@@ -15,8 +14,6 @@
         <Color x:Key="AccentColor">#006060</Color>
         <Color x:Key="BarBackgroundColor">#004040</Color>
         <Color x:Key="BarForegroundColor">#FFFFFF</Color>
-        <!-- Converters !-->
-        <converters:IsSelectedConverter x:Key="isSelectedConverter" />
         <!-- Implicit styles !-->
         <Style TargetType="Button">
             <Setter Property="VisualStateManager.VisualStateGroups">
@@ -92,131 +89,6 @@
         </Style>
         <Style TargetType="StackLayout">
             <Setter Property="Spacing" Value="0" />
-        </Style>
-        <!-- Named styles !-->
-        <Style x:Key="AllButtonsGridStyle" TargetType="Grid">
-            <Setter Property="ColumnSpacing" Value="0" />
-            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="RowSpacing" Value="0" />
-            <Setter Property="VerticalOptions" Value="FillAndExpand" />
-        </Style>
-        <Style x:Key="CommandButtonStyle" TargetType="Button">
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}" />
-        </Style>
-        <Style x:Key="CommandsGridStyle" TargetType="Grid">
-            <Setter Property="ColumnSpacing" Value="5" />
-            <Setter Property="RowSpacing" Value="5" />
-        </Style>
-        <Style x:Key="DescriptionLabelStyle" TargetType="Label">
-            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-        </Style>
-        <Style x:Key="InputButtonStyle" TargetType="Button">
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}" />
-        </Style>
-        <Style x:Key="InputFrameStyle" TargetType="Frame">
-            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-            <Setter Property="Margin" Value="0,5" />
-            <Setter Property="Padding" Value="10" />
-        </Style>
-        <Style x:Key="InputGridStyle" TargetType="Grid">
-            <Setter Property="Padding" Value="0,10" />
-        </Style>
-        <Style x:Key="InputLabelStyle" TargetType="Label">
-            <Setter Property="FontSize"
-                    Value="{OnPlatform Android=28,
-                                       iOS=32}" />
-            <Setter Property="HorizontalOptions" Value="EndAndExpand" />
-            <Setter Property="MaxLines" Value="1" />
-        </Style>
-        <Style x:Key="InputParentStackLayoutStyle" TargetType="StackLayout">
-            <Setter Property="Margin"
-                    Value="{OnPlatform Android='5,10',
-                                       iOS='10,20,10,10'}" />
-            <Setter Property="Spacing"
-                    Value="{OnPlatform Android='0',
-                                       iOS='5'}" />
-        </Style>
-        <Style x:Key="InputScrollViewStyle" TargetType="ScrollView">
-            <Setter Property="HorizontalOptions" Value="EndAndExpand" />
-            <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
-            <Setter Property="Orientation" Value="Horizontal" />
-        </Style>
-        <Style x:Key="InputSeparatorStyle" TargetType="BoxView">
-            <Setter Property="Color" Value="{StaticResource AccentColor}" />
-            <Setter Property="HeightRequest" Value="1" />
-            <Setter Property="HorizontalOptions" Value="Fill" />
-        </Style>
-        <Style x:Key="KeypadGridStyle" TargetType="Grid">
-            <Setter Property="ColumnSpacing" Value="5" />
-            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-            <Setter Property="RowSpacing" Value="5" />
-            <Setter Property="VerticalOptions" Value="FillAndExpand" />
-        </Style>
-        <Style x:Key="KeypadScrollViewStyle" TargetType="ScrollView">
-            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-            <Setter Property="VerticalOptions" Value="FillAndExpand" />
-        </Style>
-        <Style x:Key="SettingsParentStackLayoutStyle" TargetType="StackLayout">
-            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-            <Setter Property="Margin" Value="15,15,15,0" />
-            <Setter Property="Spacing" Value="15" />
-            <Setter Property="VerticalOptions" Value="FillAndExpand" />
-        </Style>
-        <Style x:Key="SaveSettingsButtonsStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="{StaticResource BarBackgroundColor}" />
-            <Setter Property="BorderColor" Value="Transparent" />
-            <Setter Property="BorderWidth" Value="0" />
-            <Setter Property="Margin" Value="0,15" />
-            <Setter Property="TextColor" Value="{StaticResource BarForegroundColor}" />
-            <Setter Property="VerticalOptions" Value="EndAndExpand" />
-        </Style>
-        <Style x:Key="SectionLabelStyle" TargetType="Label">
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="FontSize" Value="Subtitle" />
-            <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
-        </Style>
-        <Style x:Key="SectionStackLayoutStyle" TargetType="StackLayout">
-            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-            <Setter Property="Orientation" Value="Horizontal" />
-            <Setter Property="Spacing" Value="10" />
-        </Style>
-        <Style x:Key="SettingEntryStyle" TargetType="Entry">
-            <Setter Property="HorizontalOptions" Value="EndAndExpand" />
-            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-        </Style>
-        <Style x:Key="SettingPickerStyle" TargetType="Picker">
-            <Setter Property="HorizontalOptions" Value="EndAndExpand" />
-            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-        </Style>
-        <Style x:Key="ToastFrameStyle" TargetType="Frame">
-            <Setter Property="BackgroundColor"
-                    Value="{OnPlatform Android={DynamicResource AndroidTextColor},
-                                       iOS={DynamicResource iOSTextColor}}" />
-            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-            <Setter Property="Padding" Value="10" />
-        </Style>
-        <Style x:Key="ToastContentViewStyle" TargetType="ContentView">
-            <Setter Property="HorizontalOptions" Value="Center" />
-            <Setter Property="InputTransparent" Value="True" />
-            <Setter Property="Margin" Value="0,5,0,15" />
-            <Setter Property="Opacity" Value="0" />
-            <Setter Property="VerticalOptions" Value="End" />
-        </Style>
-        <Style x:Key="ToastLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-            <Setter Property="MaxLines" Value="1" />
-            <Setter Property="TextColor"
-                    Value="{OnPlatform Android={DynamicResource AndroidFieldBackgroundColor},
-                                       iOS={DynamicResource iOSFieldBackgroundColor}}" />
-        </Style>
-        <Style x:Key="ZoneStackLayoutStyle" TargetType="StackLayout">
-            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-            <Setter Property="Spacing" Value="5" />
         </Style>
     </Application.Resources>
 </Application>
