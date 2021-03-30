@@ -70,6 +70,15 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a AC.
+        /// </summary>
+        public static string AllClear {
+            get {
+                return ResourceManager.GetString("AllClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a App icon designed by Freepik from www.flaticon.com.
         /// </summary>
         public static string AppIconAttribution {

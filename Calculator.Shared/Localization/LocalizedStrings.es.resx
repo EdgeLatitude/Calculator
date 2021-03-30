@@ -182,4 +182,7 @@
   <data name="YouCanOnlyPasteValidNumbers" xml:space="preserve">
     <value>Solo puedes pegar números válidos.</value>
   </data>
+  <data name="AllClear" xml:space="preserve">
+    <value>AC</value>
+  </data>
 </root>
