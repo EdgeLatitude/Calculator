@@ -49,6 +49,21 @@ namespace Calculator.Mobile.Pages
             }
         }
 
+        private void Page_SizeChanged(object sender, EventArgs args)
+        {
+            if (KeypadScrollView.Width > KeypadScrollView.Height
+                && KeypadScrollView.Height < 256)
+            {
+                StandardKeypadLayout.IsVisible = false;
+                WideKeypadLayout.IsVisible = true;
+            }
+            else
+            {
+                WideKeypadLayout.IsVisible = false;
+                StandardKeypadLayout.IsVisible = true;
+            }
+        }
+
         private async void InputStackLayout_PropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             if (args.PropertyName != nameof(Width))
