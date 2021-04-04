@@ -19,7 +19,9 @@
         <!-- Named styles !-->
         <Style x:Key="CommandLabelStyle" TargetType="Label">
             <Setter Property="FontFamily" Value="MaterialIcons" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize"
+                    Value="{OnPlatform Android=20,
+                                       iOS=22}" />
             <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}" />
         </Style>
         <Style x:Key="CommandsGridStyle" TargetType="Grid">
