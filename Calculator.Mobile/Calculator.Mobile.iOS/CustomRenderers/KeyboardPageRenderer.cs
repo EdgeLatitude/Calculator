@@ -33,6 +33,7 @@ namespace Calculator.Mobile.iOS.CustomRenderers
 
                 // Add support for special commands (viewable on iPad (>= iOS 9) when holding down ⌘)
                 _keyCommands.Add(UIKeyCommand.Create(new NSString(HardwareInput.CopyCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.Copy)));
+                _keyCommands.Add(UIKeyCommand.Create(new NSString(HardwareInput.PasteCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.Paste)));
                 _keyCommands.Add(UIKeyCommand.Create(new NSString(HardwareInput.RootCharacter), UIKeyModifierFlags.Command, selector, new NSString(LocalizedStrings.RootOperator)));
 
                 // Add support for enter and equals key
@@ -69,6 +70,9 @@ namespace Calculator.Mobile.iOS.CustomRenderers
                     {
                         case HardwareInput.CopyCharacter:
                             Page?.OnKeyCommand(Controls.KeyCommand.Copy);
+                            break;
+                        case HardwareInput.PasteCharacter:
+                            Page?.OnKeyCommand(Controls.KeyCommand.Paste);
                             break;
                         case HardwareInput.RootCharacter:
                             Page?.OnKeyCommand(Controls.KeyCommand.RootOperator);

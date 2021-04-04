@@ -88,39 +88,39 @@ namespace Calculator.Shared.ViewModels
 
         public bool AfterResult { get; private set; }
 
-        public ICommand AllClearCommand { get; private set; }
+        public ICommand AllClearCommand { get; }
 
-        public ICommand ClearCommand { get; private set; }
+        public ICommand ClearCommand { get; }
 
-        public ICommand DeleteCommand { get; private set; }
+        public ICommand DeleteCommand { get; }
 
-        public ICommand BinaryOperatorCommand { get; private set; }
+        public ICommand BinaryOperatorCommand { get; }
 
-        public ICommand UnaryOperatorCommand { get; private set; }
+        public ICommand UnaryOperatorCommand { get; }
 
-        public ICommand ParenthesisCommand { get; private set; }
+        public ICommand ParenthesisCommand { get; }
 
-        public ICommand VariableStorageCommand { get; private set; }
+        public ICommand VariableStorageCommand { get; }
 
-        public ICommand NumberCommand { get; private set; }
+        public ICommand NumberCommand { get; }
 
-        public ICommand DecimalCommand { get; private set; }
+        public ICommand DecimalCommand { get; }
 
-        public ICommand CalculateCommand { get; private set; }
+        public ICommand CalculateCommand { get; }
 
-        public ICommand CopyCommand { get; private set; }
+        public ICommand CopyCommand { get; }
 
-        public ICommand PasteCommand { get; private set; }
+        public ICommand PasteCommand { get; }
 
-        public ICommand SelectInputSectionCommand { get; private set; }
+        public ICommand SelectInputSectionCommand { get; }
 
-        public ICommand ManageInputFromHardwareCommand { get; private set; }
+        public ICommand ManageInputFromHardwareCommand { get; }
 
-        public ICommand ShowHistoryCommand { get; private set; }
+        public ICommand ShowHistoryCommand { get; }
 
-        public ICommand NavigateToSettingsCommand { get; private set; }
+        public ICommand NavigateToSettingsCommand { get; }
 
-        public ICommand ShowAboutCommand { get; private set; }
+        public ICommand ShowAboutCommand { get; }
 
         private void AllClear()
         {

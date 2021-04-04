@@ -3,6 +3,7 @@
     public static class HardwareInput
     {
         public const string CopyCharacter = "c";
+        public const string PasteCharacter = "v";
         public const string RootCharacter = "r";
         public const string ResultOperator = LexicalSymbols.ResultOperator;
 

@@ -34,6 +34,9 @@ namespace Calculator.Mobile.Pages
                     _viewModel.CopyCommand.Execute(null);
                     CopyInputToClipboardAnimation();
                     break;
+                case KeyCommand.Paste:
+                    _viewModel.PasteCommand.Execute(null);
+                    break;
                 case KeyCommand.RootOperator:
                     SquareRootButton.Command.Execute(SquareRootButton.CommandParameter);
                     break;
@@ -57,11 +60,10 @@ namespace Calculator.Mobile.Pages
                 false);
         }
 
-        private void Copy_Clicked(object sender, EventArgs args)
+        private void Copy_Tapped(object sender, EventArgs args)
         {
             if (!_viewModel.Input.Any())
                 return;
-            _viewModel.CopyCommand.Execute(null);
             CopyInputToClipboardAnimation();
         }
 

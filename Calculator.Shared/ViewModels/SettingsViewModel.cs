@@ -143,7 +143,7 @@ namespace Calculator.Shared.ViewModels
 
         public bool StyleSectionIsVisible => DeviceSupportsManualDarkMode;
 
-        public ICommand SaveSettingsCommand { get; private set; }
+        public ICommand SaveSettingsCommand { get; }
 
         private void SaveSettings()
         {

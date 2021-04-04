@@ -49,6 +49,10 @@ namespace Calculator.Mobile.Droid.CustomRenderers
                         Page?.OnKeyCommand(KeyCommand.Copy);
                         handled = true;
                         break;
+                    case HardwareInput.PasteCharacter:
+                        Page?.OnKeyCommand(KeyCommand.Paste);
+                        handled = true;
+                        break;
                     case HardwareInput.RootCharacter:
                         Page?.OnKeyCommand(KeyCommand.RootOperator);
                         handled = true;
