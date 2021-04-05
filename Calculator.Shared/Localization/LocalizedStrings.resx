@@ -179,8 +179,11 @@
   <data name="RootOperator" xml:space="preserve">
     <value>Root operator</value>
   </data>
-  <data name="YouCanOnlyPasteValidNumbers" xml:space="preserve">
-    <value>You can only paste valid numbers.</value>
+  <data name="TheClipboardIsEmpty" xml:space="preserve">
+    <value>The clipboard is empty.</value>
+  </data>
+  <data name="YouCanOnlyPasteValidNumbersOrOperations" xml:space="preserve">
+    <value>You can only paste valid numbers or operations.</value>
   </data>
   <data name="AllClear" xml:space="preserve">
     <value>AC</value>

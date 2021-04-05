@@ -295,6 +295,15 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The clipboard is empty..
+        /// </summary>
+        public static string TheClipboardIsEmpty {
+            get {
+                return ResourceManager.GetString("TheClipboardIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Theme.
         /// </summary>
         public static string Theme {
@@ -313,11 +322,11 @@ namespace Calculator.Shared.Localization {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a You can only paste valid numbers..
+        ///   Busca una cadena traducida similar a You can only paste valid numbers or operations..
         /// </summary>
-        public static string YouCanOnlyPasteValidNumbers {
+        public static string YouCanOnlyPasteValidNumbersOrOperations {
             get {
-                return ResourceManager.GetString("YouCanOnlyPasteValidNumbers", resourceCulture);
+                return ResourceManager.GetString("YouCanOnlyPasteValidNumbersOrOperations", resourceCulture);
             }
         }
     }

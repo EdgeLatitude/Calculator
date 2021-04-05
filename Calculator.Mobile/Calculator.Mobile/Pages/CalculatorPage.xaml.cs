@@ -11,6 +11,8 @@ namespace Calculator.Mobile.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CalculatorPage : KeyboardPage
     {
+        private const double _minimumLayoutHeight = 240d;
+
         private readonly CalculatorViewModel _viewModel;
 
         private bool _inputCopiedToClipboardToastIsVisible;
@@ -24,7 +26,7 @@ namespace Calculator.Mobile.Pages
         }
 
         public override void OnKeyUp(char character) =>
-            _viewModel.ManageInputFromHardwareCommand.Execute(char.ToString(character));
+            _viewModel.ManageInputCharacterCommand.Execute(char.ToString(character));
 
         public override void OnKeyCommand(KeyCommand command)
         {
@@ -52,7 +54,7 @@ namespace Calculator.Mobile.Pages
         private void Page_SizeChanged(object sender, EventArgs args)
         {
             if (KeypadScrollView.Width > KeypadScrollView.Height
-                && KeypadScrollView.Height < 256)
+                && KeypadScrollView.Height < _minimumLayoutHeight)
             {
                 StandardKeypadLayout.IsVisible = false;
                 WideKeypadLayout.IsVisible = true;

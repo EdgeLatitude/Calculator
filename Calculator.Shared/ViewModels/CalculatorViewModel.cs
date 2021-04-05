@@ -72,7 +72,7 @@ namespace Calculator.Shared.ViewModels
             CopyCommand = _commandFactoryService.Create(async () => await Copy());
             PasteCommand = _commandFactoryService.Create(async () => await Paste());
             SelectInputSectionCommand = _commandFactoryService.Create<InputSectionViewModel>(async (inputSectionViewModel) => await SelectInputSection(inputSectionViewModel));
-            ManageInputFromHardwareCommand = _commandFactoryService.Create<string>(async (character) => await ManageInputFromHardware(character));
+            ManageInputCharacterCommand = _commandFactoryService.Create<string>(async (character) => await ManageInputCharacter(character));
             ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
             NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
             ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
@@ -114,7 +114,7 @@ namespace Calculator.Shared.ViewModels
 
         public ICommand SelectInputSectionCommand { get; }
 
-        public ICommand ManageInputFromHardwareCommand { get; }
+        public ICommand ManageInputCharacterCommand { get; }
 
         public ICommand ShowHistoryCommand { get; }
 
@@ -322,20 +322,23 @@ namespace Calculator.Shared.ViewModels
         private async Task Paste()
         {
             var clipboardText = await _clipboardService.GetTextAsync();
-            if (!decimal.TryParse(clipboardText, out var clipboardNumber))
+            if (string.IsNullOrWhiteSpace(clipboardText))
             {
                 await _alertsService.DisplayAlertAsync(
                     LocalizedStrings.Notice,
-                    LocalizedStrings.YouCanOnlyPasteValidNumbers);
+                    LocalizedStrings.TheClipboardIsEmpty);
                 return;
             }
 
-            var clipboardNumberAsString = clipboardNumber.ToString();
-            foreach (var symbol in clipboardNumberAsString)
-                if (char.IsNumber(symbol))
-                    await Number(char.ToString(symbol));
-                else if (char.ToString(symbol) == DecimalSeparator)
-                    await Decimal();
+            clipboardText = clipboardText.Replace(Strings.WhiteSpace, string.Empty);
+            foreach (var symbol in clipboardText)
+                if (!await ManageInputCharacter(char.ToString(symbol)))
+                {
+                    await _alertsService.DisplayAlertAsync(
+                        LocalizedStrings.Notice,
+                        LocalizedStrings.YouCanOnlyPasteValidNumbersOrOperations);
+                    return;
+                }
         }
 
         private async Task SelectInputSection(InputSectionViewModel inputSectionViewModel)
@@ -347,22 +350,42 @@ namespace Calculator.Shared.ViewModels
             await Task.Delay(100);
         }
 
-        private async Task ManageInputFromHardware(string character)
+        private async Task<bool> ManageInputCharacter(string character)
         {
             if (Logic.Calculator.VariableStorageWords.Contains(character))
+            {
                 await VariableStorage(character);
+                return true;
+            }
             else if (Logic.Calculator.Parentheses.Contains(character))
+            {
                 await Parenthesis(character);
+                return true;
+            }
             else if (Logic.Calculator.BinaryOperators.Contains(character))
+            {
                 await BinaryOperator(character);
+                return true;
+            }
             else if (Logic.Calculator.UnaryOperators.Contains(character))
+            {
                 await UnaryOperator(character);
+                return true;
+            }
             else if (Logic.Calculator.Numbers.Contains(character))
+            {
                 await Number(character);
+                return true;
+            }
             else if (_possibleDecimalSeparators.Contains(character))
+            {
                 await Decimal();
+                return true;
+            }
             else if (_equivalentSymbols.ContainsKey(character))
-                await ManageInputFromHardware(_equivalentSymbols[character]);
+                return await ManageInputCharacter(_equivalentSymbols[character]);
+            else
+                return false;
         }
 
         private async Task ShowHistory()
