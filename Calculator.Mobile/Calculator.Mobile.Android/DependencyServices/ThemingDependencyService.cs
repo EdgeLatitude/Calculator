@@ -1,8 +1,8 @@
 ﻿using Android.Content.Res;
 using Calculator.Mobile.DependencyServices;
 using Calculator.Shared.Models.Theming;
-using Plugin.CurrentActivity;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(Calculator.Mobile.Droid.DependencyServices.ThemingDependencyService))]
@@ -26,7 +26,7 @@ namespace Calculator.Mobile.Droid.DependencyServices
         {
             if (DeviceSupportsAutomaticDarkMode())
             {
-                var uiModeFlags = CrossCurrentActivity.Current.AppContext.Resources.Configuration.UiMode
+                var uiModeFlags = Platform.AppContext.Resources.Configuration.UiMode
                     & UiMode.NightMask;
                 switch (uiModeFlags)
                 {
