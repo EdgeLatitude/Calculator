@@ -8,6 +8,7 @@
                        xmlns:constants="clr-namespace:Calculator.Shared.Constants;assembly=Calculator.Shared"
                        xmlns:localization="clr-namespace:Calculator.Shared.Localization;assembly=Calculator.Shared"
                        xmlns:viewmodels="clr-namespace:Calculator.Shared.ViewModels;assembly=Calculator.Shared"
+                       xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                        mc:Ignorable="d"
                        x:DataType="viewmodels:CalculatorViewModel"
                        x:Class="Calculator.Mobile.Pages.CalculatorPage"
@@ -19,14 +20,15 @@
         <!-- Named styles !-->
         <Style x:Key="CommandLabelStyle" TargetType="Label">
             <Setter Property="FontFamily" Value="MaterialIcons" />
-            <Setter Property="FontSize"
-                    Value="{OnPlatform Android=20,
-                                       iOS=22}" />
+            <Setter Property="FontSize" Value="22" />
             <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}" />
         </Style>
         <Style x:Key="CommandsGridStyle" TargetType="Grid">
             <Setter Property="ColumnSpacing" Value="10" />
             <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+        <Style x:Key="CommandSvgImageStyle" TargetType="ffimageloadingsvg:SvgCachedImage">
+            <Setter Property="HeightRequest" Value="22" />
         </Style>
         <Style x:Key="InputButtonStyle" TargetType="Button">
             <Setter Property="FontSize" Value="16" />
@@ -46,7 +48,7 @@
         </Style>
         <Style x:Key="InputLabelStyle" TargetType="Label">
             <Setter Property="FontSize"
-                    Value="{OnPlatform Android=28,
+                    Value="{OnPlatform Android=30,
                                        iOS=32}" />
             <Setter Property="HorizontalOptions" Value="EndAndExpand" />
             <Setter Property="MaxLines" Value="1" />
@@ -161,28 +163,58 @@
                 <Grid
                     ColumnDefinitions="Auto,*"
                     Style="{StaticResource InputContainerStyle}">
-                    <Grid
-                        ColumnDefinitions="*,*"
-                        Style="{StaticResource CommandsGridStyle}">
-                        <Label
-                            Text="{x:Static constants:MaterialIcons.Copy}" 
-                            Style="{StaticResource CommandLabelStyle}">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding CopyCommand, Mode=OneTime}"
-                                    Tapped="Copy_Tapped" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <Label
-                            Grid.Column="1"
-                            Text="{x:Static constants:MaterialIcons.Paste}" 
-                            Style="{StaticResource CommandLabelStyle}">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding PasteCommand, Mode=OneTime}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Grid>
+                    <ContentView>
+                        <OnPlatform x:TypeArguments="Grid">
+                            <OnPlatform.Android>
+                                <Grid
+                                    ColumnDefinitions="*,*"
+                                    Style="{StaticResource CommandsGridStyle}">
+                                    <Label
+                                        Text="{x:Static constants:MaterialIcons.Copy}" 
+                                        Style="{StaticResource CommandLabelStyle}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding CopyCommand, Mode=OneTime}"
+                                                Tapped="Copy_Tapped" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="{x:Static constants:MaterialIcons.Paste}" 
+                                        Style="{StaticResource CommandLabelStyle}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding PasteCommand, Mode=OneTime}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </Grid>
+                            </OnPlatform.Android>
+                            <OnPlatform.iOS>
+                                <Grid
+                                    ColumnDefinitions="*,*"
+                                    Style="{StaticResource CommandsGridStyle}">
+                                    <ffimageloadingsvg:SvgCachedImage
+                                        Source="{DynamicResource CopyImage}" 
+                                        Style="{StaticResource CommandSvgImageStyle}">
+                                        <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding CopyCommand, Mode=OneTime}"
+                                                Tapped="Copy_Tapped" />
+                                        </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                                    </ffimageloadingsvg:SvgCachedImage>
+                                    <ffimageloadingsvg:SvgCachedImage
+                                        Grid.Column="1"
+                                        Source="{DynamicResource PasteImage}" 
+                                        Style="{StaticResource CommandSvgImageStyle}">
+                                        <ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding PasteCommand, Mode=OneTime}" />
+                                        </ffimageloadingsvg:SvgCachedImage.GestureRecognizers>
+                                    </ffimageloadingsvg:SvgCachedImage>
+                                </Grid>
+                            </OnPlatform.iOS>
+                        </OnPlatform>
+                    </ContentView>
                     <ScrollView
                         x:Name="InputScrollView"
                         Grid.Column="1"
@@ -231,7 +263,7 @@
                     IsVisible="False"
                     RowDefinitions="*,*,*,*,*,*"
                     Style="{StaticResource KeypadGridStyle}">
-                    
+
                     <controls:HapticButton 
                         Text="{x:Static localization:LocalizedStrings.AllClear}" 
                         Style="{StaticResource InputButtonStyle}"
@@ -255,7 +287,7 @@
                         Style="{StaticResource InputButtonStyle}"
                         Command="{Binding UnaryOperatorCommand, Mode=OneTime}"
                         CommandParameter="{x:Static constants:LexicalSymbols.SquareRootOperator}" />
-                    
+
                     <controls:HapticButton 
                         Text="{x:Static constants:LexicalSymbols.OpeningParenthesis}" 
                         Grid.Row="1" 
@@ -283,7 +315,7 @@
                         Style="{StaticResource InputButtonStyle}"
                         Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                         CommandParameter="{x:Static constants:LexicalSymbols.DivisionOperator}" />
-                    
+
                     <controls:HapticButton 
                         Text="{x:Static constants:LexicalSymbols.Seven}" 
                         Grid.Row="2" 
@@ -311,7 +343,7 @@
                         Style="{StaticResource InputButtonStyle}"
                         Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                         CommandParameter="{x:Static constants:LexicalSymbols.MultiplicationOperator}" />
-                    
+
                     <controls:HapticButton 
                         Text="{x:Static constants:LexicalSymbols.Four}" 
                         Grid.Row="3" 
@@ -339,7 +371,7 @@
                         Style="{StaticResource InputButtonStyle}"
                         Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                         CommandParameter="{x:Static constants:LexicalSymbols.SubstractionOperator}" />
-                    
+
                     <controls:HapticButton 
                         Text="{x:Static constants:LexicalSymbols.One}" 
                         Grid.Row="4" 
@@ -368,7 +400,7 @@
                         Style="{StaticResource InputButtonStyle}"
                         Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                         CommandParameter="{x:Static constants:LexicalSymbols.AdditionOperator}" />
-                    
+
                     <controls:HapticButton 
                         Text="{x:Static constants:LexicalSymbols.Zero}" 
                         Grid.Row="5" 
@@ -432,7 +464,7 @@
                         Style="{StaticResource InputButtonStyle}"
                         Command="{Binding NumberCommand, Mode=OneTime}"
                         CommandParameter="{x:Static constants:LexicalSymbols.One}" />
-                    
+
                     <controls:HapticButton 
                         Text="{x:Static constants:LexicalSymbols.Eight}" 
                         Grid.Column="2" 
@@ -474,7 +506,7 @@
                         Style="{StaticResource InputButtonStyle}"
                         Command="{Binding NumberCommand, Mode=OneTime}"
                         CommandParameter="{x:Static constants:LexicalSymbols.Three}" />
-                    
+
                     <controls:HapticButton 
                         Text="{x:Static constants:LexicalSymbols.SubstractionOperator}" 
                         Grid.Column="4" 
@@ -489,7 +521,7 @@
                         Style="{StaticResource InputButtonStyle}"
                         Command="{Binding BinaryOperatorCommand, Mode=OneTime}"
                         CommandParameter="{x:Static constants:LexicalSymbols.AdditionOperator}" />
-                    
+
                     <controls:HapticButton 
                         Text="{x:Static constants:LexicalSymbols.DivisionOperator}" 
                         Grid.Column="5" 

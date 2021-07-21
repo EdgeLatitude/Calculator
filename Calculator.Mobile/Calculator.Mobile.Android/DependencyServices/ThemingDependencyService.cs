@@ -36,7 +36,6 @@ namespace Calculator.Mobile.Droid.DependencyServices
                         return Task.FromResult(Theme.Light);
                 }
             }
-
             return Task.FromResult(GetDeviceDefaultTheme());
         }
     }

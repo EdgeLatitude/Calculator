@@ -2,7 +2,6 @@
 using Android.Content.PM;
 using Android.OS;
 using Calculator.Shared.Models.Theming;
-using Xamarin.Essentials;
 
 namespace Calculator.Mobile.Droid
 {
@@ -15,9 +14,11 @@ namespace Calculator.Mobile.Droid
 
             base.OnCreate(savedInstanceState);
 
-            Platform.Init(this, savedInstanceState);
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
+
             LoadApplication(new App());
 
             Shared.Logic.Theming.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;

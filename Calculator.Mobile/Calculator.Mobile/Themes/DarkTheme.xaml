@@ -9,4 +9,6 @@
     <Color x:Key="iOSTextColor">#FFFFFF</Color>
     <Color x:Key="AndroidFieldBackgroundColor">#1E1E1E</Color>
     <Color x:Key="iOSFieldBackgroundColor">#2C2C2E</Color>
+    <x:String x:Key="CopyImage">copy_light.svg</x:String>
+    <x:String x:Key="PasteImage">paste_light.svg</x:String>
 </ResourceDictionary>
