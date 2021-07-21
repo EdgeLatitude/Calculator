@@ -38,7 +38,8 @@ namespace Calculator.Shared.ViewModels
         private readonly Dictionary<string, decimal> _variableStorageValues
             = new Dictionary<string, decimal>();
 
-        private bool _calculating;
+        private bool _isCalculating;
+        private bool _isPasting;
 
         private InputSectionViewModel[] _lastInput;
 
@@ -255,7 +256,7 @@ namespace Calculator.Shared.ViewModels
                 Input.ToArray();
 
             // Calculate and show corresponding result
-            _calculating = true;
+            _isCalculating = true;
             _lastInput = input;
             var calculationResult = await Logic.Calculator.CalculateAsync(JoinInputSectionsIntoSingleString(input), _variableStorageValues);
             if (calculationResult != null)
@@ -294,7 +295,7 @@ namespace Calculator.Shared.ViewModels
                 ClearAndAddInputSection(LocalizedStrings.UnexpectedError);
                 _nextStroke = NextInput.ClearAtAny;
             }
-            _calculating = false;
+            _isCalculating = false;
         }
 
         private void AddOrUpdateVariableStorage(string storage, decimal value)
@@ -321,12 +322,18 @@ namespace Calculator.Shared.ViewModels
 
         private async Task Paste()
         {
+            if (_isPasting)
+                return;
+
+            _isPasting = true;
+
             var clipboardText = await _clipboardService.GetTextAsync();
             if (string.IsNullOrWhiteSpace(clipboardText))
             {
                 await _alertsService.DisplayAlertAsync(
                     LocalizedStrings.Notice,
                     LocalizedStrings.TheClipboardIsEmpty);
+                _isPasting = false;
                 return;
             }
 
@@ -337,8 +344,11 @@ namespace Calculator.Shared.ViewModels
                     await _alertsService.DisplayAlertAsync(
                         LocalizedStrings.Notice,
                         LocalizedStrings.YouCanOnlyPasteValidNumbersOrOperations);
+                    _isPasting = false;
                     return;
                 }
+
+            _isPasting = false;
         }
 
         private async Task SelectInputSection(InputSectionViewModel inputSectionViewModel)
@@ -475,7 +485,7 @@ namespace Calculator.Shared.ViewModels
 
         private void Input_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (!_calculating)
+            if (!_isCalculating)
                 AfterResult = false;
         }
     }
