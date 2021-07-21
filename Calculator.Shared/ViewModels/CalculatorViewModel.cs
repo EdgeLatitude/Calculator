@@ -15,14 +15,14 @@ namespace Calculator.Shared.ViewModels
 {
     public class CalculatorViewModel : BaseViewModel
     {
-        private static readonly List<string> _possibleDecimalSeparators
+        private readonly List<string> _possibleDecimalSeparators
             = new List<string>()
             {
                 LexicalSymbols.Comma,
                 LexicalSymbols.Dot
             };
 
-        private static readonly Dictionary<string, string> _equivalentSymbols
+        private readonly Dictionary<string, string> _equivalentSymbols
             = new Dictionary<string, string>()
             {
                 { LexicalSymbols.SimpleDivisionOperator, LexicalSymbols.DivisionOperator },
@@ -81,7 +81,7 @@ namespace Calculator.Shared.ViewModels
             Input.CollectionChanged += Input_CollectionChanged;
         }
 
-        public string DecimalSeparator => Logic.Calculator.DecimalSeparator;
+        public string DecimalSeparator => Logic.Calculator.Instance.DecimalSeparator;
 
         private readonly ObservableCollection<InputSectionViewModel> _input = new ObservableCollection<InputSectionViewModel>();
 
@@ -160,6 +160,7 @@ namespace Calculator.Shared.ViewModels
             if (_selectedInputSection != null)
                 _selectedInputSection.IsSelected = true;
 
+            // Prevent UI glitches.
             await Task.Delay(100);
         }
 
@@ -258,7 +259,7 @@ namespace Calculator.Shared.ViewModels
             // Calculate and show corresponding result
             _isCalculating = true;
             _lastInput = input;
-            var calculationResult = await Logic.Calculator.CalculateAsync(JoinInputSectionsIntoSingleString(input), _variableStorageValues);
+            var calculationResult = await Logic.Calculator.Instance.CalculateAsync(JoinInputSectionsIntoSingleString(input), _variableStorageValues);
             if (calculationResult != null)
                 // Show result if calculation was successful
                 if (calculationResult.Successful)
@@ -311,7 +312,7 @@ namespace Calculator.Shared.ViewModels
         {
             resultText = result.ToString();
             while (resultText.Contains(DecimalSeparator)
-                && (char.ToString(resultText[^1]) == Logic.Calculator.ZeroString
+                && (char.ToString(resultText[^1]) == Logic.Calculator.Instance.ZeroString
                     || char.ToString(resultText[^1]) == DecimalSeparator))
                 resultText = resultText[0..^1];
             return true;
@@ -362,27 +363,27 @@ namespace Calculator.Shared.ViewModels
 
         private async Task<bool> ManageInputCharacter(string character)
         {
-            if (Logic.Calculator.VariableStorageWords.Contains(character))
+            if (Logic.Calculator.Instance.VariableStorageWords.Contains(character))
             {
                 await VariableStorage(character);
                 return true;
             }
-            else if (Logic.Calculator.Parentheses.Contains(character))
+            else if (Logic.Calculator.Instance.Parentheses.Contains(character))
             {
                 await Parenthesis(character);
                 return true;
             }
-            else if (Logic.Calculator.BinaryOperators.Contains(character))
+            else if (Logic.Calculator.Instance.BinaryOperators.Contains(character))
             {
                 await BinaryOperator(character);
                 return true;
             }
-            else if (Logic.Calculator.UnaryOperators.Contains(character))
+            else if (Logic.Calculator.Instance.UnaryOperators.Contains(character))
             {
                 await UnaryOperator(character);
                 return true;
             }
-            else if (Logic.Calculator.Numbers.Contains(character))
+            else if (Logic.Calculator.Instance.Numbers.Contains(character))
             {
                 await Number(character);
                 return true;

@@ -13,19 +13,39 @@ using System.Threading.Tasks;
 
 namespace Calculator.Shared.Logic
 {
-    static class Calculator
+    public class Calculator
     {
+        public static Calculator Instance
+        {
+            get;
+            private set;
+        }
+
+        public static void Initialize() =>
+            Instance = new Calculator();
+
+        private Calculator()
+        {
+            // Initialize separators array from list filled with specified lexical collections
+            var separators = new List<string>();
+            separators.AddRange(VariableStorageWords);
+            separators.AddRange(Parentheses);
+            separators.AddRange(BinaryOperators);
+            separators.AddRange(UnaryOperators);
+            _separators = separators.ToArray();
+        }
+
         // Compilation constants
         public const string WhiteSpace = " ";
 
         // Runtime constants
-        public static readonly string ZeroString = decimal.Zero.ToString();
-        public static readonly string MinusOneString = decimal.MinusOne.ToString();
-        public static readonly string DecimalSeparator
+        public readonly string ZeroString = decimal.Zero.ToString();
+        public readonly string MinusOneString = decimal.MinusOne.ToString();
+        public readonly string DecimalSeparator
             = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
 
         #region General definitions
-        private static readonly Dictionary<TerminalSymbol, string> _terminalSymbolsVariableStorageCharacter
+        private readonly Dictionary<TerminalSymbol, string> _terminalSymbolsVariableStorageCharacter
             = new Dictionary<TerminalSymbol, string>
         {
             { TerminalSymbol.LastResult, LocalizedStrings.LastResultAbbreviation }
@@ -34,22 +54,22 @@ namespace Calculator.Shared.Logic
 
         #region Lexical definitions
         // Lexical collections
-        public static readonly string[] VariableStorageWords
+        public readonly string[] VariableStorageWords
             = new string[] { LocalizedStrings.LastResultAbbreviation }; // 1 terminal symbol for each
-        public static readonly string[] Parentheses
+        public readonly string[] Parentheses
             = new string[] { LexicalSymbols.OpeningParenthesis, LexicalSymbols.ClosingParenthesis }; // 1 terminal symbol for each
-        public static readonly string[] BinaryOperators
+        public readonly string[] BinaryOperators
             = new string[] { LexicalSymbols.AdditionOperator, LexicalSymbols.SubstractionOperator, LexicalSymbols.MultiplicationOperator, LexicalSymbols.DivisionOperator, LexicalSymbols.PotentiationOperator }; // 1 terminal symbol for each
-        public static readonly string[] UnaryOperators
+        public readonly string[] UnaryOperators
             = new string[] { LexicalSymbols.SquareRootOperator }; // 1 terminal symbol for each
-        public static readonly string[] Numbers
+        public readonly string[] Numbers
             = new string[] { LexicalSymbols.Zero, LexicalSymbols.One, LexicalSymbols.Two, LexicalSymbols.Three, LexicalSymbols.Four, LexicalSymbols.Five, LexicalSymbols.Six, LexicalSymbols.Seven, LexicalSymbols.Eight, LexicalSymbols.Nine }; // 1 terminal symbol for a complete real number
 
         // Separators array to be filled with some lexical collections
-        private static readonly string[] _separators;
+        private readonly string[] _separators;
 
         // Automata for lexical analysis
-        private static readonly int?[,] _automata = new int?[,]
+        private readonly int?[,] _automata = new int?[,]
         {           //  Numbers     Decimal
         /* S0 */    {   2,          1,      }, // Initial state
         /* S1 */    {   3,          null,   },
@@ -60,7 +80,7 @@ namespace Calculator.Shared.Logic
 
         #region Syntax definitions
         // Terminal symbols groups
-        private static readonly Dictionary<TerminalSymbol, TerminalSymbolGroup> _terminalSymbolsGroups
+        private readonly Dictionary<TerminalSymbol, TerminalSymbolGroup> _terminalSymbolsGroups
             = new Dictionary<TerminalSymbol, TerminalSymbolGroup>
         {
             { TerminalSymbol.None, TerminalSymbolGroup.None },
@@ -79,7 +99,7 @@ namespace Calculator.Shared.Logic
         };
 
         // Grammar productions for each non terminal symbol
-        private static readonly Dictionary<NonTerminalSymbol, Enum[][]> _grammarNonTerminalSymbols
+        private readonly Dictionary<NonTerminalSymbol, Enum[][]> _grammarNonTerminalSymbols
             = new Dictionary<NonTerminalSymbol, Enum[][]>
         {
             { NonTerminalSymbol.Expression, new Enum[][]
@@ -106,7 +126,7 @@ namespace Calculator.Shared.Logic
         };
 
         // Predictive table for each non terminal symbol
-        private static readonly Dictionary<NonTerminalSymbol, int?[]> _predictiveTable
+        private readonly Dictionary<NonTerminalSymbol, int?[]> _predictiveTable
             = new Dictionary<NonTerminalSymbol, int?[]>
         {
             { NonTerminalSymbol.Expression,
@@ -120,7 +140,7 @@ namespace Calculator.Shared.Logic
         };
 
         // Predictive table column definitions
-        private static readonly Enum[] _predictiveTableColumns = new Enum[]
+        private readonly Enum[] _predictiveTableColumns = new Enum[]
         {
             TerminalSymbolGroup.VariableStorageCharacters,
             TerminalSymbol.OpeningParenthesis,
@@ -137,7 +157,7 @@ namespace Calculator.Shared.Logic
 
         #region Semantic definitions
         // Operators dictionary by token
-        private static readonly Dictionary<TerminalSymbol, Operator> _operators
+        private readonly Dictionary<TerminalSymbol, Operator> _operators
             = new Dictionary<TerminalSymbol, Operator>
         {
             { TerminalSymbol.OpeningParenthesis, new Operator(TerminalSymbol.OpeningParenthesis, 0, LexicalSymbols.OpeningParenthesis) },
@@ -152,21 +172,10 @@ namespace Calculator.Shared.Logic
         };
         #endregion
 
-        static Calculator()
-        {
-            // Initialize separators array from list filled with specified lexical collections
-            var separators = new List<string>();
-            separators.AddRange(VariableStorageWords);
-            separators.AddRange(Parentheses);
-            separators.AddRange(BinaryOperators);
-            separators.AddRange(UnaryOperators);
-            _separators = separators.ToArray();
-        }
+        internal async Task<CalculationResult> CalculateAsync(string operation, Dictionary<string, decimal> variableStorageValues) =>
+            await Task.Run(() => Calculate(operation, variableStorageValues)).ConfigureAwait(false);
 
-        public static async Task<CalculationResult> CalculateAsync(string operation, Dictionary<string, decimal> variableStorageValues) =>
-            await Task.Run(() => Calculate(operation, variableStorageValues));
-
-        private static CalculationResult Calculate(string operation, Dictionary<string, decimal> variableStorageValues)
+        private CalculationResult Calculate(string operation, Dictionary<string, decimal> variableStorageValues)
         {
             try
             {
@@ -194,7 +203,7 @@ namespace Calculator.Shared.Logic
             }
         }
 
-        private static string[] SplitOperation(string operation)
+        private string[] SplitOperation(string operation)
         {
             // Add surrounding blank spaces to every separator in the operation
             foreach (var separator in _separators)
@@ -209,7 +218,7 @@ namespace Calculator.Shared.Logic
             return operation.Split();
         }
 
-        private static LexicalAnalysisResult LexicalAnalysis(string[] lexemes)
+        private LexicalAnalysisResult LexicalAnalysis(string[] lexemes)
         {
             var terminalSymbols = new List<TerminalSymbol>();
             // Use the lexemes array to fill corresponding terminal symbols list
@@ -224,7 +233,7 @@ namespace Calculator.Shared.Logic
             return new LexicalAnalysisResult(lexemes, terminalSymbols.ToArray());
         }
 
-        private static LexemeResult AnalyzeLexeme(string lexeme)
+        private LexemeResult AnalyzeLexeme(string lexeme)
         {
             var terminalSymbol = 0;
             // Check for lexeme in each lexical collection, at the end parse accumulated terminal symbol index into an actual symbol
@@ -250,7 +259,7 @@ namespace Calculator.Shared.Logic
             return AnalyzeLexemeByAutomata(lexeme);
         }
 
-        private static LexemeResult AnalyzeLexemeByAutomata(string lexeme)
+        private LexemeResult AnalyzeLexemeByAutomata(string lexeme)
         {
             int automataColumn, currentState = 0;
             /* Analyze lexeme parsing each character, using the current state as main reference
@@ -282,7 +291,7 @@ namespace Calculator.Shared.Logic
             return TerminalSymbolResultByState(currentState);
         }
 
-        private static LexemeResult TerminalSymbolResultByState(int lastState)
+        private LexemeResult TerminalSymbolResultByState(int lastState)
         {
             switch (lastState)
             {
@@ -298,7 +307,7 @@ namespace Calculator.Shared.Logic
             }
         }
 
-        private static LexicalAnalysisResult AddMissingSymbols(LexicalAnalysisResult lexicalAnalysisResult)
+        private LexicalAnalysisResult AddMissingSymbols(LexicalAnalysisResult lexicalAnalysisResult)
         {
             var lexemesList = lexicalAnalysisResult.Lexemes.ToList();
             var terminalSymbolsList = lexicalAnalysisResult.TerminalSymbols.ToList();
@@ -364,7 +373,7 @@ namespace Calculator.Shared.Logic
             return new LexicalAnalysisResult(lexemesList.ToArray(), terminalSymbolsList.ToArray());
         }
 
-        private static SyntaxAndSemanticAnalysisResult SyntaxAndSemanticAnalysis(Dictionary<string, decimal> variableStorageValues, LexicalAnalysisResult lexicalAnalysisResult)
+        private SyntaxAndSemanticAnalysisResult SyntaxAndSemanticAnalysis(Dictionary<string, decimal> variableStorageValues, LexicalAnalysisResult lexicalAnalysisResult)
         {
             // Data structures and main variables for syntax analysis
             var syntaxQueue = new Queue<TerminalSymbol>(lexicalAnalysisResult.TerminalSymbols);
@@ -447,7 +456,7 @@ namespace Calculator.Shared.Logic
             }
         }
 
-        private static void ProcessMathOperator(Stack<Operator> operatorsStack, List<MathObject> postfixOperation, Operator actualOperator)
+        private void ProcessMathOperator(Stack<Operator> operatorsStack, List<MathObject> postfixOperation, Operator actualOperator)
         {
             if (actualOperator.TerminalSymbol == TerminalSymbol.OpeningParenthesis)
                 operatorsStack.Push(actualOperator);
@@ -470,13 +479,13 @@ namespace Calculator.Shared.Logic
             }
         }
 
-        private static void EndMathOperatorProcess(Stack<Operator> operatorsStack, List<MathObject> postfixOperation)
+        private void EndMathOperatorProcess(Stack<Operator> operatorsStack, List<MathObject> postfixOperation)
         {
             while (operatorsStack.Any())
                 postfixOperation.Add(operatorsStack.Pop());
         }
 
-        private static CalculationResult ActualCalculation(SyntaxAndSemanticAnalysisResult syntaxAndSemanticAnalysisResult)
+        private CalculationResult ActualCalculation(SyntaxAndSemanticAnalysisResult syntaxAndSemanticAnalysisResult)
         {
             var postfixOperation = syntaxAndSemanticAnalysisResult.PostfixOperation;
             var operandsStack = new Stack<Operand>();
@@ -504,14 +513,14 @@ namespace Calculator.Shared.Logic
                 return new CalculationResult(LocalizedStrings.CalculationError);
         }
 
-        private static Operand EvaluateUnary(Operand operand, Operator operatorX) =>
+        private Operand EvaluateUnary(Operand operand, Operator operatorX) =>
             operatorX.TerminalSymbol switch
             {
                 TerminalSymbol.SquareRootOperator => new Operand(DecimalEx.Sqrt(operand.Value)),
                 _ => throw new Exception(LocalizedStrings.UnexpectedError),
             };
 
-        private static Operand EvaluateBinary(Operand rightOperand, Operand leftOperand, Operator operatorX) =>
+        private Operand EvaluateBinary(Operand rightOperand, Operand leftOperand, Operator operatorX) =>
             operatorX.TerminalSymbol switch
             {
                 TerminalSymbol.AdditionOperator => new Operand(decimal.Add(leftOperand.Value, rightOperand.Value)),

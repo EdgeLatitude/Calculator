@@ -46,7 +46,7 @@ namespace Calculator.Shared.Logic
             _settingsService.Remove(Strings.ResultsHistory);
 
         public async Task ManageNewResultAsync(string result) =>
-            await Task.Run(() => ManageNewResult(result));
+            await Task.Run(() => ManageNewResult(result)).ConfigureAwait(false);
 
         private void ManageNewResult(string result)
         {
@@ -57,13 +57,13 @@ namespace Calculator.Shared.Logic
         }
 
         public async Task<List<string>> GetResultsHistoryAsync() =>
-            await Task.Run(GetResultsHistory);
+            await Task.Run(GetResultsHistory).ConfigureAwait(false);
 
         private List<string> GetResultsHistory() =>
             JsonConvert.DeserializeObject<List<string>>(_settingsService.Get(Strings.ResultsHistory, string.Empty));
 
         public async void SetResultsHistoryAsync(IEnumerable<string> resultsHistory) =>
-            await Task.Run(() => SetResultsHistory(resultsHistory));
+            await Task.Run(() => SetResultsHistory(resultsHistory)).ConfigureAwait(false);
 
         private void SetResultsHistory(IEnumerable<string> resultsHistory) =>
             _settingsService.Set(Strings.ResultsHistory, JsonConvert.SerializeObject(resultsHistory));

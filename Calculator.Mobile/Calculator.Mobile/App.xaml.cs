@@ -8,6 +8,7 @@ namespace Calculator.Mobile
     {
         public App()
         {
+            Shared.Logic.Calculator.Initialize();
             ViewModelLocator.Initialize();
             InitializeComponent();
             MainPage = new NavigationPage(new CalculatorPage());
