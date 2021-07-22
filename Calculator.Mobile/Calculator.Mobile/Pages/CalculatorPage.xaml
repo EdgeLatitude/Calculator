@@ -137,7 +137,7 @@
         </ToolbarItem>
         <ToolbarItem 
             Text="{x:Static localization:LocalizedStrings.About}"
-            Command="{Binding ShowAboutCommand, Mode=OneTime}">
+            Command="{Binding NavigateToAboutCommand, Mode=OneTime}">
             <ToolbarItem.Order>
                 <OnPlatform x:TypeArguments="ToolbarItemOrder">
                     <On Platform="Android" Value="Secondary" />

@@ -34,6 +34,11 @@ namespace Calculator.Mobile
 
         private readonly Type[] _viewModelsToResolve = new Type[]
         {
+            typeof(AboutViewModel)
+        };
+
+        private readonly Type[] _viewModelsToResolveAsSingletons = new Type[]
+        {
             typeof(CalculatorViewModel),
             typeof(SettingsViewModel)
         };
@@ -57,6 +62,8 @@ namespace Calculator.Mobile
         private void RegisterViewModels(ContainerBuilder builder)
         {
             foreach (var viewModelToResolve in _viewModelsToResolve)
+                builder.RegisterType(viewModelToResolve);
+            foreach (var viewModelToResolve in _viewModelsToResolveAsSingletons)
                 builder.RegisterType(viewModelToResolve).SingleInstance();
         }
 

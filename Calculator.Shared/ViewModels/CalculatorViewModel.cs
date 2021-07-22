@@ -15,12 +15,19 @@ namespace Calculator.Shared.ViewModels
 {
     public class CalculatorViewModel : BaseViewModel
     {
-        private readonly List<string> _possibleDecimalSeparators
-            = new List<string>()
-            {
-                LexicalSymbols.Comma,
-                LexicalSymbols.Dot
-            };
+        #region Fields
+        private bool _isCalculating;
+        private bool _isPasting;
+
+        private InputSectionViewModel _selectedInputSection;
+        private NextInput _nextStroke = NextInput.DoNothing;
+        private InputSectionViewModel[] _lastInput;
+
+        private readonly IAlertsService _alertsService;
+        private readonly IClipboardService _clipboardService;
+        private readonly ICommandFactoryService _commandFactoryService;
+        private readonly INavigationService _navigationService;
+        private readonly IPlatformInformationService _platformInformationService;
 
         private readonly Dictionary<string, string> _equivalentSymbols
             = new Dictionary<string, string>()
@@ -29,58 +36,18 @@ namespace Calculator.Shared.ViewModels
                 { LexicalSymbols.SimpleMultiplicationOperator, LexicalSymbols.MultiplicationOperator }
             };
 
-        private readonly IAlertsService _alertsService;
-        private readonly IClipboardService _clipboardService;
-        private readonly ICommandFactoryService _commandFactoryService;
-        private readonly INavigationService _navigationService;
-        private readonly IPlatformInformationService _platformInformationService;
+        private readonly List<string> _possibleDecimalSeparators
+            = new List<string>()
+            {
+                LexicalSymbols.Comma,
+                LexicalSymbols.Dot
+            };
 
         private readonly Dictionary<string, decimal> _variableStorageValues
             = new Dictionary<string, decimal>();
+        #endregion
 
-        private bool _isCalculating;
-        private bool _isPasting;
-
-        private InputSectionViewModel[] _lastInput;
-
-        private NextInput _nextStroke = NextInput.DoNothing;
-
-        private InputSectionViewModel _selectedInputSection;
-
-        public CalculatorViewModel(
-            IAlertsService alertsService,
-            IClipboardService clipboardService,
-            ICommandFactoryService commandFactoryService,
-            INavigationService navigationService,
-            IPlatformInformationService platformInformationService)
-        {
-            _alertsService = alertsService;
-            _clipboardService = clipboardService;
-            _commandFactoryService = commandFactoryService;
-            _navigationService = navigationService;
-            _platformInformationService = platformInformationService;
-
-            AllClearCommand = _commandFactoryService.Create(AllClear);
-            ClearCommand = _commandFactoryService.Create(Clear);
-            DeleteCommand = _commandFactoryService.Create(async () => await Delete());
-            BinaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await BinaryOperator(symbol));
-            UnaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await UnaryOperator(symbol));
-            ParenthesisCommand = _commandFactoryService.Create<string>(async (parenthesis) => await Parenthesis(parenthesis));
-            VariableStorageCommand = _commandFactoryService.Create<string>(async (symbol) => await VariableStorage(symbol));
-            NumberCommand = _commandFactoryService.Create<string>(async (number) => await Number(number));
-            DecimalCommand = _commandFactoryService.Create(async () => await Decimal());
-            CalculateCommand = _commandFactoryService.Create(async () => await Calculate());
-            CopyCommand = _commandFactoryService.Create(async () => await Copy());
-            PasteCommand = _commandFactoryService.Create(async () => await Paste());
-            SelectInputSectionCommand = _commandFactoryService.Create<InputSectionViewModel>(async (inputSectionViewModel) => await SelectInputSection(inputSectionViewModel));
-            ManageInputCharacterCommand = _commandFactoryService.Create<string>(async (character) => await ManageInputCharacter(character));
-            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
-            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
-            ShowAboutCommand = _commandFactoryService.Create(async () => await ShowAbout());
-
-            Input.CollectionChanged += Input_CollectionChanged;
-        }
-
+        #region Properties
         public string DecimalSeparator => Logic.Calculator.Instance.DecimalSeparator;
 
         private readonly ObservableCollection<InputSectionViewModel> _input = new ObservableCollection<InputSectionViewModel>();
@@ -88,7 +55,9 @@ namespace Calculator.Shared.ViewModels
         public ObservableCollection<InputSectionViewModel> Input => _input;
 
         public bool AfterResult { get; private set; }
+        #endregion
 
+        #region Commands
         public ICommand AllClearCommand { get; }
 
         public ICommand ClearCommand { get; }
@@ -121,8 +90,46 @@ namespace Calculator.Shared.ViewModels
 
         public ICommand NavigateToSettingsCommand { get; }
 
-        public ICommand ShowAboutCommand { get; }
+        public ICommand NavigateToAboutCommand { get; }
+        #endregion
 
+        #region Constructors
+        public CalculatorViewModel(
+            IAlertsService alertsService,
+            IClipboardService clipboardService,
+            ICommandFactoryService commandFactoryService,
+            INavigationService navigationService,
+            IPlatformInformationService platformInformationService)
+        {
+            _alertsService = alertsService;
+            _clipboardService = clipboardService;
+            _commandFactoryService = commandFactoryService;
+            _navigationService = navigationService;
+            _platformInformationService = platformInformationService;
+
+            AllClearCommand = _commandFactoryService.Create(AllClear);
+            ClearCommand = _commandFactoryService.Create(Clear);
+            DeleteCommand = _commandFactoryService.Create(async () => await Delete());
+            BinaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await BinaryOperator(symbol));
+            UnaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await UnaryOperator(symbol));
+            ParenthesisCommand = _commandFactoryService.Create<string>(async (parenthesis) => await Parenthesis(parenthesis));
+            VariableStorageCommand = _commandFactoryService.Create<string>(async (symbol) => await VariableStorage(symbol));
+            NumberCommand = _commandFactoryService.Create<string>(async (number) => await Number(number));
+            DecimalCommand = _commandFactoryService.Create(async () => await Decimal());
+            CalculateCommand = _commandFactoryService.Create(async () => await Calculate());
+            CopyCommand = _commandFactoryService.Create(async () => await Copy());
+            PasteCommand = _commandFactoryService.Create(async () => await Paste());
+            SelectInputSectionCommand = _commandFactoryService.Create<InputSectionViewModel>(async (inputSectionViewModel) => await SelectInputSection(inputSectionViewModel));
+            ManageInputCharacterCommand = _commandFactoryService.Create<string>(async (character) => await ManageInputCharacter(character));
+            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
+            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettings());
+            NavigateToAboutCommand = _commandFactoryService.Create(async () => await NavigateToAbout());
+
+            Input.CollectionChanged += Input_CollectionChanged;
+        }
+        #endregion
+
+        #region Methods
         private void AllClear()
         {
             // Clear user input and memory values
@@ -407,7 +414,7 @@ namespace Calculator.Shared.ViewModels
                     LocalizedStrings.DisabledResultsHistory,
                     LocalizedStrings.Settings);
                 if (openSettings)
-                    await NavigateToSettingsAsync();
+                    await NavigateToSettings();
                 return;
             }
 
@@ -438,20 +445,11 @@ namespace Calculator.Shared.ViewModels
                 Settings.Instance.ClearResultsHistory();
         }
 
-        private async Task NavigateToSettingsAsync() =>
+        private async Task NavigateToSettings() =>
             await _navigationService.NavigateToAsync(Locations.SettingsPage);
 
-        private async Task ShowAbout() =>
-            await _alertsService.DisplayAlertAsync(
-                LocalizedStrings.About,
-                (_platformInformationService.PlatformSupportsGettingApplicationVersion() ?
-                    LocalizedStrings.AppVersion
-                        + Environment.NewLine
-                        + _platformInformationService.GetApplicationVersion()
-                        + Environment.NewLine
-                        + Environment.NewLine :
-                    string.Empty)
-                + LocalizedStrings.AppIconAttribution);
+        private async Task NavigateToAbout() =>
+            await _navigationService.NavigateToAsync(Locations.AboutPage);
 
         private void ClearAndAddInputSection(string input)
         {
@@ -489,5 +487,6 @@ namespace Calculator.Shared.ViewModels
             if (!_isCalculating)
                 AfterResult = false;
         }
+        #endregion
     }
 }

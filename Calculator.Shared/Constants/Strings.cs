@@ -6,5 +6,7 @@
         public const string ResultsHistory = "ResultsHistory";
         public const string Theme = "Theme";
         public const string WhiteSpace = " ";
+        public const string HttpsProtocol = "https://";
+        public const string SourceCodeWebsite = "github.com/EdgeLatitude/Calculator";
     }
 }

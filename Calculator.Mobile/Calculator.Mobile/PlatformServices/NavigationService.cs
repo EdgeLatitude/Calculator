@@ -13,6 +13,7 @@ namespace Calculator.Mobile.PlatformServices
     {
         private readonly Dictionary<string, Type> _locationPageDictionary = new Dictionary<string, Type>
         {
+            { Locations.AboutPage, typeof(AboutPage) },
             { Locations.SettingsPage, typeof(SettingsPage) }
         };
 

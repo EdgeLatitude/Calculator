@@ -12,53 +12,24 @@ namespace Calculator.Shared.ViewModels
 {
     public class SettingsViewModel : BaseViewModel
     {
-        private readonly ICommandFactoryService _commandFactoryService;
-        private readonly IUiThreadService _uiThreadService;
+        #region Fields
+        private bool _loaded;
+        private int _currentHistoryLength;
+        private Theme? _currentTheme;
 
         private readonly bool _deviceSupportsAutomaticDarkMode;
+
+        private readonly ICommandFactoryService _commandFactoryService;
+        private readonly IUiThreadService _uiThreadService;
 
         private readonly Dictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
         {
             { LocalizedStrings.Light, Theme.Light },
             { LocalizedStrings.Dark, Theme.Dark }
         };
+        #endregion
 
-        private bool _loaded;
-
-        private int _currentHistoryLength;
-
-        private Theme? _currentTheme;
-
-        public SettingsViewModel(
-            ICommandFactoryService commandFactoryService,
-            IUiThreadService uiThreadService)
-        {
-            _commandFactoryService = commandFactoryService;
-            _uiThreadService = uiThreadService;
-
-            #region History settings
-            SaveSettingsCommand = _commandFactoryService.Create(() => SaveSettings(), CanExecuteSaveSettings);
-            _currentHistoryLength = Settings.Instance.GetResultsHistoryLength();
-            HistoryLength = _currentHistoryLength.ToString();
-            #endregion History settings
-
-            #region Theme settings
-            DeviceSupportsManualDarkMode = Theming.Instance.DeviceSupportsManualDarkMode;
-            _deviceSupportsAutomaticDarkMode = Theming.Instance.DeviceSupportsAutomaticDarkMode;
-            _currentTheme = Theming.Instance.GetAppOrDefaultTheme();
-
-            if (_deviceSupportsAutomaticDarkMode)
-                _themesDictionary.Add(LocalizedStrings.Device, null);
-
-            _uiThreadService.ExecuteOnUiThread(() =>
-            {
-                Themes = _themesDictionary.Keys.ToArray();
-                SelectedTheme = _themesDictionary.FirstOrDefault(pair => pair.Value == _currentTheme).Key;
-                _loaded = true;
-            });
-            #endregion Theme settings
-        }
-
+        #region Properties
         private string _historyLength;
 
         public string HistoryLength
@@ -142,9 +113,46 @@ namespace Calculator.Shared.ViewModels
         }
 
         public bool StyleSectionIsVisible => DeviceSupportsManualDarkMode;
+        #endregion
 
+        #region Commands
         public ICommand SaveSettingsCommand { get; }
+        #endregion
 
+        #region Constructors
+        public SettingsViewModel(
+            ICommandFactoryService commandFactoryService,
+            IUiThreadService uiThreadService)
+        {
+            _commandFactoryService = commandFactoryService;
+            _uiThreadService = uiThreadService;
+
+            SaveSettingsCommand = _commandFactoryService.Create(() => SaveSettings(), CanExecuteSaveSettings);
+
+            #region History settings
+            _currentHistoryLength = Settings.Instance.GetResultsHistoryLength();
+            HistoryLength = _currentHistoryLength.ToString();
+            #endregion History settings
+
+            #region Theme settings
+            DeviceSupportsManualDarkMode = Theming.Instance.DeviceSupportsManualDarkMode;
+            _deviceSupportsAutomaticDarkMode = Theming.Instance.DeviceSupportsAutomaticDarkMode;
+            _currentTheme = Theming.Instance.GetAppOrDefaultTheme();
+
+            if (_deviceSupportsAutomaticDarkMode)
+                _themesDictionary.Add(LocalizedStrings.Device, null);
+
+            _uiThreadService.ExecuteOnUiThread(() =>
+            {
+                Themes = _themesDictionary.Keys.ToArray();
+                SelectedTheme = _themesDictionary.FirstOrDefault(pair => pair.Value == _currentTheme).Key;
+                _loaded = true;
+            });
+            #endregion Theme settings
+        }
+        #endregion
+
+        #region Methods
         private void SaveSettings()
         {
             _ = ManageHistoryLengthSettings();
@@ -198,5 +206,6 @@ namespace Calculator.Shared.ViewModels
 
         private bool CanExecuteSaveSettings() =>
             SettingsChanged;
+        #endregion
     }
 }
