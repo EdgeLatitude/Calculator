@@ -62,6 +62,7 @@ namespace Calculator.Mobile
 
         private void InitializeSingletons()
         {
+            Shared.Logic.Calculator.Initialize();
             Shared.Logic.Settings.Initialize(
                 _container.Resolve<ISettingsService>(),
                 _container.Resolve<IThemingService>());
