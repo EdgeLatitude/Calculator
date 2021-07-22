@@ -112,6 +112,9 @@ namespace Calculator.Shared.ViewModels
             }
         }
 
+        private bool CanExecuteSaveSettings =>
+            SettingsChanged;
+
         public bool StyleSectionIsVisible => DeviceSupportsManualDarkMode;
         #endregion
 
@@ -127,7 +130,7 @@ namespace Calculator.Shared.ViewModels
             _commandFactoryService = commandFactoryService;
             _uiThreadService = uiThreadService;
 
-            SaveSettingsCommand = _commandFactoryService.Create(() => SaveSettings(), CanExecuteSaveSettings);
+            SaveSettingsCommand = _commandFactoryService.Create(SaveSettings, () => CanExecuteSaveSettings);
 
             #region History settings
             _currentHistoryLength = Settings.Instance.GetResultsHistoryLength();
@@ -203,9 +206,6 @@ namespace Calculator.Shared.ViewModels
             Theming.Instance.ManageAppTheme();
             _currentTheme = selectedTheme;
         }
-
-        private bool CanExecuteSaveSettings() =>
-            SettingsChanged;
         #endregion
     }
 }
