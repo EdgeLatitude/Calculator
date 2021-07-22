@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Calculator.Shared.DataStructures
 {
-    class CircularBuffer<T> : IEnumerable<T>
+    internal class CircularBuffer<T> : IEnumerable<T>
     {
         public readonly int Capacity;
 

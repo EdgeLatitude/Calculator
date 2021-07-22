@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace Calculator.Mobile.PlatformServices
 {
-    class NavigationService : INavigationService
+    internal class NavigationService : INavigationService
     {
         private readonly Dictionary<string, Type> _locationPageDictionary = new Dictionary<string, Type>
         {

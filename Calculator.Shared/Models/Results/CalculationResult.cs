@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Shared.Models.Results
 {
-    class CalculationResult
+    internal class CalculationResult
     {
         public bool Successful { get; }
         public string ErrorMessage { get; }

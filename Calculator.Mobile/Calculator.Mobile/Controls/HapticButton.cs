@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace Calculator.Mobile.Controls
 {
-    class HapticButton : Button
+    internal class HapticButton : Button
     {
         private static IClickSoundDependencyService _clickSoundService;
 

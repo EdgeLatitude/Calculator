@@ -4,7 +4,7 @@ using Xamarin.Essentials;
 
 namespace Calculator.Mobile.PlatformServices
 {
-    class ClipboardService : IClipboardService
+    internal class ClipboardService : IClipboardService
     {
         public async Task<string> GetTextAsync() =>
             await Clipboard.GetTextAsync();

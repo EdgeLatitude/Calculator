@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Mobile.PlatformServices
 {
-    static class Equivalences
+    internal static class Equivalences
     {
     }
 }

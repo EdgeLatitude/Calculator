@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace Calculator.Mobile.Converters
 {
-    class NegateBooleanConverter : IValueConverter
+    internal class NegateBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType,
             object parameter, CultureInfo culture) =>

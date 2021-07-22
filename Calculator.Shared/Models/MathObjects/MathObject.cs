@@ -1,4 +1,4 @@
 ﻿namespace Calculator.Shared.Models.MathObjects
 {
-    abstract class MathObject { }
+    internal abstract class MathObject { }
 }

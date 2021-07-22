@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Shared.Models.Enums
 {
-    enum TerminalSymbol
+    internal enum TerminalSymbol
     {
         None, // Used when no valid lexeme is detected
         LastResult, // Variable storage characters

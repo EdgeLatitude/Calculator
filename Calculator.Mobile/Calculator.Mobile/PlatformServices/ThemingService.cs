@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace Calculator.Mobile.PlatformServices
 {
-    class ThemingService : IThemingService
+    internal class ThemingService : IThemingService
     {
         private readonly IThemingDependencyService _themingDependencyService
             = DependencyService.Get<IThemingDependencyService>();

@@ -3,7 +3,7 @@ using Xamarin.Essentials;
 
 namespace Calculator.Mobile.PlatformServices
 {
-    class PlatformInformationService : IPlatformInformationService
+    internal class PlatformInformationService : IPlatformInformationService
     {
         public bool PlatformSupportsGettingApplicationVersion() =>
             true;

@@ -2,7 +2,7 @@
 
 namespace Calculator.Shared.Models.MathObjects
 {
-    class Operator : MathObject
+    internal class Operator : MathObject
     {
         public TerminalSymbol TerminalSymbol { get; }
         public int Precedence { get; }

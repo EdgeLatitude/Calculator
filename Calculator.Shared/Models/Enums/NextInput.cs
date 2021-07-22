@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Shared.Models.Enums
 {
-    enum NextInput
+    internal enum NextInput
     {
         DoNothing, ClearAtNumber, ClearAtAny
     }

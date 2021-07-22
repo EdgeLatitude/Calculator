@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Shared.Models.MathObjects
 {
-    class Operand : MathObject
+    internal class Operand : MathObject
     {
         public decimal Value { get; }
 

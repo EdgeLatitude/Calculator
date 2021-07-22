@@ -2,7 +2,7 @@
 
 namespace Calculator.Shared.Models.Results
 {
-    class LexemeResult
+    internal class LexemeResult
     {
         public bool Successful { get; }
         public string ErrorMessage { get; }

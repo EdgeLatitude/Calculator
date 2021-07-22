@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Shared.Models.Enums
 {
-    enum TerminalSymbolGroup
+    internal enum TerminalSymbolGroup
     {
         None,
         VariableStorageCharacters,

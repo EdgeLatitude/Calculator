@@ -2,7 +2,7 @@
 
 namespace Calculator.Shared.Models.Results
 {
-    class LexicalAnalysisResult
+    internal class LexicalAnalysisResult
     {
         public string[] Lexemes { get; }
         public TerminalSymbol[] TerminalSymbols { get; }

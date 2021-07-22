@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace Calculator.Mobile.Controls
 {
-    class CustomPicker : Picker
+    internal class CustomPicker : Picker
     {
         private bool _customPickerIsShowing;
 

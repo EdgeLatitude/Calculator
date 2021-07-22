@@ -2,7 +2,7 @@
 
 namespace Calculator.Shared.Models.Results
 {
-    class SyntaxAndSemanticAnalysisResult
+    internal class SyntaxAndSemanticAnalysisResult
     {
         public MathObject[] PostfixOperation { get; }
 
