@@ -23,6 +23,9 @@ namespace Calculator.Shared.ViewModels
         private NextInput _nextStroke = NextInput.DoNothing;
         private InputSectionViewModel[] _lastInput;
 
+        private readonly Logic.Calculator _calculator;
+        private readonly Settings _settings;
+
         private readonly IAlertsService _alertsService;
         private readonly IClipboardService _clipboardService;
         private readonly ICommandFactoryService _commandFactoryService;
@@ -48,7 +51,7 @@ namespace Calculator.Shared.ViewModels
         #endregion
 
         #region Properties
-        public string DecimalSeparator => Logic.Calculator.Instance.DecimalSeparator;
+        public string DecimalSeparator => _calculator.DecimalSeparator;
 
         private readonly ObservableCollection<InputSectionViewModel> _input = new ObservableCollection<InputSectionViewModel>();
 
@@ -95,12 +98,17 @@ namespace Calculator.Shared.ViewModels
 
         #region Constructors
         public CalculatorViewModel(
+            Logic.Calculator calculator,
+            Settings settings,
             IAlertsService alertsService,
             IClipboardService clipboardService,
             ICommandFactoryService commandFactoryService,
             INavigationService navigationService,
             IPlatformInformationService platformInformationService)
         {
+            _calculator = calculator;
+            _settings = settings;
+
             _alertsService = alertsService;
             _clipboardService = clipboardService;
             _commandFactoryService = commandFactoryService;
@@ -266,7 +274,7 @@ namespace Calculator.Shared.ViewModels
             // Calculate and show corresponding result
             _isCalculating = true;
             _lastInput = input;
-            var calculationResult = await Logic.Calculator.Instance.CalculateAsync(JoinInputSectionsIntoSingleString(input), _variableStorageValues);
+            var calculationResult = await _calculator.CalculateAsync(JoinInputSectionsIntoSingleString(input), _variableStorageValues);
             if (calculationResult != null)
                 // Show result if calculation was successful
                 if (calculationResult.Successful)
@@ -281,7 +289,7 @@ namespace Calculator.Shared.ViewModels
 
                         AddOrUpdateVariableStorage(LocalizedStrings.LastResultAbbreviation, result);
 
-                        _ = Settings.Instance.ManageNewResultAsync(resultText);
+                        _ = _settings.ManageNewResultAsync(resultText);
                     }
                     // Show error message if result could not be formatted
                     else
@@ -319,7 +327,7 @@ namespace Calculator.Shared.ViewModels
         {
             resultText = result.ToString();
             while (resultText.Contains(DecimalSeparator)
-                && (char.ToString(resultText[^1]) == Logic.Calculator.Instance.ZeroString
+                && (char.ToString(resultText[^1]) == _calculator.ZeroString
                     || char.ToString(resultText[^1]) == DecimalSeparator))
                 resultText = resultText[0..^1];
             return true;
@@ -370,27 +378,27 @@ namespace Calculator.Shared.ViewModels
 
         private async Task<bool> ManageInputCharacter(string character)
         {
-            if (Logic.Calculator.Instance.VariableStorageWords.Contains(character))
+            if (_calculator.VariableStorageWords.Contains(character))
             {
                 await VariableStorage(character);
                 return true;
             }
-            else if (Logic.Calculator.Instance.Parentheses.Contains(character))
+            else if (_calculator.Parentheses.Contains(character))
             {
                 await Parenthesis(character);
                 return true;
             }
-            else if (Logic.Calculator.Instance.BinaryOperators.Contains(character))
+            else if (_calculator.BinaryOperators.Contains(character))
             {
                 await BinaryOperator(character);
                 return true;
             }
-            else if (Logic.Calculator.Instance.UnaryOperators.Contains(character))
+            else if (_calculator.UnaryOperators.Contains(character))
             {
                 await UnaryOperator(character);
                 return true;
             }
-            else if (Logic.Calculator.Instance.Numbers.Contains(character))
+            else if (_calculator.Numbers.Contains(character))
             {
                 await Number(character);
                 return true;
@@ -408,7 +416,7 @@ namespace Calculator.Shared.ViewModels
 
         private async Task ShowHistory()
         {
-            if (Settings.Instance.GetResultsHistoryLength() == 0)
+            if (_settings.GetResultsHistoryLength() == 0)
             {
                 var openSettings = await _alertsService.DisplayConfirmationAsync(LocalizedStrings.Notice,
                     LocalizedStrings.DisabledResultsHistory,
@@ -418,7 +426,7 @@ namespace Calculator.Shared.ViewModels
                 return;
             }
 
-            if (!Settings.Instance.ContainsResultsHistory())
+            if (!_settings.ContainsResultsHistory())
             {
                 await _alertsService.DisplayAlertAsync(
                     LocalizedStrings.Notice,
@@ -426,7 +434,7 @@ namespace Calculator.Shared.ViewModels
                 return;
             }
 
-            var resultsHistory = await Settings.Instance.GetResultsHistoryAsync();
+            var resultsHistory = await _settings.GetResultsHistoryAsync();
             resultsHistory.Reverse();
             var resultFromHistory = await _alertsService.DisplayOptionsAsync(LocalizedStrings.History,
                 LocalizedStrings.ClearHistory,
@@ -442,7 +450,7 @@ namespace Calculator.Shared.ViewModels
                 else
                     await AddInputSection(resultFromHistory);
             else if (resultFromHistory == LocalizedStrings.ClearHistory)
-                Settings.Instance.ClearResultsHistory();
+                _settings.ClearResultsHistory();
         }
 
         private async Task NavigateToSettings() =>

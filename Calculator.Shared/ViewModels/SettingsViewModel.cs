@@ -19,6 +19,9 @@ namespace Calculator.Shared.ViewModels
 
         private readonly bool _deviceSupportsAutomaticDarkMode;
 
+        private readonly Settings _settings;
+        private readonly Theming _theming;
+
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IUiThreadService _uiThreadService;
 
@@ -124,23 +127,28 @@ namespace Calculator.Shared.ViewModels
 
         #region Constructors
         public SettingsViewModel(
+            Settings settings,
+            Theming theming,
             ICommandFactoryService commandFactoryService,
             IUiThreadService uiThreadService)
         {
+            _settings = settings;
+            _theming = theming;
+
             _commandFactoryService = commandFactoryService;
             _uiThreadService = uiThreadService;
 
             SaveSettingsCommand = _commandFactoryService.Create(SaveSettings, () => CanExecuteSaveSettings);
 
             #region History settings
-            _currentHistoryLength = Settings.Instance.GetResultsHistoryLength();
+            _currentHistoryLength = _settings.GetResultsHistoryLength();
             HistoryLength = _currentHistoryLength.ToString();
             #endregion History settings
 
             #region Theme settings
-            DeviceSupportsManualDarkMode = Theming.Instance.DeviceSupportsManualDarkMode;
-            _deviceSupportsAutomaticDarkMode = Theming.Instance.DeviceSupportsAutomaticDarkMode;
-            _currentTheme = Theming.Instance.GetAppOrDefaultTheme();
+            DeviceSupportsManualDarkMode = _theming.DeviceSupportsManualDarkMode;
+            _deviceSupportsAutomaticDarkMode = _theming.DeviceSupportsAutomaticDarkMode;
+            _currentTheme = _theming.GetAppOrDefaultTheme();
 
             if (_deviceSupportsAutomaticDarkMode)
                 _themesDictionary.Add(LocalizedStrings.Device, null);
@@ -173,24 +181,24 @@ namespace Calculator.Shared.ViewModels
             }
             if (_currentHistoryLength == historyLengthAsInt)
                 return;
-            Settings.Instance.SetResultsHistoryLength(historyLengthAsInt);
+            _settings.SetResultsHistoryLength(historyLengthAsInt);
             // Clear storage for out of bounds results
             var newHistoryLengthIsZero = historyLengthAsInt == 0;
             if (historyLengthAsInt - _currentHistoryLength < 0
-                && Settings.Instance.ContainsResultsHistory()
+                && _settings.ContainsResultsHistory()
                 && !newHistoryLengthIsZero)
             {
-                var resultsHistory = await Settings.Instance.GetResultsHistoryAsync();
+                var resultsHistory = await _settings.GetResultsHistoryAsync();
                 if (historyLengthAsInt < resultsHistory.Count)
                 {
                     resultsHistory.Reverse();
                     resultsHistory = resultsHistory.Take(historyLengthAsInt).ToList();
                     resultsHistory.Reverse();
-                    Settings.Instance.SetResultsHistoryAsync(resultsHistory);
+                    _settings.SetResultsHistoryAsync(resultsHistory);
                 }
             }
             else if (newHistoryLengthIsZero)
-                Settings.Instance.ClearResultsHistory();
+                _settings.ClearResultsHistory();
             _currentHistoryLength = historyLengthAsInt;
         }
 
@@ -200,10 +208,10 @@ namespace Calculator.Shared.ViewModels
             if (_currentTheme == selectedTheme)
                 return;
             if (selectedTheme.HasValue)
-                Settings.Instance.SetTheme(selectedTheme.Value);
+                _settings.SetTheme(selectedTheme.Value);
             else
-                Settings.Instance.ClearTheme();
-            Theming.Instance.ManageAppTheme();
+                _settings.ClearTheme();
+            _theming.ManageAppTheme();
             _currentTheme = selectedTheme;
         }
         #endregion

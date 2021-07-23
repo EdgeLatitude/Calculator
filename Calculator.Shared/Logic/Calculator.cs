@@ -15,16 +15,7 @@ namespace Calculator.Shared.Logic
 {
     public class Calculator
     {
-        public static Calculator Instance
-        {
-            get;
-            private set;
-        }
-
-        public static void Initialize() =>
-            Instance = new Calculator();
-
-        private Calculator()
+        public Calculator()
         {
             // Initialize separators array from list filled with specified lexical collections
             var separators = new List<string>();

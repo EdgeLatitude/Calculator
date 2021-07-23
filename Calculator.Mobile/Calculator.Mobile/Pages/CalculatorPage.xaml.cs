@@ -21,7 +21,7 @@ namespace Calculator.Mobile.Pages
         public CalculatorPage()
         {
             InitializeComponent();
-            _viewModel = ViewModelLocator.Instance.Resolve<CalculatorViewModel>();
+            _viewModel = ViewModelLocator.Instance.ResolveViewModel<CalculatorViewModel>();
             BindingContext = _viewModel;
         }
 

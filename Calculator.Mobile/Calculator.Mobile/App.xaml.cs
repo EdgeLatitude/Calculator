@@ -6,23 +6,26 @@ namespace Calculator.Mobile
 {
     public partial class App : Application
     {
+        private readonly Theming _theming;
+
         public App()
         {
             InitializeComponent();
             ViewModelLocator.Initialize();
             MainPage = new NavigationPage(new CalculatorPage());
+            _theming = ViewModelLocator.Instance.Resolve<Theming>();
         }
 
         protected override void OnStart()
         {
             base.OnStart();
-            Theming.Instance.ManageAppTheme(true);
+            _theming.ManageAppTheme(true);
         }
 
         protected override void OnResume()
         {
             base.OnResume();
-            Theming.Instance.ManageAppTheme();
+            _theming.ManageAppTheme();
         }
     }
 }

@@ -18,6 +18,13 @@ namespace Calculator.Mobile
         public static void Initialize() =>
             Instance = new ViewModelLocator();
 
+        public TViewModel ResolveViewModel<TViewModel>()
+            where TViewModel : BaseViewModel =>
+            _container.Resolve<TViewModel>();
+
+        public T Resolve<T>() =>
+            _container.Resolve<T>();
+
         private readonly IContainer _container;
 
         private readonly Dictionary<Type, Type> _implementationInterfaceDictionary = new Dictionary<Type, Type>
@@ -48,8 +55,8 @@ namespace Calculator.Mobile
             var builder = new ContainerBuilder();
             RegisterPlatformServices(builder);
             RegisterViewModels(builder);
+            RegisterLogic(builder);
             _container = builder.Build();
-            InitializeSingletons();
         }
 
         private void RegisterPlatformServices(ContainerBuilder builder)
@@ -67,18 +74,11 @@ namespace Calculator.Mobile
                 builder.RegisterType(viewModelToResolve).SingleInstance();
         }
 
-        private void InitializeSingletons()
+        private void RegisterLogic(ContainerBuilder builder)
         {
-            Shared.Logic.Calculator.Initialize();
-            Shared.Logic.Settings.Initialize(
-                _container.Resolve<ISettingsService>(),
-                _container.Resolve<IThemingService>());
-            Shared.Logic.Theming.Initialize(
-                _container.Resolve<IThemingService>());
+            builder.RegisterType<Shared.Logic.Calculator>().InstancePerLifetimeScope();
+            builder.RegisterType<Shared.Logic.Settings>().InstancePerLifetimeScope();
+            builder.RegisterType<Shared.Logic.Theming>().InstancePerLifetimeScope();
         }
-
-        public TViewModel Resolve<TViewModel>()
-            where TViewModel : BaseViewModel =>
-            _container.Resolve<TViewModel>();
     }
 }
