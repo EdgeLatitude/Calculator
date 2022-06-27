@@ -26,7 +26,7 @@ namespace Calculator.Shared.ViewModels
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly IUiThreadService _uiThreadService;
 
-        private readonly Dictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
+        private readonly IDictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
         {
             { LocalizedStrings.Light, Theme.Light },
             { LocalizedStrings.Dark, Theme.Dark }
