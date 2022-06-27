@@ -23,7 +23,7 @@ namespace Calculator.Mobile.PlatformServices
             _themingDependencyService.GetDeviceDefaultTheme();
 
         public async Task<Theme> GetDeviceThemeAsync() =>
-            await _themingDependencyService.GetDeviceTheme();
+            await _themingDependencyService.GetDeviceThemeAsync();
 
         public async Task SetThemeAsync(Theme theme)
         {

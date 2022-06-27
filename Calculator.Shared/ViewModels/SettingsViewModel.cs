@@ -166,12 +166,12 @@ namespace Calculator.Shared.ViewModels
         #region Methods
         private void SaveSettings()
         {
-            _ = ManageHistoryLengthSettings();
+            _ = ManageHistoryLengthSettingsAsync();
             ManageThemeSettings();
             SettingsChanged = false;
         }
 
-        private async Task ManageHistoryLengthSettings()
+        private async Task ManageHistoryLengthSettingsAsync()
         {
             // Try to use the value that the user inputted, else, use the configuration default
             if (!int.TryParse(HistoryLength, out int historyLengthAsInt))

@@ -113,21 +113,21 @@ namespace Calculator.Shared.ViewModels
 
             AllClearCommand = _commandFactoryService.Create(AllClear);
             ClearCommand = _commandFactoryService.Create(Clear);
-            DeleteCommand = _commandFactoryService.Create(async () => await Delete());
-            BinaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await BinaryOperator(symbol));
-            UnaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await UnaryOperator(symbol));
-            ParenthesisCommand = _commandFactoryService.Create<string>(async (parenthesis) => await Parenthesis(parenthesis));
-            VariableStorageCommand = _commandFactoryService.Create<string>(async (symbol) => await VariableStorage(symbol));
-            NumberCommand = _commandFactoryService.Create<string>(async (number) => await Number(number));
-            DecimalCommand = _commandFactoryService.Create(async () => await Decimal());
-            CalculateCommand = _commandFactoryService.Create(async () => await Calculate());
-            CopyCommand = _commandFactoryService.Create(async () => await Copy());
-            PasteCommand = _commandFactoryService.Create(async () => await Paste());
-            SelectInputSectionCommand = _commandFactoryService.Create<InputSectionViewModel>(async (inputSectionViewModel) => await SelectInputSection(inputSectionViewModel));
-            ManageInputCharacterCommand = _commandFactoryService.Create<string>(async (character) => await ManageInputCharacter(character));
-            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistory());
-            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettings());
-            NavigateToAboutCommand = _commandFactoryService.Create(async () => await NavigateToAbout());
+            DeleteCommand = _commandFactoryService.Create(async () => await DeleteAsync());
+            BinaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await BinaryOperatorAsync(symbol));
+            UnaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await UnaryOperatorAsync(symbol));
+            ParenthesisCommand = _commandFactoryService.Create<string>(async (parenthesis) => await ParenthesisAsync(parenthesis));
+            VariableStorageCommand = _commandFactoryService.Create<string>(async (symbol) => await VariableStorageAsync(symbol));
+            NumberCommand = _commandFactoryService.Create<string>(async (number) => await NumberAsync(number));
+            DecimalCommand = _commandFactoryService.Create(async () => await DecimalAsync());
+            CalculateCommand = _commandFactoryService.Create(async () => await CalculateAsync());
+            CopyCommand = _commandFactoryService.Create(async () => await CopyAsync());
+            PasteCommand = _commandFactoryService.Create(async () => await PasteAsync());
+            SelectInputSectionCommand = _commandFactoryService.Create<InputSectionViewModel>(async (inputSectionViewModel) => await SelectInputSectionAsync(inputSectionViewModel));
+            ManageInputCharacterCommand = _commandFactoryService.Create<string>(async (character) => await ManageInputCharacterAsync(character));
+            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistoryAsync());
+            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
+            NavigateToAboutCommand = _commandFactoryService.Create(async () => await NavigateToAboutAsync());
 
             Input.CollectionChanged += Input_CollectionChanged;
         }
@@ -148,7 +148,7 @@ namespace Calculator.Shared.ViewModels
             _nextStroke = NextInput.DoNothing;
         }
 
-        private async Task Delete()
+        private async Task DeleteAsync()
         {
             // Do nothing if there is currently no input
             if (!Input.Any())
@@ -175,7 +175,7 @@ namespace Calculator.Shared.ViewModels
             await Task.Delay(100);
         }
 
-        private async Task BinaryOperator(string symbol)
+        private async Task BinaryOperatorAsync(string symbol)
         {
             if (_nextStroke == NextInput.ClearAtAny)
             {
@@ -185,14 +185,14 @@ namespace Calculator.Shared.ViewModels
             else if (_nextStroke == NextInput.ClearAtNumber)
             {
                 ClearAndAddInputSection(LocalizedStrings.LastResultAbbreviation);
-                await AddInputSection(symbol);
+                await AddInputSectionAsync(symbol);
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                await AddInputSection(symbol);
+                await AddInputSectionAsync(symbol);
         }
 
-        private async Task UnaryOperator(string symbol)
+        private async Task UnaryOperatorAsync(string symbol)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
@@ -200,10 +200,10 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                await AddInputSection(symbol);
+                await AddInputSectionAsync(symbol);
         }
 
-        private async Task Parenthesis(string parenthesis)
+        private async Task ParenthesisAsync(string parenthesis)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
@@ -211,10 +211,10 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                await AddInputSection(parenthesis);
+                await AddInputSectionAsync(parenthesis);
         }
 
-        private async Task VariableStorage(string symbol)
+        private async Task VariableStorageAsync(string symbol)
         {
             if (_nextStroke != NextInput.DoNothing)
             {
@@ -222,10 +222,10 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                await AddInputSection(symbol);
+                await AddInputSectionAsync(symbol);
         }
 
-        private async Task Number(string number)
+        private async Task NumberAsync(string number)
         {
             if (_nextStroke == NextInput.ClearAtAny
                 || _nextStroke == NextInput.ClearAtNumber)
@@ -234,10 +234,10 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                await AddInputSection(number);
+                await AddInputSectionAsync(number);
         }
 
-        private async Task Decimal()
+        private async Task DecimalAsync()
         {
             if (_nextStroke != NextInput.DoNothing)
             {
@@ -245,10 +245,10 @@ namespace Calculator.Shared.ViewModels
                 _nextStroke = NextInput.DoNothing;
             }
             else
-                await AddInputSection(DecimalSeparator);
+                await AddInputSectionAsync(DecimalSeparator);
         }
 
-        private async Task Calculate()
+        private async Task CalculateAsync()
         {
             // Do nothing if there is no input
             if (!Input.Any())
@@ -329,10 +329,10 @@ namespace Calculator.Shared.ViewModels
             return true;
         }
 
-        private async Task Copy() =>
+        private async Task CopyAsync() =>
             await _clipboardService.SetTextAsync(JoinInputSectionsIntoSingleString(Input.ToArray()));
 
-        private async Task Paste()
+        private async Task PasteAsync()
         {
             if (_isPasting)
                 return;
@@ -351,7 +351,7 @@ namespace Calculator.Shared.ViewModels
 
             clipboardText = clipboardText.Replace(Strings.WhiteSpace, string.Empty);
             foreach (var symbol in clipboardText)
-                if (!await ManageInputCharacter(char.ToString(symbol)))
+                if (!await ManageInputCharacterAsync(char.ToString(symbol)))
                 {
                     await _alertsService.DisplayAlertAsync(
                         LocalizedStrings.Notice,
@@ -363,7 +363,7 @@ namespace Calculator.Shared.ViewModels
             _isPasting = false;
         }
 
-        private async Task SelectInputSection(InputSectionViewModel inputSectionViewModel)
+        private async Task SelectInputSectionAsync(InputSectionViewModel inputSectionViewModel)
         {
             if (_selectedInputSection != null)
                 _selectedInputSection.IsSelected = false;
@@ -372,45 +372,45 @@ namespace Calculator.Shared.ViewModels
             await Task.Delay(100);
         }
 
-        private async Task<bool> ManageInputCharacter(string character)
+        private async Task<bool> ManageInputCharacterAsync(string character)
         {
             if (_calculator.VariableStorageWords.Contains(character))
             {
-                await VariableStorage(character);
+                await VariableStorageAsync(character);
                 return true;
             }
             else if (_calculator.Parentheses.Contains(character))
             {
-                await Parenthesis(character);
+                await ParenthesisAsync(character);
                 return true;
             }
             else if (_calculator.BinaryOperators.Contains(character))
             {
-                await BinaryOperator(character);
+                await BinaryOperatorAsync(character);
                 return true;
             }
             else if (_calculator.UnaryOperators.Contains(character))
             {
-                await UnaryOperator(character);
+                await UnaryOperatorAsync(character);
                 return true;
             }
             else if (_calculator.Numbers.Contains(character))
             {
-                await Number(character);
+                await NumberAsync(character);
                 return true;
             }
             else if (_possibleDecimalSeparators.Contains(character))
             {
-                await Decimal();
+                await DecimalAsync();
                 return true;
             }
             else if (_equivalentSymbols.ContainsKey(character))
-                return await ManageInputCharacter(_equivalentSymbols[character]);
+                return await ManageInputCharacterAsync(_equivalentSymbols[character]);
             else
                 return false;
         }
 
-        private async Task ShowHistory()
+        private async Task ShowHistoryAsync()
         {
             if (_settings.GetResultsHistoryLength() == 0)
             {
@@ -418,7 +418,7 @@ namespace Calculator.Shared.ViewModels
                     LocalizedStrings.DisabledResultsHistory,
                     LocalizedStrings.Settings);
                 if (openSettings)
-                    await NavigateToSettings();
+                    await NavigateToSettingsAsync();
                 return;
             }
 
@@ -444,15 +444,15 @@ namespace Calculator.Shared.ViewModels
                     _nextStroke = NextInput.DoNothing;
                 }
                 else
-                    await AddInputSection(resultFromHistory);
+                    await AddInputSectionAsync(resultFromHistory);
             else if (resultFromHistory == LocalizedStrings.ClearHistory)
                 _settings.ClearResultsHistory();
         }
 
-        private async Task NavigateToSettings() =>
+        private async Task NavigateToSettingsAsync() =>
             await _navigationService.NavigateToAsync(Locations.SettingsPage);
 
-        private async Task NavigateToAbout() =>
+        private async Task NavigateToAboutAsync() =>
             await _navigationService.NavigateToAsync(Locations.AboutPage);
 
         private void ClearAndAddInputSection(string input)
@@ -463,7 +463,7 @@ namespace Calculator.Shared.ViewModels
             _selectedInputSection = onlySection;
         }
 
-        private async Task AddInputSection(string input)
+        private async Task AddInputSectionAsync(string input)
         {
             if (_selectedInputSection == null)
             {
