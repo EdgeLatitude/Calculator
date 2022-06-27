@@ -1,4 +1,5 @@
 ﻿using Calculator.Shared.Constants;
+using Calculator.Shared.Extensions;
 using Calculator.Shared.Localization;
 using Calculator.Shared.Logic;
 using Calculator.Shared.Models.Enums;
@@ -285,7 +286,7 @@ namespace Calculator.Shared.ViewModels
 
                         AddOrUpdateVariableStorage(LocalizedStrings.LastResultAbbreviation, result);
 
-                        _ = _settings.ManageNewResultAsync(resultText);
+                        _settings.ManageNewResultAsync(resultText).AwaitInOtherContext(true);
                     }
                     // Show error message if result could not be formatted
                     else

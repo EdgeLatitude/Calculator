@@ -1,4 +1,5 @@
 ﻿using Calculator.Shared.Constants;
+using Calculator.Shared.Extensions;
 using Calculator.Shared.Localization;
 using Calculator.Shared.Logic;
 using Calculator.Shared.Models.Theming;
@@ -166,7 +167,7 @@ namespace Calculator.Shared.ViewModels
         #region Methods
         private void SaveSettings()
         {
-            _ = ManageHistoryLengthSettingsAsync();
+            ManageHistoryLengthSettingsAsync().AwaitInOtherContext(true);
             ManageThemeSettings();
             SettingsChanged = false;
         }
