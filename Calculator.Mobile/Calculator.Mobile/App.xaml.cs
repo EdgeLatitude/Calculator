@@ -1,4 +1,4 @@
-﻿using Calculator.Mobile.Pages;
+﻿using Calculator.Shared.Constants;
 using Calculator.Shared.Logic;
 using Xamarin.Forms;
 
@@ -12,7 +12,7 @@ namespace Calculator.Mobile
         {
             InitializeComponent();
             ViewModelLocator.Initialize();
-            MainPage = new NavigationPage(new CalculatorPage());
+            MainPage = new NavigationPage(ViewModelLocator.Instance.ResolvePage(Locations.CalculatorPage));
             _theming = ViewModelLocator.Instance.Resolve<Theming>();
         }
 

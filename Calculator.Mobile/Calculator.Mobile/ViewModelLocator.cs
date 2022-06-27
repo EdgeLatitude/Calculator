@@ -59,6 +59,7 @@ namespace Calculator.Mobile
         private readonly IReadOnlyDictionary<string, Type> _pagesToResolve = new ReadOnlyDictionary<string, Type>(new Dictionary<string, Type>
         {
             { Locations.AboutPage, typeof(AboutPage) },
+            { Locations.CalculatorPage, typeof(CalculatorPage) },
             { Locations.SettingsPage, typeof(SettingsPage) }
         });
 
