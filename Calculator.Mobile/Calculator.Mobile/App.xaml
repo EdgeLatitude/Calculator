@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:controls="clr-namespace:Calculator.Mobile.Controls"
-             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             mc:Ignorable="d"
-             android:Application.WindowSoftInputModeAdjust="Resize"
-             x:Class="Calculator.Mobile.App">
+<Application
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:controls="clr-namespace:Calculator.Mobile.Controls"
+    xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    android:Application.WindowSoftInputModeAdjust="Resize"
+    mc:Ignorable="d"
+    x:Class="Calculator.Mobile.App">
     <Application.Resources>
         <!-- Colors !-->
         <Color x:Key="AccentColor">#006060</Color>

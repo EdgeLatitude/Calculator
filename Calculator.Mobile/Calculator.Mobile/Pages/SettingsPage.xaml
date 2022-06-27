@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:controls="clr-namespace:Calculator.Mobile.Controls"
-             xmlns:localization="clr-namespace:Calculator.Shared.Localization;assembly=Calculator.Shared"
-             xmlns:viewmodels="clr-namespace:Calculator.Shared.ViewModels;assembly=Calculator.Shared"
-             mc:Ignorable="d"
-             x:DataType="viewmodels:SettingsViewModel"
-             x:Class="Calculator.Mobile.Pages.SettingsPage"
-             Title="{x:Static localization:LocalizedStrings.Settings}">
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:controls="clr-namespace:Calculator.Mobile.Controls"
+    xmlns:localization="clr-namespace:Calculator.Shared.Localization;assembly=Calculator.Shared"
+    xmlns:viewmodels="clr-namespace:Calculator.Shared.ViewModels;assembly=Calculator.Shared"
+    mc:Ignorable="d"
+    x:Class="Calculator.Mobile.Pages.SettingsPage"
+    x:DataType="viewmodels:SettingsViewModel"
+    Title="{x:Static localization:LocalizedStrings.Settings}">
     <ContentPage.Resources>
         <!-- Named styles !-->
         <Style x:Key="DescriptionLabelStyle" TargetType="Label">
