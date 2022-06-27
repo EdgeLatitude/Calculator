@@ -6,6 +6,7 @@ using Calculator.Shared.Models.Results;
 using DecimalMath;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -23,7 +24,7 @@ namespace Calculator.Shared.Logic
             separators.AddRange(Parentheses);
             separators.AddRange(BinaryOperators);
             separators.AddRange(UnaryOperators);
-            _separators = separators.ToArray();
+            _separators = separators.AsReadOnly();
         }
 
         // Compilation constants
@@ -36,28 +37,28 @@ namespace Calculator.Shared.Logic
             = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
 
         #region General definitions
-        private readonly Dictionary<TerminalSymbol, string> _terminalSymbolsVariableStorageCharacter
-            = new Dictionary<TerminalSymbol, string>
+        private readonly IReadOnlyDictionary<TerminalSymbol, string> _terminalSymbolsVariableStorageCharacter
+            = new ReadOnlyDictionary<TerminalSymbol, string>(new Dictionary<TerminalSymbol, string>
         {
             { TerminalSymbol.LastResult, LocalizedStrings.LastResultAbbreviation }
-        };
+        });
         #endregion
 
         #region Lexical definitions
         // Lexical collections
-        public readonly string[] VariableStorageWords
-            = new string[] { LocalizedStrings.LastResultAbbreviation }; // 1 terminal symbol for each
-        public readonly string[] Parentheses
-            = new string[] { LexicalSymbols.OpeningParenthesis, LexicalSymbols.ClosingParenthesis }; // 1 terminal symbol for each
-        public readonly string[] BinaryOperators
-            = new string[] { LexicalSymbols.AdditionOperator, LexicalSymbols.SubstractionOperator, LexicalSymbols.MultiplicationOperator, LexicalSymbols.DivisionOperator, LexicalSymbols.PotentiationOperator }; // 1 terminal symbol for each
-        public readonly string[] UnaryOperators
-            = new string[] { LexicalSymbols.SquareRootOperator }; // 1 terminal symbol for each
-        public readonly string[] Numbers
-            = new string[] { LexicalSymbols.Zero, LexicalSymbols.One, LexicalSymbols.Two, LexicalSymbols.Three, LexicalSymbols.Four, LexicalSymbols.Five, LexicalSymbols.Six, LexicalSymbols.Seven, LexicalSymbols.Eight, LexicalSymbols.Nine }; // 1 terminal symbol for a complete real number
+        public readonly ReadOnlyCollection<string> VariableStorageWords
+            = new ReadOnlyCollection<string>(new string[] { LocalizedStrings.LastResultAbbreviation }); // 1 terminal symbol for each
+        public readonly ReadOnlyCollection<string> Parentheses
+            = new ReadOnlyCollection<string>(new string[] { LexicalSymbols.OpeningParenthesis, LexicalSymbols.ClosingParenthesis }); // 1 terminal symbol for each
+        public readonly ReadOnlyCollection<string> BinaryOperators
+            = new ReadOnlyCollection<string>(new string[] { LexicalSymbols.AdditionOperator, LexicalSymbols.SubstractionOperator, LexicalSymbols.MultiplicationOperator, LexicalSymbols.DivisionOperator, LexicalSymbols.PotentiationOperator }); // 1 terminal symbol for each
+        public readonly ReadOnlyCollection<string> UnaryOperators
+            = new ReadOnlyCollection<string>(new string[] { LexicalSymbols.SquareRootOperator }); // 1 terminal symbol for each
+        public readonly ReadOnlyCollection<string> Numbers
+            = new ReadOnlyCollection<string>(new string[] { LexicalSymbols.Zero, LexicalSymbols.One, LexicalSymbols.Two, LexicalSymbols.Three, LexicalSymbols.Four, LexicalSymbols.Five, LexicalSymbols.Six, LexicalSymbols.Seven, LexicalSymbols.Eight, LexicalSymbols.Nine }); // 1 terminal symbol for a complete real number
 
         // Separators array to be filled with some lexical collections
-        private readonly string[] _separators;
+        private readonly ReadOnlyCollection<string> _separators;
 
         // Automata for lexical analysis
         private readonly int?[,] _automata = new int?[,]
@@ -71,8 +72,8 @@ namespace Calculator.Shared.Logic
 
         #region Syntax definitions
         // Terminal symbols groups
-        private readonly Dictionary<TerminalSymbol, TerminalSymbolGroup> _terminalSymbolsGroups
-            = new Dictionary<TerminalSymbol, TerminalSymbolGroup>
+        private readonly IReadOnlyDictionary<TerminalSymbol, TerminalSymbolGroup> _terminalSymbolsGroups
+            = new ReadOnlyDictionary<TerminalSymbol, TerminalSymbolGroup>(new Dictionary<TerminalSymbol, TerminalSymbolGroup>
         {
             { TerminalSymbol.None, TerminalSymbolGroup.None },
             { TerminalSymbol.LastResult, TerminalSymbolGroup.VariableStorageCharacters },
@@ -87,11 +88,11 @@ namespace Calculator.Shared.Logic
             { TerminalSymbol.RealNumber, TerminalSymbolGroup.None },
             { TerminalSymbol.Nothing, TerminalSymbolGroup.None },
             { TerminalSymbol.OperandNegatorOperator, TerminalSymbolGroup.BinaryOperators }
-        };
+        });
 
         // Grammar productions for each non terminal symbol
-        private readonly Dictionary<NonTerminalSymbol, Enum[][]> _grammarNonTerminalSymbols
-            = new Dictionary<NonTerminalSymbol, Enum[][]>
+        private readonly IReadOnlyDictionary<NonTerminalSymbol, Enum[][]> _grammarNonTerminalSymbols
+            = new ReadOnlyDictionary<NonTerminalSymbol, Enum[][]>(new Dictionary<NonTerminalSymbol, Enum[][]>
         {
             { NonTerminalSymbol.Expression, new Enum[][]
                 {
@@ -114,11 +115,11 @@ namespace Calculator.Shared.Logic
                     new Enum[] { TerminalSymbolGroup.BinaryOperators, NonTerminalSymbol.Expression },
                     new Enum[] { }
                 }}
-        };
+        });
 
         // Predictive table for each non terminal symbol
-        private readonly Dictionary<NonTerminalSymbol, int?[]> _predictiveTable
-            = new Dictionary<NonTerminalSymbol, int?[]>
+        private readonly IReadOnlyDictionary<NonTerminalSymbol, int?[]> _predictiveTable
+            = new ReadOnlyDictionary<NonTerminalSymbol, int?[]>(new Dictionary<NonTerminalSymbol, int?[]>
         {
             { NonTerminalSymbol.Expression,
                 new int?[] { 0000, 0002, null, null, 0001, 0000, null } },
@@ -128,10 +129,10 @@ namespace Calculator.Shared.Logic
                 new int?[] { 0000, null, 0001, 0001, null, null, 0001 } },
             { NonTerminalSymbol.BinaryOperator,
                 new int?[] { null, null, 0001, 0000, null, null, 0001 } }
-        };
+        });
 
         // Predictive table column definitions
-        private readonly Enum[] _predictiveTableColumns = new Enum[]
+        private readonly ReadOnlyCollection<Enum> _predictiveTableColumns = new ReadOnlyCollection<Enum>(new Enum[]
         {
             TerminalSymbolGroup.VariableStorageCharacters,
             TerminalSymbol.OpeningParenthesis,
@@ -140,7 +141,7 @@ namespace Calculator.Shared.Logic
             TerminalSymbolGroup.UnaryOperators,
             TerminalSymbol.RealNumber,
             TerminalSymbol.Nothing
-        };
+        });
 
         // Starting non terminal symbol
         private const NonTerminalSymbol _startingNonTerminalSymbol = NonTerminalSymbol.Expression;
@@ -148,8 +149,8 @@ namespace Calculator.Shared.Logic
 
         #region Semantic definitions
         // Operators dictionary by token
-        private readonly Dictionary<TerminalSymbol, Operator> _operators
-            = new Dictionary<TerminalSymbol, Operator>
+        private readonly IReadOnlyDictionary<TerminalSymbol, Operator> _operators
+            = new ReadOnlyDictionary<TerminalSymbol, Operator>(new Dictionary<TerminalSymbol, Operator>
         {
             { TerminalSymbol.OpeningParenthesis, new Operator(TerminalSymbol.OpeningParenthesis, 0, LexicalSymbols.OpeningParenthesis) },
             { TerminalSymbol.ClosingParenthesis, new Operator(TerminalSymbol.ClosingParenthesis, 0, LexicalSymbols.ClosingParenthesis) },
@@ -160,13 +161,13 @@ namespace Calculator.Shared.Logic
             { TerminalSymbol.PotentiationOperator, new Operator(TerminalSymbol.PotentiationOperator, 3, LexicalSymbols.PotentiationOperator, false, false) },
             { TerminalSymbol.SquareRootOperator, new Operator(TerminalSymbol.SquareRootOperator, 3, LexicalSymbols.SquareRootOperator, false, true) },
             { TerminalSymbol.OperandNegatorOperator, new Operator(TerminalSymbol.MultiplicationOperator, int.MaxValue, LexicalSymbols.MultiplicationOperator, false, false) }
-        };
+        });
         #endregion
 
-        internal async Task<CalculationResult> CalculateAsync(string operation, Dictionary<string, decimal> variableStorageValues) =>
+        internal async Task<CalculationResult> CalculateAsync(string operation, IDictionary<string, decimal> variableStorageValues) =>
             await Task.Run(() => Calculate(operation, variableStorageValues)).ConfigureAwait(false);
 
-        private CalculationResult Calculate(string operation, Dictionary<string, decimal> variableStorageValues)
+        private CalculationResult Calculate(string operation, IDictionary<string, decimal> variableStorageValues)
         {
             try
             {
@@ -230,22 +231,22 @@ namespace Calculator.Shared.Logic
             // Check for lexeme in each lexical collection, at the end parse accumulated terminal symbol index into an actual symbol
             // Check in variable storage characters collection
             if (VariableStorageWords.Contains(lexeme))
-                return new LexemeResult((TerminalSymbol)Array.IndexOf(VariableStorageWords, lexeme) + terminalSymbol + 1);
-            terminalSymbol += VariableStorageWords.Length;
+                return new LexemeResult((TerminalSymbol)VariableStorageWords.IndexOf(lexeme) + terminalSymbol + 1);
+            terminalSymbol += VariableStorageWords.Count;
             // Check in special characters and operators collections
             if (lexeme.Length == 1)
             {
                 // Check in special characters collection
                 if (Parentheses.Contains(lexeme))
-                    return new LexemeResult((TerminalSymbol)Array.IndexOf(Parentheses, lexeme) + terminalSymbol + 1);
-                terminalSymbol += Parentheses.Length;
+                    return new LexemeResult((TerminalSymbol)Parentheses.IndexOf(lexeme) + terminalSymbol + 1);
+                terminalSymbol += Parentheses.Count;
                 // Check in binary operators collection
                 if (BinaryOperators.Contains(lexeme))
-                    return new LexemeResult((TerminalSymbol)Array.IndexOf(BinaryOperators, lexeme) + terminalSymbol + 1);
-                terminalSymbol += BinaryOperators.Length;
+                    return new LexemeResult((TerminalSymbol)BinaryOperators.IndexOf(lexeme) + terminalSymbol + 1);
+                terminalSymbol += BinaryOperators.Count;
                 // Check in unary operators collection
                 if (UnaryOperators.Contains(lexeme))
-                    return new LexemeResult((TerminalSymbol)Array.IndexOf(UnaryOperators, lexeme) + terminalSymbol + 1);
+                    return new LexemeResult((TerminalSymbol)UnaryOperators.IndexOf(lexeme) + terminalSymbol + 1);
             }
             return AnalyzeLexemeByAutomata(lexeme);
         }
@@ -364,7 +365,7 @@ namespace Calculator.Shared.Logic
             return new LexicalAnalysisResult(lexemesList.ToArray(), terminalSymbolsList.ToArray());
         }
 
-        private SyntaxAndSemanticAnalysisResult SyntaxAndSemanticAnalysis(Dictionary<string, decimal> variableStorageValues, LexicalAnalysisResult lexicalAnalysisResult)
+        private SyntaxAndSemanticAnalysisResult SyntaxAndSemanticAnalysis(IDictionary<string, decimal> variableStorageValues, LexicalAnalysisResult lexicalAnalysisResult)
         {
             // Data structures and main variables for syntax analysis
             var syntaxQueue = new Queue<TerminalSymbol>(lexicalAnalysisResult.TerminalSymbols);
@@ -420,9 +421,9 @@ namespace Calculator.Shared.Logic
                 {
                     int? nextProductionIndex;
                     if (_predictiveTableColumns.Contains(queueElement))
-                        nextProductionIndex = _predictiveTable[nonTerminalSymbol][Array.IndexOf(_predictiveTableColumns, queueElement)];
+                        nextProductionIndex = _predictiveTable[nonTerminalSymbol][_predictiveTableColumns.IndexOf(queueElement)];
                     else
-                        nextProductionIndex = _predictiveTable[nonTerminalSymbol][Array.IndexOf(_predictiveTableColumns, _terminalSymbolsGroups[queueElement])];
+                        nextProductionIndex = _predictiveTable[nonTerminalSymbol][_predictiveTableColumns.IndexOf(_terminalSymbolsGroups[queueElement])];
 
                     if (nextProductionIndex == null)
                         return null;

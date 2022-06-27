@@ -4,6 +4,7 @@ using Calculator.Shared.PlatformServices;
 using Calculator.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Calculator.Mobile
 {
@@ -27,7 +28,7 @@ namespace Calculator.Mobile
 
         private readonly IContainer _container;
 
-        private readonly Dictionary<Type, Type> _implementationInterfaceDictionary = new Dictionary<Type, Type>
+        private readonly IReadOnlyDictionary<Type, Type> _implementationInterfaceDictionary = new ReadOnlyDictionary<Type, Type>(new Dictionary<Type, Type>
         {
             { typeof(AlertsService), typeof(IAlertsService) },
             { typeof(ClipboardService), typeof(IClipboardService) },
@@ -37,18 +38,18 @@ namespace Calculator.Mobile
             { typeof(SettingsService), typeof(ISettingsService) },
             { typeof(ThemingService), typeof(IThemingService) },
             { typeof(UiThreadService), typeof(IUiThreadService) }
-        };
+        });
 
-        private readonly Type[] _viewModelsToResolve = new Type[]
+        private readonly ReadOnlyCollection<Type> _viewModelsToResolve = new ReadOnlyCollection<Type>(new Type[]
         {
             typeof(AboutViewModel)
-        };
+        });
 
-        private readonly Type[] _viewModelsToResolveAsSingletons = new Type[]
+        private readonly ReadOnlyCollection<Type> _viewModelsToResolveAsSingletons = new ReadOnlyCollection<Type>(new Type[]
         {
             typeof(CalculatorViewModel),
             typeof(SettingsViewModel)
-        };
+        });
 
         private ViewModelLocator()
         {

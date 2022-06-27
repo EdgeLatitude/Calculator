@@ -1,4 +1,6 @@
-﻿namespace Calculator.Shared.Constants
+﻿using System.Collections.ObjectModel;
+
+namespace Calculator.Shared.Constants
 {
     public static class HardwareInput
     {
@@ -7,7 +9,7 @@
         public const string RootCharacter = "r";
         public const string ResultOperator = LexicalSymbols.ResultOperator;
 
-        public static readonly string[] ParenthesesDecimalSeparatorsAndOperators = new string[]
+        public static readonly ReadOnlyCollection<string> ParenthesesDecimalSeparatorsAndOperators = new ReadOnlyCollection<string>(new string[]
         {
             LexicalSymbols.OpeningParenthesis,
             LexicalSymbols.ClosingParenthesis,
@@ -21,6 +23,6 @@
             LexicalSymbols.SquareRootOperator,
             LexicalSymbols.SimpleMultiplicationOperator,
             LexicalSymbols.SimpleDivisionOperator
-        };
+        });
     }
 }

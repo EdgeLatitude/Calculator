@@ -3,7 +3,6 @@ using Calculator.Shared.Localization;
 using Calculator.Shared.Logic;
 using Calculator.Shared.Models.Enums;
 using Calculator.Shared.PlatformServices;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -19,8 +18,8 @@ namespace Calculator.Shared.ViewModels
         private bool _isCalculating;
         private bool _isPasting;
 
-        private InputSectionViewModel _selectedInputSection;
         private NextInput _nextStroke = NextInput.DoNothing;
+        private InputSectionViewModel _selectedInputSection;
         private InputSectionViewModel[] _lastInput;
 
         private readonly Logic.Calculator _calculator;
@@ -30,23 +29,22 @@ namespace Calculator.Shared.ViewModels
         private readonly IClipboardService _clipboardService;
         private readonly ICommandFactoryService _commandFactoryService;
         private readonly INavigationService _navigationService;
-        private readonly IPlatformInformationService _platformInformationService;
 
-        private readonly Dictionary<string, string> _equivalentSymbols
-            = new Dictionary<string, string>()
+        private readonly IReadOnlyDictionary<string, string> _equivalentSymbols
+            = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>()
             {
                 { LexicalSymbols.SimpleDivisionOperator, LexicalSymbols.DivisionOperator },
                 { LexicalSymbols.SimpleMultiplicationOperator, LexicalSymbols.MultiplicationOperator }
-            };
+            });
 
-        private readonly List<string> _possibleDecimalSeparators
-            = new List<string>()
+        private readonly ReadOnlyCollection<string> _possibleDecimalSeparators
+            = new ReadOnlyCollection<string>(new string[]
             {
                 LexicalSymbols.Comma,
                 LexicalSymbols.Dot
-            };
+            });
 
-        private readonly Dictionary<string, decimal> _variableStorageValues
+        private readonly IDictionary<string, decimal> _variableStorageValues
             = new Dictionary<string, decimal>();
         #endregion
 
@@ -103,8 +101,7 @@ namespace Calculator.Shared.ViewModels
             IAlertsService alertsService,
             IClipboardService clipboardService,
             ICommandFactoryService commandFactoryService,
-            INavigationService navigationService,
-            IPlatformInformationService platformInformationService)
+            INavigationService navigationService)
         {
             _calculator = calculator;
             _settings = settings;
@@ -113,7 +110,6 @@ namespace Calculator.Shared.ViewModels
             _clipboardService = clipboardService;
             _commandFactoryService = commandFactoryService;
             _navigationService = navigationService;
-            _platformInformationService = platformInformationService;
 
             AllClearCommand = _commandFactoryService.Create(AllClear);
             ClearCommand = _commandFactoryService.Create(Clear);
