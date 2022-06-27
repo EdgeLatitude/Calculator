@@ -72,7 +72,7 @@
             <Setter Property="Orientation" Value="Horizontal" />
         </Style>
         <Style x:Key="InputSeparatorStyle" TargetType="BoxView">
-            <Setter Property="Color" Value="{StaticResource AccentColor}" />
+            <Setter Property="Color" Value="{DynamicResource AccentColor}" />
             <Setter Property="HeightRequest" Value="1" />
             <Setter Property="HorizontalOptions" Value="Fill" />
         </Style>

@@ -33,7 +33,7 @@
             <Setter Property="FontSize" Value="Subtitle" />
             <Setter Property="HorizontalOptions" Value="Center" />
             <Setter Property="HorizontalTextAlignment" Value="Center" />
-            <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+            <Setter Property="TextColor" Value="{DynamicResource AccentColor}" />
         </Style>
     </ContentPage.Resources>
     <ScrollView>
