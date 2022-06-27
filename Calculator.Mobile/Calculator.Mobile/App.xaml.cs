@@ -16,16 +16,16 @@ namespace Calculator.Mobile
             _theming = ViewModelLocator.Instance.Resolve<Theming>();
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
             base.OnStart();
-            _theming.ManageAppTheme(true);
+            await _theming.ManageAppThemeAsync(true);
         }
 
-        protected override void OnResume()
+        protected override async void OnResume()
         {
             base.OnResume();
-            _theming.ManageAppTheme();
+            await _theming.ManageAppThemeAsync();
         }
     }
 }

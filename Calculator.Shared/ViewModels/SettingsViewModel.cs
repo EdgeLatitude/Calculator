@@ -1,5 +1,4 @@
 ﻿using Calculator.Shared.Constants;
-using Calculator.Shared.Extensions;
 using Calculator.Shared.Localization;
 using Calculator.Shared.Logic;
 using Calculator.Shared.Models.Theming;
@@ -139,7 +138,7 @@ namespace Calculator.Shared.ViewModels
             _commandFactoryService = commandFactoryService;
             _uiThreadService = uiThreadService;
 
-            SaveSettingsCommand = _commandFactoryService.Create(SaveSettings, () => CanExecuteSaveSettings);
+            SaveSettingsCommand = _commandFactoryService.Create(async () => await SaveSettingsAsync(), () => CanExecuteSaveSettings);
 
             #region History settings
             _currentHistoryLength = _settings.GetResultsHistoryLength();
@@ -165,10 +164,10 @@ namespace Calculator.Shared.ViewModels
         #endregion
 
         #region Methods
-        private void SaveSettings()
+        private async Task SaveSettingsAsync()
         {
-            ManageHistoryLengthSettingsAsync().AwaitInOtherContext(true);
-            ManageThemeSettings();
+            await ManageHistoryLengthSettingsAsync();
+            await ManageThemeSettingsAsync();
             SettingsChanged = false;
         }
 
@@ -203,7 +202,7 @@ namespace Calculator.Shared.ViewModels
             _currentHistoryLength = historyLengthAsInt;
         }
 
-        private void ManageThemeSettings()
+        private async Task ManageThemeSettingsAsync()
         {
             var selectedTheme = _themesDictionary[SelectedTheme];
             if (_currentTheme == selectedTheme)
@@ -212,7 +211,7 @@ namespace Calculator.Shared.ViewModels
                 _settings.SetTheme(selectedTheme.Value);
             else
                 _settings.ClearTheme();
-            _theming.ManageAppTheme();
+            await _theming.ManageAppThemeAsync();
             _currentTheme = selectedTheme;
         }
         #endregion

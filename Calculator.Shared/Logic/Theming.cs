@@ -30,7 +30,7 @@ namespace Calculator.Shared.Logic
             DeviceSupportsAutomaticDarkMode = _themingService.DeviceSupportsAutomaticDarkMode();
         }
 
-        public async void ManageAppTheme(bool starting = false)
+        public async Task ManageAppThemeAsync(bool starting = false)
         {
             var theme = await GetAppOrDeviceThemeAsync();
             if (!starting
