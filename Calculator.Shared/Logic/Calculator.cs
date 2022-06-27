@@ -319,7 +319,7 @@ namespace Calculator.Shared.Logic
                 terminalSymbolsList.Insert(0, TerminalSymbol.RealNumber);
             }
 
-            for (int i = 0; i < terminalSymbolsList.Count - 1; i++)
+            for (var i = 0; i < terminalSymbolsList.Count - 1; i++)
             {
                 // Insert multiplication operator between operand, closing parenthesis or variable storage char, 
                 // and opening parenthesis, variable storage character or unary operator

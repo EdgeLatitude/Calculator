@@ -1,10 +1,14 @@
 ﻿using Autofac;
+using Calculator.Mobile.Pages;
 using Calculator.Mobile.PlatformServices;
+using Calculator.Shared.Constants;
 using Calculator.Shared.PlatformServices;
 using Calculator.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Calculator.Mobile
 {
@@ -18,6 +22,18 @@ namespace Calculator.Mobile
 
         public static void Initialize() =>
             Instance = new ViewModelLocator();
+
+        public Page ResolvePage(string page) =>
+            (Page)_container.Resolve(_pagesToResolve[page]);
+
+        public async Task<Page> ResolvePageAsync(string page) =>
+            await Task.Run(() => ResolvePage(page));
+
+        public Page ResolvePage(Type pageType) =>
+            (Page)_container.Resolve(pageType);
+
+        public async Task<Page> ResolvePageAsync(Type pageType) =>
+            await Task.Run(() => ResolvePage(pageType));
 
         public TViewModel ResolveViewModel<TViewModel>()
             where TViewModel : BaseViewModel =>
@@ -40,6 +56,12 @@ namespace Calculator.Mobile
             { typeof(UiThreadService), typeof(IUiThreadService) }
         });
 
+        private readonly IReadOnlyDictionary<string, Type> _pagesToResolve = new ReadOnlyDictionary<string, Type>(new Dictionary<string, Type>
+        {
+            { Locations.AboutPage, typeof(AboutPage) },
+            { Locations.SettingsPage, typeof(SettingsPage) }
+        });
+
         private readonly ReadOnlyCollection<Type> _viewModelsToResolve = new ReadOnlyCollection<Type>(new Type[]
         {
             typeof(AboutViewModel)
@@ -55,6 +77,7 @@ namespace Calculator.Mobile
         {
             var builder = new ContainerBuilder();
             RegisterPlatformServices(builder);
+            RegisterPages(builder);
             RegisterViewModels(builder);
             RegisterLogic(builder);
             _container = builder.Build();
@@ -65,6 +88,12 @@ namespace Calculator.Mobile
             foreach (var implementationInterfacePair in _implementationInterfaceDictionary)
                 builder.RegisterType(implementationInterfacePair.Key)
                     .As(implementationInterfacePair.Value).SingleInstance();
+        }
+
+        private void RegisterPages(ContainerBuilder builder)
+        {
+            foreach (var pageToResolve in _pagesToResolve)
+                builder.RegisterType(pageToResolve.Value);
         }
 
         private void RegisterViewModels(ContainerBuilder builder)

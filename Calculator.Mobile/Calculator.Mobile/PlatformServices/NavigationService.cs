@@ -1,8 +1,5 @@
-﻿using Calculator.Mobile.Pages;
-using Calculator.Shared.Constants;
-using Calculator.Shared.PlatformServices;
+﻿using Calculator.Shared.PlatformServices;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -11,12 +8,6 @@ namespace Calculator.Mobile.PlatformServices
 {
     internal class NavigationService : INavigationService
     {
-        private readonly Dictionary<string, Type> _locationPageDictionary = new Dictionary<string, Type>
-        {
-            { Locations.AboutPage, typeof(AboutPage) },
-            { Locations.SettingsPage, typeof(SettingsPage) }
-        };
-
         public async Task NavigateToAsync(string resource)
         {
             if (Uri.TryCreate(resource, UriKind.Absolute, out var uri)
@@ -24,7 +15,7 @@ namespace Calculator.Mobile.PlatformServices
                     || uri.Scheme == Uri.UriSchemeHttps))
                 await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
             else
-                await Application.Current.MainPage.Navigation.PushAsync((Page)Activator.CreateInstance(_locationPageDictionary[resource]));
+                await Application.Current.MainPage.Navigation.PushAsync(await ViewModelLocator.Instance.ResolvePageAsync(resource));
         }
 
         public async Task NavigateBackAsync() =>

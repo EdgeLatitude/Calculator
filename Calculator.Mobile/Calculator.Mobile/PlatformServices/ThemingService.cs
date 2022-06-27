@@ -2,7 +2,6 @@
 using Calculator.Mobile.Themes;
 using Calculator.Shared.Models.Theming;
 using Calculator.Shared.PlatformServices;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -23,10 +22,10 @@ namespace Calculator.Mobile.PlatformServices
         public Theme GetDeviceDefaultTheme() =>
             _themingDependencyService.GetDeviceDefaultTheme();
 
-        public async Task<Theme> GetDeviceTheme() =>
+        public async Task<Theme> GetDeviceThemeAsync() =>
             await _themingDependencyService.GetDeviceTheme();
 
-        public void SetTheme(Theme theme)
+        public async Task SetThemeAsync(Theme theme)
         {
             var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
             var appJustLaunched = true;
@@ -49,17 +48,17 @@ namespace Calculator.Mobile.PlatformServices
 
             if (!appJustLaunched
                 && _themingDependencyService.DeviceRequiresPagesRedraw())
-                RedrawPages();
+                await RedrawPagesAsync();
         }
 
-        private void RedrawPages()
+        private async Task RedrawPagesAsync()
         {
             var firstPage = Application.Current.MainPage.Navigation.NavigationStack[0];
             var originalCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
-            for (int i = 0; i < originalCount; i++)
+            for (var i = 0; i < originalCount; i++)
             {
                 var page = Application.Current.MainPage.Navigation.NavigationStack[i * 2];
-                Application.Current.MainPage.Navigation.InsertPageBefore((Page)Activator.CreateInstance(page.GetType()), firstPage);
+                Application.Current.MainPage.Navigation.InsertPageBefore(await ViewModelLocator.Instance.ResolvePageAsync(page.GetType()), firstPage);
             }
             var newCount = Application.Current.MainPage.Navigation.NavigationStack.Count;
             if (newCount == originalCount * 2)
@@ -68,7 +67,7 @@ namespace Calculator.Mobile.PlatformServices
                 while (Application.Current.MainPage.Navigation.NavigationStack.Count - 1 > pageToPopIndex)
                     Application.Current.MainPage.Navigation.RemovePage(
                         Application.Current.MainPage.Navigation.NavigationStack[pageToPopIndex]);
-                Application.Current.MainPage.Navigation.PopAsync(false);
+                await Application.Current.MainPage.Navigation.PopAsync(false);
             }
         }
     }

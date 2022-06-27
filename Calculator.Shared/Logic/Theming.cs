@@ -37,7 +37,7 @@ namespace Calculator.Shared.Logic
                 && theme == _currentTheme)
                 return;
             ThemeChangeNeeded?.Invoke(this, new ThemeChangeNeededEventArgs { Theme = theme });
-            _themingService.SetTheme(theme);
+            await _themingService.SetThemeAsync(theme);
             _currentTheme = theme;
         }
 
@@ -51,6 +51,6 @@ namespace Calculator.Shared.Logic
         public async Task<Theme> GetAppOrDeviceTheme() =>
             _settings.ContainsTheme() ?
                 _settings.GetTheme() :
-                await _themingService.GetDeviceTheme();
+                await _themingService.GetDeviceThemeAsync();
     }
 }
