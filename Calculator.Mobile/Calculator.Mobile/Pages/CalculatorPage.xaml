@@ -32,7 +32,7 @@
             <Setter Property="HeightRequest" Value="{OnIdiom 24, Tablet=36}" />
         </Style>
         <Style x:Key="InputButtonStyle" TargetType="Button">
-            <Setter Property="FontSize" Value="Body" />
+            <Setter Property="FontSize" Value="{OnIdiom 14, Tablet=21}" />
             <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}" />
         </Style>
         <Style x:Key="InputContainerStyle" TargetType="Grid">
