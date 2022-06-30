@@ -7,7 +7,9 @@ using Calculator.Shared.PlatformServices;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -50,7 +52,14 @@ namespace Calculator.Shared.ViewModels
         #endregion
 
         #region Properties
-        public string DecimalSeparator => _calculator.DecimalSeparator;
+        private CultureInfo CurrentCulture =>
+            Thread.CurrentThread.CurrentCulture;
+
+        public string DecimalSeparator =>
+            CurrentCulture.NumberFormat.NumberDecimalSeparator;
+
+        public string GroupSeparator =>
+            CurrentCulture.NumberFormat.NumberGroupSeparator;
 
         private readonly ObservableCollection<InputSectionViewModel> _input = new ObservableCollection<InputSectionViewModel>();
 
@@ -271,7 +280,7 @@ namespace Calculator.Shared.ViewModels
             // Calculate and show corresponding result
             _isCalculating = true;
             _lastInput = input;
-            var calculationResult = await _calculator.CalculateAsync(JoinInputSectionsIntoSingleString(input), _variableStorageValues);
+            var calculationResult = await _calculator.CalculateAsync(JoinInputSectionsIntoSingleString(input), DecimalSeparator, _variableStorageValues);
             if (calculationResult != null)
                 // Show result if calculation was successful
                 if (calculationResult.Successful)
@@ -286,7 +295,7 @@ namespace Calculator.Shared.ViewModels
 
                         AddOrUpdateVariableStorage(LocalizedStrings.LastResultAbbreviation, result);
 
-                        _settings.ManageNewResultAsync(resultText).AwaitInOtherContext(true);
+                        _settings.ManageNewResultAsync(RemoveGroupsSeparatorFromResultText(resultText)).AwaitInOtherContext(true);
                     }
                     // Show error message if result could not be formatted
                     else
@@ -322,13 +331,16 @@ namespace Calculator.Shared.ViewModels
 
         private bool TryFormatResult(decimal result, out string resultText)
         {
-            resultText = result.ToString();
+            resultText = result.ToString("N", CurrentCulture);
             while (resultText.Contains(DecimalSeparator)
                 && (char.ToString(resultText[^1]) == _calculator.ZeroString
                     || char.ToString(resultText[^1]) == DecimalSeparator))
                 resultText = resultText[0..^1];
             return true;
         }
+
+        private string RemoveGroupsSeparatorFromResultText(string resultText) =>
+            resultText.Replace(GroupSeparator, string.Empty);
 
         private async Task CopyAsync() =>
             await _clipboardService.SetTextAsync(JoinInputSectionsIntoSingleString(Input.ToArray()));

@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Calculator.Shared.Logic
@@ -33,8 +32,6 @@ namespace Calculator.Shared.Logic
         // Runtime constants
         public readonly string ZeroString = decimal.Zero.ToString();
         public readonly string MinusOneString = decimal.MinusOne.ToString();
-        public readonly string DecimalSeparator
-            = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator;
 
         #region General definitions
         private readonly IReadOnlyDictionary<TerminalSymbol, string> _terminalSymbolsVariableStorageCharacter
@@ -164,10 +161,10 @@ namespace Calculator.Shared.Logic
         });
         #endregion
 
-        internal async Task<CalculationResult> CalculateAsync(string operation, IDictionary<string, decimal> variableStorageValues) =>
-            await Task.Run(() => Calculate(operation, variableStorageValues)).ConfigureAwait(false);
+        internal async Task<CalculationResult> CalculateAsync(string operation, string decimalSeparator, IDictionary<string, decimal> variableStorageValues) =>
+            await Task.Run(() => Calculate(operation, decimalSeparator, variableStorageValues)).ConfigureAwait(false);
 
-        private CalculationResult Calculate(string operation, IDictionary<string, decimal> variableStorageValues)
+        private CalculationResult Calculate(string operation, string decimalSeparator, IDictionary<string, decimal> variableStorageValues)
         {
             try
             {
@@ -176,7 +173,7 @@ namespace Calculator.Shared.Logic
                 if (lexemes == null)
                     return new CalculationResult(LocalizedStrings.UnexpectedError);
                 // Lexical analysis
-                var lexicalAnalysisResult = LexicalAnalysis(lexemes);
+                var lexicalAnalysisResult = LexicalAnalysis(lexemes, decimalSeparator);
                 if (lexicalAnalysisResult == null)
                     return new CalculationResult(LocalizedStrings.LexicalError);
                 // Add possible missing join symbols to the operation
@@ -210,13 +207,13 @@ namespace Calculator.Shared.Logic
             return operation.Split();
         }
 
-        private LexicalAnalysisResult LexicalAnalysis(string[] lexemes)
+        private LexicalAnalysisResult LexicalAnalysis(string[] lexemes, string decimalSeparator)
         {
             var terminalSymbols = new List<TerminalSymbol>();
             // Use the lexemes array to fill corresponding terminal symbols list
             foreach (var lexeme in lexemes)
             {
-                var lexemeResult = AnalyzeLexeme(lexeme);
+                var lexemeResult = AnalyzeLexeme(lexeme, decimalSeparator);
                 if (lexemeResult?.Successful == true)
                     terminalSymbols.Add(lexemeResult.TerminalSymbol);
                 else
@@ -225,7 +222,7 @@ namespace Calculator.Shared.Logic
             return new LexicalAnalysisResult(lexemes, terminalSymbols.ToArray());
         }
 
-        private LexemeResult AnalyzeLexeme(string lexeme)
+        private LexemeResult AnalyzeLexeme(string lexeme, string decimalSeparator)
         {
             var terminalSymbol = 0;
             // Check for lexeme in each lexical collection, at the end parse accumulated terminal symbol index into an actual symbol
@@ -248,10 +245,10 @@ namespace Calculator.Shared.Logic
                 if (UnaryOperators.Contains(lexeme))
                     return new LexemeResult((TerminalSymbol)UnaryOperators.IndexOf(lexeme) + terminalSymbol + 1);
             }
-            return AnalyzeLexemeByAutomata(lexeme);
+            return AnalyzeLexemeByAutomata(lexeme, decimalSeparator);
         }
 
-        private LexemeResult AnalyzeLexemeByAutomata(string lexeme)
+        private LexemeResult AnalyzeLexemeByAutomata(string lexeme, string decimalSeparator)
         {
             int automataColumn, currentState = 0;
             /* Analyze lexeme parsing each character, using the current state as main reference
@@ -269,7 +266,7 @@ namespace Calculator.Shared.Logic
                     else
                         currentState = _automata[currentState, automataColumn].Value;
                 }
-                else if (DecimalSeparator == lexemeCharacter)
+                else if (decimalSeparator == lexemeCharacter)
                 {
                     automataColumn = 1;
                     if (_automata[currentState, automataColumn].Equals(null))
