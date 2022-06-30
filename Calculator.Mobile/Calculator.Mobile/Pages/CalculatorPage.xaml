@@ -21,7 +21,7 @@
         <!-- Named styles !-->
         <Style x:Key="CommandLabelStyle" TargetType="Label">
             <Setter Property="FontFamily" Value="MaterialIcons" />
-            <Setter Property="FontSize" Value="Large" />
+            <Setter Property="FontSize" Value="{OnIdiom 24, Tablet=36}" />
             <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}" />
         </Style>
         <Style x:Key="CommandsGridStyle" TargetType="Grid">
@@ -29,7 +29,7 @@
             <Setter Property="VerticalOptions" Value="Center" />
         </Style>
         <Style x:Key="CommandSvgImageStyle" TargetType="ffimageloadingsvg:SvgCachedImage">
-            <Setter Property="HeightRequest" Value="22" />
+            <Setter Property="HeightRequest" Value="{OnIdiom 24, Tablet=36}" />
         </Style>
         <Style x:Key="InputButtonStyle" TargetType="Button">
             <Setter Property="FontSize" Value="Body" />
@@ -48,9 +48,7 @@
             <Setter Property="VerticalOptions" Value="Center" />
         </Style>
         <Style x:Key="InputLabelStyle" TargetType="Label">
-            <Setter Property="FontSize"
-                    Value="{OnPlatform Android=30,
-                                       iOS=32}" />
+            <Setter Property="FontSize" Value="{OnIdiom 32, Tablet=48}" />
             <Setter Property="HorizontalOptions" Value="EndAndExpand" />
             <Setter Property="MaxLines" Value="1" />
         </Style>
