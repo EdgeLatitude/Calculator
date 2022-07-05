@@ -298,7 +298,7 @@ namespace Calculator.Shared.ViewModels
 
                         AddOrUpdateVariableStorage(LocalizedStrings.LastResultAbbreviation, result);
 
-                        _settings.ManageNewResultAsync(RemoveGroupsSeparatorFromResultText(resultText)).AwaitInOtherContext(true);
+                        _settings.ManageNewResultAsync(RemoveGroupsSeparatorFromText(resultText)).AwaitInOtherContext(true);
                     }
                     // Show error message if result could not be formatted
                     else
@@ -342,11 +342,11 @@ namespace Calculator.Shared.ViewModels
             return true;
         }
 
-        private string RemoveGroupsSeparatorFromResultText(string resultText) =>
-            resultText.Replace(GroupSeparator, string.Empty);
+        private string RemoveGroupsSeparatorFromText(string text) =>
+            text.Replace(GroupSeparator, string.Empty);
 
         private async Task CopyAsync() =>
-            await _clipboardService.SetTextAsync(JoinInputSectionsIntoSingleString(Input.ToArray()));
+            await _clipboardService.SetTextAsync(RemoveGroupsSeparatorFromText(JoinInputSectionsIntoSingleString(Input.ToArray())));
 
         private async Task PasteAsync()
         {
