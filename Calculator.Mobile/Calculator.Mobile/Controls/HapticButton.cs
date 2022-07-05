@@ -12,6 +12,9 @@ namespace Calculator.Mobile.Controls
         public HapticButton() =>
             Clicked += HapticFeedbackButton_Clicked;
 
+        ~HapticButton() =>
+            Clicked -= HapticFeedbackButton_Clicked;
+
         private void HapticFeedbackButton_Clicked(object sender, EventArgs args)
         {
             try

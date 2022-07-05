@@ -13,8 +13,7 @@
     mc:Ignorable="d"
     x:Class="Calculator.Mobile.Pages.CalculatorPage"
     x:DataType="viewmodels:CalculatorViewModel"
-    x:Name="Page"
-    SizeChanged="Page_SizeChanged">
+    x:Name="Page">
     <controls:KeyboardPage.Resources>
         <!-- Converters !-->
         <converters:IsSelectedConverter x:Key="isSelectedConverter" />
@@ -226,7 +225,6 @@
                             <StackLayout
                                 x:Name="InputStackLayout"
                                 BindableLayout.ItemsSource="{Binding Input, Mode=OneTime}"
-                                PropertyChanged="InputStackLayout_PropertyChanged"
                                 Style="{StaticResource InputStackLayoutStyle}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate

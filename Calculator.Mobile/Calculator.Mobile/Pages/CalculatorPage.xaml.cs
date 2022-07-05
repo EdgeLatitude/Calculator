@@ -23,6 +23,14 @@ namespace Calculator.Mobile.Pages
             InitializeComponent();
             _viewModel = ViewModelLocator.Instance.ResolveViewModel<CalculatorViewModel>();
             BindingContext = _viewModel;
+            SizeChanged += Page_SizeChanged;
+            InputStackLayout.PropertyChanged += InputStackLayout_PropertyChanged;
+        }
+
+        ~CalculatorPage()
+        {
+            SizeChanged -= Page_SizeChanged;
+            InputStackLayout.PropertyChanged -= InputStackLayout_PropertyChanged;
         }
 
         public override void OnKeyUp(char character) =>

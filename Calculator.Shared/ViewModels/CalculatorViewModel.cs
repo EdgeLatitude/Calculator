@@ -141,6 +141,9 @@ namespace Calculator.Shared.ViewModels
 
             Input.CollectionChanged += Input_CollectionChanged;
         }
+
+        ~CalculatorViewModel() =>
+            Input.CollectionChanged -= Input_CollectionChanged;
         #endregion
 
         #region Methods
