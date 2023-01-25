@@ -6,10 +6,10 @@ namespace Calculator.Mobile.PlatformServices
 {
     internal class ClipboardService : IClipboardService
     {
-        public async Task<string> GetTextAsync() =>
-            await Clipboard.GetTextAsync();
+        public Task<string> GetTextAsync() =>
+            Clipboard.GetTextAsync();
 
-        public async Task SetTextAsync(string text) =>
-            await Clipboard.SetTextAsync(text);
+        public Task SetTextAsync(string text) =>
+            Clipboard.SetTextAsync(text);
     }
 }

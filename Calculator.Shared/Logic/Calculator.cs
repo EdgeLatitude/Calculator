@@ -161,8 +161,8 @@ namespace Calculator.Shared.Logic
         });
         #endregion
 
-        internal async Task<CalculationResult> CalculateAsync(string operation, string decimalSeparator, IDictionary<string, decimal> variableStorageValues) =>
-            await Task.Run(() => Calculate(operation, decimalSeparator, variableStorageValues)).ConfigureAwait(false);
+        internal Task<CalculationResult> CalculateAsync(string operation, string decimalSeparator, IDictionary<string, decimal> variableStorageValues) =>
+            Task.Run(() => Calculate(operation, decimalSeparator, variableStorageValues));
 
         private CalculationResult Calculate(string operation, string decimalSeparator, IDictionary<string, decimal> variableStorageValues)
         {

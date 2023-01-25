@@ -34,8 +34,8 @@ namespace Calculator.Shared.Logic
         public void ClearResultsHistory() =>
             _settingsService.Remove(Strings.ResultsHistory);
 
-        public async Task ManageNewResultAsync(string result) =>
-            await Task.Run(() => ManageNewResult(result)).ConfigureAwait(false);
+        public Task ManageNewResultAsync(string result) =>
+            Task.Run(() => ManageNewResult(result));
 
         private void ManageNewResult(string result)
         {
@@ -45,14 +45,14 @@ namespace Calculator.Shared.Logic
             SetResultsHistory(new CircularBuffer<string>(GetResultsHistoryLength(), resultsHistory));
         }
 
-        public async Task<List<string>> GetResultsHistoryAsync() =>
-            await Task.Run(GetResultsHistory).ConfigureAwait(false);
+        public Task<List<string>> GetResultsHistoryAsync() =>
+            Task.Run(GetResultsHistory);
 
         private List<string> GetResultsHistory() =>
             JsonConvert.DeserializeObject<List<string>>(_settingsService.Get(Strings.ResultsHistory, string.Empty));
 
-        public async Task SetResultsHistoryAsync(IEnumerable<string> resultsHistory) =>
-            await Task.Run(() => SetResultsHistory(resultsHistory)).ConfigureAwait(false);
+        public Task SetResultsHistoryAsync(IEnumerable<string> resultsHistory) =>
+            Task.Run(() => SetResultsHistory(resultsHistory));
 
         private void SetResultsHistory(IEnumerable<string> resultsHistory) =>
             _settingsService.Set(Strings.ResultsHistory, JsonConvert.SerializeObject(resultsHistory));

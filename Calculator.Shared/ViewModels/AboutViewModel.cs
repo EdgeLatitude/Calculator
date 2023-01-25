@@ -62,8 +62,8 @@ namespace Calculator.Shared.ViewModels
         #endregion
 
         #region Methods
-        private async Task NavigateToWebsiteAsync(string website) =>
-            await _navigationService.NavigateToAsync($"{Strings.HttpsProtocol}{website}");
+        private Task NavigateToWebsiteAsync(string website) =>
+            _navigationService.NavigateToAsync($"{Strings.HttpsProtocol}{website}");
         #endregion
     }
 }

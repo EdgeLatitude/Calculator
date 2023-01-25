@@ -7,13 +7,13 @@ namespace Calculator.Mobile.PlatformServices
 {
     internal class AlertsService : IAlertsService
     {
-        public async Task DisplayAlertAsync(string title, string message) =>
-            await Application.Current.MainPage.DisplayAlert(title, message, LocalizedStrings.Ok);
+        public Task DisplayAlertAsync(string title, string message) =>
+            Application.Current.MainPage.DisplayAlert(title, message, LocalizedStrings.Ok);
 
-        public async Task<bool> DisplayConfirmationAsync(string title, string message, string action) =>
-            await Application.Current.MainPage.DisplayAlert(title, message, action, LocalizedStrings.Cancel);
+        public Task<bool> DisplayConfirmationAsync(string title, string message, string action) =>
+            Application.Current.MainPage.DisplayAlert(title, message, action, LocalizedStrings.Cancel);
 
-        public async Task<string> DisplayOptionsAsync(string title, string destruction, params string[] options) =>
-            await Application.Current.MainPage.DisplayActionSheet(title, LocalizedStrings.Cancel, destruction, options);
+        public Task<string> DisplayOptionsAsync(string title, string destruction, params string[] options) =>
+            Application.Current.MainPage.DisplayActionSheet(title, LocalizedStrings.Cancel, destruction, options);
     }
 }

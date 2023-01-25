@@ -343,8 +343,8 @@ namespace Calculator.Shared.ViewModels
         private string RemoveGroupsSeparatorFromText(string text) =>
             text.Replace(GroupSeparator, string.Empty);
 
-        private async Task CopyAsync() =>
-            await _clipboardService.SetTextAsync(RemoveGroupsSeparatorFromText(JoinInputSectionsIntoSingleString(Input.ToArray())));
+        private Task CopyAsync() =>
+            _clipboardService.SetTextAsync(RemoveGroupsSeparatorFromText(JoinInputSectionsIntoSingleString(Input.ToArray())));
 
         private async Task PasteAsync()
         {
@@ -377,13 +377,13 @@ namespace Calculator.Shared.ViewModels
             _isPasting = false;
         }
 
-        private async Task SelectInputSectionAsync(InputSectionViewModel inputSectionViewModel)
+        private Task SelectInputSectionAsync(InputSectionViewModel inputSectionViewModel)
         {
             if (_selectedInputSection != null)
                 _selectedInputSection.IsSelected = false;
             _selectedInputSection = inputSectionViewModel;
             inputSectionViewModel.IsSelected = true;
-            await UiDelayAsync();
+            return UiDelayAsync();
         }
 
         private async Task<bool> ManageInputCharacterAsync(string character, bool uiDelay)
@@ -463,11 +463,11 @@ namespace Calculator.Shared.ViewModels
                 _settings.ClearResultsHistory();
         }
 
-        private async Task NavigateToSettingsAsync() =>
-            await _navigationService.NavigateToAsync(Locations.SettingsPage);
+        private Task NavigateToSettingsAsync() =>
+            _navigationService.NavigateToAsync(Locations.SettingsPage);
 
-        private async Task NavigateToAboutAsync() =>
-            await _navigationService.NavigateToAsync(Locations.AboutPage);
+        private Task NavigateToAboutAsync() =>
+            _navigationService.NavigateToAsync(Locations.AboutPage);
 
         private void ClearAndAddInputSection(string input)
         {
@@ -498,8 +498,8 @@ namespace Calculator.Shared.ViewModels
                 await UiDelayAsync();
         }
 
-        private async Task UiDelayAsync() =>
-            await Task.Delay(100).ConfigureAwait(false);
+        private Task UiDelayAsync() =>
+            Task.Delay(100);
 
         private string JoinInputSectionsIntoSingleString(InputSectionViewModel[] input) =>
             string.Join(string.Empty, input.Select(inputSection => inputSection.Input));
