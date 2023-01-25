@@ -43,7 +43,7 @@
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
-    <AndroidUseDefaultAotProfile>true</AndroidUseDefaultAotProfile>
+    <AndroidUseDefaultAotProfile>false</AndroidUseDefaultAotProfile>
     <AndroidDexTool>d8</AndroidDexTool>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
@@ -98,6 +98,9 @@
       <Project>{258A1592-CC9E-4A97-B44F-9823E90896C1}</Project>
       <Name>Calculator.Mobile</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAotProfile Include="$(MSBuildThisFileDirectory)custom.aprof" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRenderers\KeyboardPageRenderer.cs" />
