@@ -1,9 +1,11 @@
 ﻿using Calculator.Shared.Constants;
 using Calculator.Shared.Logic;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace Calculator.Mobile
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class App : Application
     {
         private readonly Theming _theming;
