@@ -12,8 +12,7 @@ namespace Calculator.Mobile.Droid.DependencyServices
 
         public void PlaySound()
         {
-            if (_root == null)
-                _root = Platform.CurrentActivity.FindViewById(Android.Resource.Id.Content);
+            _root ??= Platform.CurrentActivity.FindViewById(Android.Resource.Id.Content);
             _root.PlaySoundEffect(SoundEffects.Click);
         }
     }

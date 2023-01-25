@@ -187,7 +187,7 @@ namespace Calculator.Shared.Logic
             }
             catch (Exception exception)
             {
-                Debug.WriteLine("Error: " + exception.Message);
+                Debug.WriteLine($"{nameof(Calculate)} exception: {exception.Message}");
                 return new CalculationResult(LocalizedStrings.UnexpectedError);
             }
         }
@@ -195,9 +195,9 @@ namespace Calculator.Shared.Logic
         private string[] SplitOperation(string operation)
         {
             // Add surrounding blank spaces to every separator in the operation
-            foreach (var separator in _separators)
-                if (operation.Contains(separator))
-                    operation = operation.Replace(separator, WhiteSpace + separator + WhiteSpace);
+            var separatorsInOperation = _separators.Where(separator => operation.Contains(separator)).ToArray();
+            foreach (var separator in separatorsInOperation)
+                operation = operation.Replace(separator, WhiteSpace + separator + WhiteSpace);
             // Remove unnecessary blank spaces
             var doubleWhiteSpace = WhiteSpace + WhiteSpace;
             while (operation.Contains(doubleWhiteSpace))
@@ -355,7 +355,6 @@ namespace Calculator.Shared.Logic
                     terminalSymbolsList[i] = TerminalSymbol.OperandNegatorOperator;
                     lexemesList.Insert(i, MinusOneString);
                     terminalSymbolsList.Insert(i, TerminalSymbol.RealNumber);
-                    continue;
                 }
             }
 
@@ -492,7 +491,7 @@ namespace Calculator.Shared.Logic
             }
             catch (Exception exception)
             {
-                Debug.WriteLine("Error: " + exception.Message);
+                Debug.WriteLine($"{nameof(ActualCalculation)} exception: {exception.Message}");
                 return new CalculationResult(LocalizedStrings.CalculationError);
             }
 

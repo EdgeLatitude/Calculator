@@ -51,7 +51,7 @@ namespace Calculator.Shared.Logic
         private List<string> GetResultsHistory() =>
             JsonConvert.DeserializeObject<List<string>>(_settingsService.Get(Strings.ResultsHistory, string.Empty));
 
-        public async void SetResultsHistoryAsync(IEnumerable<string> resultsHistory) =>
+        public async Task SetResultsHistoryAsync(IEnumerable<string> resultsHistory) =>
             await Task.Run(() => SetResultsHistory(resultsHistory)).ConfigureAwait(false);
 
         private void SetResultsHistory(IEnumerable<string> resultsHistory) =>

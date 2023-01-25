@@ -2,10 +2,10 @@
 
 namespace Calculator.Mobile.Controls
 {
-    public class KeyboardPage : ContentPage
+    public abstract class KeyboardPage : ContentPage
     {
-        public virtual void OnKeyUp(char character) { return; }
-        public virtual void OnKeyCommand(KeyCommand command) { return; }
+        public abstract void OnKeyUp(char character);
+        public abstract void OnKeyCommand(KeyCommand command);
     }
 
     public enum KeyCommand

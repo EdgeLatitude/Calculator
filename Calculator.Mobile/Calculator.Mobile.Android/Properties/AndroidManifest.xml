@@ -6,7 +6,7 @@
 	package="com.edgelatitude.calculator">
 	<uses-sdk
         android:minSdkVersion="21"
-        android:targetSdkVersion="31" />
+        android:targetSdkVersion="33" />
 	<application
         android:label="@string/app_name"></application>
 </manifest>

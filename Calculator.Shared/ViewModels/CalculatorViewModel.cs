@@ -30,7 +30,6 @@ namespace Calculator.Shared.ViewModels
 
         private readonly IAlertsService _alertsService;
         private readonly IClipboardService _clipboardService;
-        private readonly ICommandFactoryService _commandFactoryService;
         private readonly INavigationService _navigationService;
 
         private readonly IReadOnlyDictionary<string, string> _equivalentSymbols
@@ -118,26 +117,25 @@ namespace Calculator.Shared.ViewModels
 
             _alertsService = alertsService;
             _clipboardService = clipboardService;
-            _commandFactoryService = commandFactoryService;
             _navigationService = navigationService;
 
-            AllClearCommand = _commandFactoryService.Create(AllClear);
-            ClearCommand = _commandFactoryService.Create(Clear);
-            DeleteCommand = _commandFactoryService.Create(async () => await DeleteAsync());
-            BinaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await BinaryOperatorAsync(symbol, true));
-            UnaryOperatorCommand = _commandFactoryService.Create<string>(async (symbol) => await UnaryOperatorAsync(symbol, true));
-            ParenthesisCommand = _commandFactoryService.Create<string>(async (parenthesis) => await ParenthesisAsync(parenthesis, true));
-            VariableStorageCommand = _commandFactoryService.Create<string>(async (symbol) => await VariableStorageAsync(symbol, true));
-            NumberCommand = _commandFactoryService.Create<string>(async (number) => await NumberAsync(number, true));
-            DecimalCommand = _commandFactoryService.Create(async () => await DecimalAsync(true));
-            CalculateCommand = _commandFactoryService.Create(async () => await CalculateAsync());
-            CopyCommand = _commandFactoryService.Create(async () => await CopyAsync());
-            PasteCommand = _commandFactoryService.Create(async () => await PasteAsync());
-            SelectInputSectionCommand = _commandFactoryService.Create<InputSectionViewModel>(async (inputSectionViewModel) => await SelectInputSectionAsync(inputSectionViewModel));
-            ManageInputCharacterCommand = _commandFactoryService.Create<string>(async (character) => await ManageInputCharacterAsync(character, true));
-            ShowHistoryCommand = _commandFactoryService.Create(async () => await ShowHistoryAsync());
-            NavigateToSettingsCommand = _commandFactoryService.Create(async () => await NavigateToSettingsAsync());
-            NavigateToAboutCommand = _commandFactoryService.Create(async () => await NavigateToAboutAsync());
+            AllClearCommand = commandFactoryService.Create(AllClear);
+            ClearCommand = commandFactoryService.Create(Clear);
+            DeleteCommand = commandFactoryService.Create(async () => await DeleteAsync());
+            BinaryOperatorCommand = commandFactoryService.Create<string>(async (symbol) => await BinaryOperatorAsync(symbol, true));
+            UnaryOperatorCommand = commandFactoryService.Create<string>(async (symbol) => await UnaryOperatorAsync(symbol, true));
+            ParenthesisCommand = commandFactoryService.Create<string>(async (parenthesis) => await ParenthesisAsync(parenthesis, true));
+            VariableStorageCommand = commandFactoryService.Create<string>(async (symbol) => await VariableStorageAsync(symbol, true));
+            NumberCommand = commandFactoryService.Create<string>(async (number) => await NumberAsync(number, true));
+            DecimalCommand = commandFactoryService.Create(async () => await DecimalAsync(true));
+            CalculateCommand = commandFactoryService.Create(async () => await CalculateAsync());
+            CopyCommand = commandFactoryService.Create(async () => await CopyAsync());
+            PasteCommand = commandFactoryService.Create(async () => await PasteAsync());
+            SelectInputSectionCommand = commandFactoryService.Create<InputSectionViewModel>(async (inputSectionViewModel) => await SelectInputSectionAsync(inputSectionViewModel));
+            ManageInputCharacterCommand = commandFactoryService.Create<string>(async (character) => await ManageInputCharacterAsync(character, true));
+            ShowHistoryCommand = commandFactoryService.Create(async () => await ShowHistoryAsync());
+            NavigateToSettingsCommand = commandFactoryService.Create(async () => await NavigateToSettingsAsync());
+            NavigateToAboutCommand = commandFactoryService.Create(async () => await NavigateToAboutAsync());
 
             Input.CollectionChanged += Input_CollectionChanged;
         }

@@ -1,4 +1,5 @@
 ﻿using Calculator.Shared.Constants;
+using Calculator.Shared.Extensions;
 using Calculator.Shared.Localization;
 using Calculator.Shared.Logic;
 using Calculator.Shared.Models.Theming;
@@ -17,13 +18,8 @@ namespace Calculator.Shared.ViewModels
         private int _currentHistoryLength;
         private Theme? _currentTheme;
 
-        private readonly bool _deviceSupportsAutomaticDarkMode;
-
         private readonly Settings _settings;
         private readonly Theming _theming;
-
-        private readonly ICommandFactoryService _commandFactoryService;
-        private readonly IUiThreadService _uiThreadService;
 
         private readonly IDictionary<string, Theme?> _themesDictionary = new Dictionary<string, Theme?>
         {
@@ -135,10 +131,7 @@ namespace Calculator.Shared.ViewModels
             _settings = settings;
             _theming = theming;
 
-            _commandFactoryService = commandFactoryService;
-            _uiThreadService = uiThreadService;
-
-            SaveSettingsCommand = _commandFactoryService.Create(async () => await SaveSettingsAsync(), () => CanExecuteSaveSettings);
+            SaveSettingsCommand = commandFactoryService.Create(async () => await SaveSettingsAsync(), () => CanExecuteSaveSettings);
 
             #region History settings
             _currentHistoryLength = _settings.GetResultsHistoryLength();
@@ -147,13 +140,13 @@ namespace Calculator.Shared.ViewModels
 
             #region Theme settings
             DeviceSupportsManualDarkMode = _theming.DeviceSupportsManualDarkMode;
-            _deviceSupportsAutomaticDarkMode = _theming.DeviceSupportsAutomaticDarkMode;
+            var deviceSupportsAutomaticDarkMode = _theming.DeviceSupportsAutomaticDarkMode;
             _currentTheme = _theming.GetAppOrDefaultTheme();
 
-            if (_deviceSupportsAutomaticDarkMode)
+            if (deviceSupportsAutomaticDarkMode)
                 _themesDictionary.Add(LocalizedStrings.Device, null);
 
-            _uiThreadService.ExecuteOnUiThread(() =>
+            uiThreadService.ExecuteOnUiThread(() =>
             {
                 Themes = _themesDictionary.Keys.ToArray();
                 SelectedTheme = _themesDictionary.FirstOrDefault(pair => pair.Value == _currentTheme).Key;
@@ -194,7 +187,7 @@ namespace Calculator.Shared.ViewModels
                     resultsHistory.Reverse();
                     resultsHistory = resultsHistory.Take(historyLengthAsInt).ToList();
                     resultsHistory.Reverse();
-                    _settings.SetResultsHistoryAsync(resultsHistory);
+                    _settings.SetResultsHistoryAsync(resultsHistory).AwaitInOtherContext(true);
                 }
             }
             else if (newHistoryLengthIsZero)
