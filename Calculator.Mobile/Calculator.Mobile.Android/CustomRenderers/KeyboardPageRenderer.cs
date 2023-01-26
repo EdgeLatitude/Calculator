@@ -4,7 +4,6 @@ using Android.Views;
 using Calculator.Mobile.Controls;
 using Calculator.Shared.Constants;
 using System;
-using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -30,9 +29,7 @@ namespace Calculator.Mobile.Droid.CustomRenderers
                 RequestFocus();
 
             Page.Appearing += (sender, innerArgs) =>
-            {
                 RequestFocus();
-            };
         }
 
         public override bool OnKeyUp([GeneratedEnum] Keycode keyCode, KeyEvent keyEvent)

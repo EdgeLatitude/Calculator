@@ -24,6 +24,12 @@ namespace Calculator.Mobile.Droid
             Shared.Logic.Theming.ThemeChangeNeeded += GlobalEvents_ThemeChangeNeeded;
         }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            Shared.Logic.Theming.ThemeChangeNeeded -= GlobalEvents_ThemeChangeNeeded;
+        }
+
         private void GlobalEvents_ThemeChangeNeeded(object sender, ThemeChangeNeededEventArgs args)
         {
             switch (args.Theme)
