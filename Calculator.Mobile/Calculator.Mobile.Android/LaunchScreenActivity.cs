@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace Calculator.Mobile.Droid
 {
-    [Activity(Label = "@string/app_name", Icon = "@mipmap/icon", Theme = "@style/MainTheme.Splash", MainLauncher = true, NoHistory = true)]
-    public class SplashActivity : AppCompatActivity
+    [Activity(
+        Icon = "@mipmap/icon",
+        Label = "@string/app_name",
+        MainLauncher = true,
+        NoHistory = true,
+        Theme = "@style/MainTheme.Splash")]
+    public class LaunchScreenActivity : AppCompatActivity
     {
         private bool _mainActivityCreationStarted;
 
